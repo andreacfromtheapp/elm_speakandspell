@@ -5144,27 +5144,70 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Main$initialModel = {screen: 'Welcome to Speak & Spell'};
+var $author$project$Main$initialModel = {instructions: 'Press Keys To Compose a Word', word: ''};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $elm$core$String$append = _String_append;
+var $author$project$Main$appendToWord = F2(
+	function (word, letter) {
+		return A2($elm$core$String$append, word, letter);
+	});
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $elm$core$String$dropRight = F2(
+	function (n, string) {
+		return (n < 1) ? string : A3($elm$core$String$slice, 0, -n, string);
+	});
+var $author$project$Main$popTheLastLetter = function (word) {
+	return A2($elm$core$String$dropRight, 1, word);
+};
+var $elm$core$String$toUpper = _String_toUpper;
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		var string = msg.a;
-		return _Utils_Tuple2(
-			_Utils_update(
-				model,
-				{screen: string}),
-			$elm$core$Platform$Cmd$none);
+		switch (msg.$) {
+			case 'KeyPressed':
+				var string = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							word: A2(
+								$author$project$Main$appendToWord,
+								model.word,
+								$elm$core$String$toUpper(string))
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'ResetWord':
+				var string = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{word: string}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							word: $author$project$Main$popTheLastLetter(model.word)
+						}),
+					$elm$core$Platform$Cmd$none);
+		}
 	});
-var $author$project$Main$Key = function (a) {
-	return {$: 'Key', a: a};
+var $author$project$Main$EraseLetter = {$: 'EraseLetter'};
+var $author$project$Main$KeyPressed = function (a) {
+	return {$: 'KeyPressed', a: a};
+};
+var $author$project$Main$ResetWord = function (a) {
+	return {$: 'ResetWord', a: a};
 };
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
+var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5182,6 +5225,7 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$view = function (model) {
@@ -5198,22 +5242,337 @@ var $author$project$Main$view = function (model) {
 						$elm$html$Html$text('Speak & Spell')
 					])),
 				A2(
+				$elm$html$Html$h4,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(model.instructions)
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('a'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('A')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('b'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('B')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('c'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('C')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('d'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('D')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('e'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('E')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('f'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('F')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('g'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('G')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('h'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('H')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('i'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('I')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('j'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('J')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('k'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('K')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('l'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('L')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('m'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('M')
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('n'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('N')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('o'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('O')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('p'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('P')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('q'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Q')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('r'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('R')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('s'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('S')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('t'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('T')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('u'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('U')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('v'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('V')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('w'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('W')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('x'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('X')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('y'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Y')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$KeyPressed('z'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Z')
+							]))
+					])),
+				A2(
+				$elm$html$Html$p,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(model.word)
+					])),
+				A2(
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
 						$elm$html$Html$Events$onClick(
-						$author$project$Main$Key('A'))
+						$author$project$Main$ResetWord(''))
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('A')
+						$elm$html$Html$text('Reset')
 					])),
 				A2(
-				$elm$html$Html$h3,
-				_List_Nil,
+				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(model.screen)
+						$elm$html$Html$Events$onClick($author$project$Main$EraseLetter)
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Delete')
 					]))
 			]));
 };
