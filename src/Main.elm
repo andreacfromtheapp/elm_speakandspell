@@ -4,18 +4,26 @@ import Browser
 import Css exposing (..)
 import Html exposing (..)
 import Html.Events exposing (onClick)
-import String exposing (..)
+import String exposing (append, dropRight, toUpper)
 
 
 type Msg
     = KeyPressed Letter
+    | EraseLetter Word
     | ResetWord Word
-    | EraseLetter
+    | SubmitWord Word
 
 
 type alias Model =
-    { instructions : String
+    { title : String
     , word : Word
+    }
+
+
+initialModel : Model
+initialModel =
+    { title = "Speak & Spell"
+    , word = ""
     }
 
 
@@ -27,28 +35,30 @@ type alias Word =
     String
 
 
-initialModel : Model
-initialModel =
-    { instructions = "Press Keys To Compose a Word"
-    , word = ""
-    }
+
+{-
+   appendToWord : Word -> Letter -> Word
+   appendToWord word letter =
+       append word letter
 
 
-appendToWord : Word -> Letter -> Word
-appendToWord word letter =
-    append word letter
-
-
-popTheLastLetter : Word -> Word
-popTheLastLetter word =
-    dropRight 1 word
+   popTheLastLetter : Word -> Word
+   popTheLastLetter word =
+       dropRight 1 word
+-}
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ text "Speak & Spell" ]
-        , h4 [] [ text model.instructions ]
+        [ h1 [] [ text model.title ]
+        , div []
+            [ button [] [ text "Module Select" ]
+            , button [] [ text "New Word" ]
+            , button [] [ text "Say It" ]
+            , button [] [ text "Spell" ]
+            ]
+        , br [] []
         , div []
             [ button [ onClick (KeyPressed "a") ] [ text "A" ]
             , button [ onClick (KeyPressed "b") ] [ text "B" ]
@@ -79,9 +89,14 @@ view model =
             , button [ onClick (KeyPressed "y") ] [ text "Y" ]
             , button [ onClick (KeyPressed "z") ] [ text "Z" ]
             ]
-        , p [] [ text model.word ]
-        , button [ onClick (ResetWord "") ] [ text "Reset" ]
-        , button [ onClick EraseLetter ] [ text "Delete" ]
+        , div []
+            [ p [] [ text model.word ]
+            ]
+        , div []
+            [ button [ onClick (ResetWord "") ] [ text "Replay" ]
+            , button [ onClick (EraseLetter model.word) ] [ text "Erase" ]
+            , button [ onClick (SubmitWord model.word) ] [ text "Enter" ]
+            ]
         ]
 
 
@@ -89,13 +104,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         KeyPressed string ->
-            ( { model | word = appendToWord model.word (toUpper string) }, Cmd.none )
+            ( { model | word = append model.word (toUpper string) }, Cmd.none )
 
         ResetWord string ->
             ( { model | word = string }, Cmd.none )
 
-        EraseLetter ->
-            ( { model | word = popTheLastLetter model.word }, Cmd.none )
+        EraseLetter string ->
+            ( { model | word = dropRight 1 string }, Cmd.none )
+
+        SubmitWord string ->
+            ( { model | word = string ++ " submitted!" }, Cmd.none )
 
 
 main : Program () Model Msg
