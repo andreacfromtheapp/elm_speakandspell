@@ -5144,16 +5144,12 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Main$initialModel = {instructions: 'Press Keys To Compose a Word', word: ''};
+var $author$project$Main$initialModel = {title: 'Speak & Spell', word: ''};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $elm$core$String$append = _String_append;
-var $author$project$Main$appendToWord = F2(
-	function (word, letter) {
-		return A2($elm$core$String$append, word, letter);
-	});
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
@@ -5161,9 +5157,6 @@ var $elm$core$String$dropRight = F2(
 	function (n, string) {
 		return (n < 1) ? string : A3($elm$core$String$slice, 0, -n, string);
 	});
-var $author$project$Main$popTheLastLetter = function (word) {
-	return A2($elm$core$String$dropRight, 1, word);
-};
 var $elm$core$String$toUpper = _String_toUpper;
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -5175,7 +5168,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							word: A2(
-								$author$project$Main$appendToWord,
+								$elm$core$String$append,
 								model.word,
 								$elm$core$String$toUpper(string))
 						}),
@@ -5187,27 +5180,40 @@ var $author$project$Main$update = F2(
 						model,
 						{word: string}),
 					$elm$core$Platform$Cmd$none);
-			default:
+			case 'EraseLetter':
+				var string = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							word: $author$project$Main$popTheLastLetter(model.word)
+							word: A2($elm$core$String$dropRight, 1, string)
 						}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				var string = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{word: string + ' submitted!'}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Main$EraseLetter = {$: 'EraseLetter'};
+var $author$project$Main$EraseLetter = function (a) {
+	return {$: 'EraseLetter', a: a};
+};
 var $author$project$Main$KeyPressed = function (a) {
 	return {$: 'KeyPressed', a: a};
 };
 var $author$project$Main$ResetWord = function (a) {
 	return {$: 'ResetWord', a: a};
 };
+var $author$project$Main$SubmitWord = function (a) {
+	return {$: 'SubmitWord', a: a};
+};
+var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5239,15 +5245,43 @@ var $author$project$Main$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Speak & Spell')
+						$elm$html$Html$text(model.title)
 					])),
 				A2(
-				$elm$html$Html$h4,
+				$elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(model.instructions)
+						A2(
+						$elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Module Select')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('New Word')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Say It')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Spell')
+							]))
 					])),
+				A2($elm$html$Html$br, _List_Nil, _List_Nil),
 				A2(
 				$elm$html$Html$div,
 				_List_Nil,
@@ -5547,32 +5581,56 @@ var $author$project$Main$view = function (model) {
 							]))
 					])),
 				A2(
-				$elm$html$Html$p,
+				$elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(model.word)
+						A2(
+						$elm$html$Html$p,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(model.word)
+							]))
 					])),
 				A2(
-				$elm$html$Html$button,
+				$elm$html$Html$div,
+				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick(
-						$author$project$Main$ResetWord(''))
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Reset')
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onClick($author$project$Main$EraseLetter)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Delete')
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$ResetWord(''))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Replay')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$EraseLetter(model.word))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Erase')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$SubmitWord(model.word))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Enter')
+							]))
 					]))
 			]));
 };
