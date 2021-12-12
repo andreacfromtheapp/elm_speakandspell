@@ -1,51 +1,76 @@
 module Main exposing (main)
 
 import Browser
-import Css exposing (..)
 import Html exposing (..)
 import Html.Events exposing (onClick)
+import Http
+import Json.Decode exposing (Decoder, list, string, succeed)
+import Json.Decode.Pipeline exposing (required)
 import String exposing (append, dropRight, toUpper)
 
 
+randomWordAPIRequest : String
+randomWordAPIRequest =
+    "https://random-words-api.vercel.app/word"
+
+
 type Msg
-    = KeyPressed Letter
-    | EraseLetter Word
-    | ResetWord Word
-    | SubmitWord Word
+    = KeyPressed String
+    | EraseLetter String
+    | ResetWord String
+    | GotWord (Result Http.Error (List NewWord))
+    | SubmitWord GuessWord
+
+
+type alias GuessWord =
+    String
+
+
+type alias NewWord =
+    { word : String
+    , definition : String
+    , pronunciation : String
+    }
 
 
 type alias Model =
     { title : String
-    , word : Word
+
+    -- , status : Status
+    , newWord : NewWord
+    , guessWord : GuessWord
     }
 
 
 initialModel : Model
 initialModel =
     { title = "Speak & Spell"
-    , word = ""
+
+    -- , status = Loading
+    , newWord =
+        { word = "word"
+        , definition = "definition"
+        , pronunciation = "pronunciation"
+        }
+    , guessWord = ""
     }
 
 
-type alias Letter =
-    String
 
-
-type alias Word =
-    String
-
-
-
-{-
-   appendToWord : Word -> Letter -> Word
-   appendToWord word letter =
-       append word letter
-
-
-   popTheLastLetter : Word -> Word
-   popTheLastLetter word =
-       dropRight 1 word
--}
+-- type Status
+--     = Loading
+--     | Loaded NewWord
+--     | Errored String
+-- view : Model -> Html Msg
+-- view model =
+--     div [] <|
+--         case model.status of
+--             Loaded word ->
+--                 viewLoaded word model
+--             Loading ->
+--                 [ text "Loading..." ]
+--             Errored errorMessage ->
+--                 [ text ("Error: " ++ errorMessage) ]
 
 
 view : Model -> Html Msg
@@ -53,12 +78,15 @@ view model =
     div []
         [ h1 [] [ text model.title ]
         , div []
-            [ button [] [ text "Module Select" ]
-            , button [] [ text "New Word" ]
-            , button [] [ text "Say It" ]
-            , button [] [ text "Spell" ]
+            -- screen
+            [ hr [] []
+            , p [] [ text ("your word is: " ++ model.newWord.word) ]
+            , p [] [ text ("definition: " ++ model.newWord.definition) ]
+            , p [] [ text ("pronunciation: " ++ model.newWord.pronunciation) ]
             ]
-        , br [] []
+
+        -- keyboard
+        , hr [] []
         , div []
             [ button [ onClick (KeyPressed "a") ] [ text "A" ]
             , button [ onClick (KeyPressed "b") ] [ text "B" ]
@@ -89,13 +117,22 @@ view model =
             , button [ onClick (KeyPressed "y") ] [ text "Y" ]
             , button [ onClick (KeyPressed "z") ] [ text "Z" ]
             ]
+
+        -- output
+        , hr [] []
+        , p [] [ text model.guessWord ]
+
+        -- commands
+        , hr [] []
         , div []
-            [ p [] [ text model.word ]
+            [ button [] [ text "New Word" ]
+            , button [] [ text "Say Word" ]
+            , button [] [ text "Spell Word" ]
             ]
         , div []
-            [ button [ onClick (ResetWord "") ] [ text "Replay" ]
-            , button [ onClick (EraseLetter model.word) ] [ text "Erase" ]
-            , button [ onClick (SubmitWord model.word) ] [ text "Enter" ]
+            [ button [ onClick (ResetWord "") ] [ text "Reset Word" ]
+            , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
+            , button [ onClick (SubmitWord model.guessWord) ] [ text "Submit Word" ]
             ]
         ]
 
@@ -104,22 +141,62 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         KeyPressed string ->
-            ( { model | word = append model.word (toUpper string) }, Cmd.none )
+            ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
 
         ResetWord string ->
-            ( { model | word = string }, Cmd.none )
+            ( { model | guessWord = string }, Cmd.none )
 
         EraseLetter string ->
-            ( { model | word = dropRight 1 string }, Cmd.none )
+            ( { model | guessWord = dropRight 1 string }, Cmd.none )
 
         SubmitWord string ->
-            ( { model | word = string ++ " submitted!" }, Cmd.none )
+            ( { model | guessWord = string ++ " submitted!" }, Cmd.none )
+
+        GotWord (Ok word) ->
+            ( { model | newWord = unwrapNewWordList word }, Cmd.none )
+
+        GotWord (Err _) ->
+            ( { model | title = "Server Error!" }, Cmd.none )
+
+
+nothingWord : NewWord
+nothingWord =
+    { word = "Nothing"
+    , definition = "Nothing"
+    , pronunciation = "Nothing"
+    }
+
+
+unwrapNewWordList : List NewWord -> NewWord
+unwrapNewWordList wordsList =
+    case List.head wordsList of
+        Just word ->
+            word
+
+        Nothing ->
+            nothingWord
+
+
+newWordDecoder : Decoder NewWord
+newWordDecoder =
+    succeed NewWord
+        |> required "word" string
+        |> required "definition" string
+        |> required "pronunciation" string
+
+
+initialCmd : Cmd Msg
+initialCmd =
+    Http.get
+        { url = randomWordAPIRequest
+        , expect = Http.expectJson GotWord (list newWordDecoder)
+        }
 
 
 main : Program () Model Msg
 main =
     Browser.element
-        { init = \_ -> ( initialModel, Cmd.none )
+        { init = \_ -> ( initialModel, initialCmd )
         , view = view
         , update = update
         , subscriptions = \_ -> Sub.none
