@@ -19,6 +19,7 @@ type Msg
     | EraseLetter String
     | ResetWord String
     | GetNewWord (Result Http.Error (List NewWord))
+    | FetchAnotherWord
     | SubmitWord GuessWord
 
 
@@ -123,7 +124,7 @@ view model =
         -- commands
         , hr [] []
         , div []
-            [ button [] [ text "New Word" ]
+            [ button [ onClick FetchAnotherWord ] [ text "New Word" ]
             , button [] [ text "Say Word" ]
             , button [] [ text "Spell Word" ]
             ]
@@ -155,6 +156,9 @@ update msg model =
 
         GetNewWord (Err _) ->
             ( { model | title = "Server Error!" }, Cmd.none )
+
+        FetchAnotherWord ->
+            ( model, initialCmd )
 
 
 nothingWord : NewWord
