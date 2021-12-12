@@ -18,7 +18,7 @@ type Msg
     = KeyPressed String
     | EraseLetter String
     | ResetWord String
-    | GotWord (Result Http.Error (List NewWord))
+    | GetNewWord (Result Http.Error (List NewWord))
     | SubmitWord GuessWord
 
 
@@ -34,9 +34,8 @@ type alias NewWord =
 
 
 type alias Model =
-    { title : String
-
-    -- , status : Status
+    { -- status : Status
+      title : String
     , newWord : NewWord
     , guessWord : GuessWord
     }
@@ -44,9 +43,8 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { title = "Speak & Spell"
-
-    -- , status = Loading
+    { -- status = Loading
+      title = "Speak & Spell"
     , newWord =
         { word = "word"
         , definition = "definition"
@@ -150,12 +148,12 @@ update msg model =
             ( { model | guessWord = dropRight 1 string }, Cmd.none )
 
         SubmitWord string ->
-            ( { model | guessWord = string ++ " submitted!" }, Cmd.none )
+            ( { model | guessWord = string ++ " this is not implemented yet!!!" }, Cmd.none )
 
-        GotWord (Ok word) ->
+        GetNewWord (Ok word) ->
             ( { model | newWord = unwrapNewWordList word }, Cmd.none )
 
-        GotWord (Err _) ->
+        GetNewWord (Err _) ->
             ( { model | title = "Server Error!" }, Cmd.none )
 
 
@@ -189,7 +187,7 @@ initialCmd : Cmd Msg
 initialCmd =
     Http.get
         { url = randomWordAPIRequest
-        , expect = Http.expectJson GotWord (list newWordDecoder)
+        , expect = Http.expectJson GetNewWord (list newWordDecoder)
         }
 
 
