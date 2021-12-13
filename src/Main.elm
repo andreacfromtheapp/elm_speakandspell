@@ -17,7 +17,7 @@ randomWordAPIRequest =
 type Msg
     = KeyPressed String
     | EraseLetter String
-    | ResetWord String
+    | ResetWord
     | GetNewWord (Result Http.Error (List NewWord))
     | FetchAnotherWord
     | SubmitWord GuessWord
@@ -129,7 +129,7 @@ view model =
             , button [] [ text "Spell Word" ]
             ]
         , div []
-            [ button [ onClick (ResetWord "") ] [ text "Reset Word" ]
+            [ button [ onClick ResetWord ] [ text "Reset Word" ]
             , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
             , button [ onClick (SubmitWord model.guessWord) ] [ text "Submit Word" ]
             ]
@@ -142,14 +142,14 @@ update msg model =
         KeyPressed string ->
             ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
 
-        ResetWord string ->
-            ( { model | guessWord = string }, Cmd.none )
+        ResetWord ->
+            ( { model | guessWord = "" }, Cmd.none )
 
-        EraseLetter string ->
-            ( { model | guessWord = dropRight 1 string }, Cmd.none )
+        EraseLetter word ->
+            ( { model | guessWord = dropRight 1 word }, Cmd.none )
 
-        SubmitWord string ->
-            ( { model | guessWord = string ++ " this is not implemented yet!!!" }, Cmd.none )
+        SubmitWord word ->
+            ( { model | guessWord = word ++ " this is not implemented yet!!!" }, Cmd.none )
 
         GetNewWord (Ok word) ->
             ( { model | newWord = unwrapNewWordList word }, Cmd.none )
