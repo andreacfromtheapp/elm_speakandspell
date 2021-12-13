@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
-import String exposing (append, dropRight, isEmpty, toUpper)
+import String exposing (append, dropRight, fromChar, isEmpty, toUpper)
 
 
 randomWordApiUrl : String
@@ -80,6 +80,24 @@ initialModel =
 --                 [ text ("Error: " ++ errorMessage) ]
 
 
+toLetter : Int -> Char
+toLetter index =
+    (('a' |> Char.toCode) + index)
+        |> Char.fromCode
+
+
+letterButtons : Int -> Int -> List (Html Msg)
+letterButtons firstLetter lastLetter =
+    List.range firstLetter lastLetter
+        |> List.map (toLetter >> fromChar)
+        |> List.map
+            (\letterText ->
+                button
+                    [ onClick (KeyPressed (toUpper letterText)) ]
+                    [ text (toUpper letterText) ]
+            )
+
+
 view : Model -> Html Msg
 view model =
     div []
@@ -94,36 +112,8 @@ view model =
 
         -- keyboard
         , hr [] []
-        , div []
-            [ button [ onClick (KeyPressed "a") ] [ text "A" ]
-            , button [ onClick (KeyPressed "b") ] [ text "B" ]
-            , button [ onClick (KeyPressed "c") ] [ text "C" ]
-            , button [ onClick (KeyPressed "d") ] [ text "D" ]
-            , button [ onClick (KeyPressed "e") ] [ text "E" ]
-            , button [ onClick (KeyPressed "f") ] [ text "F" ]
-            , button [ onClick (KeyPressed "g") ] [ text "G" ]
-            , button [ onClick (KeyPressed "h") ] [ text "H" ]
-            , button [ onClick (KeyPressed "i") ] [ text "I" ]
-            , button [ onClick (KeyPressed "j") ] [ text "J" ]
-            , button [ onClick (KeyPressed "k") ] [ text "K" ]
-            , button [ onClick (KeyPressed "l") ] [ text "L" ]
-            , button [ onClick (KeyPressed "m") ] [ text "M" ]
-            ]
-        , div []
-            [ button [ onClick (KeyPressed "n") ] [ text "N" ]
-            , button [ onClick (KeyPressed "o") ] [ text "O" ]
-            , button [ onClick (KeyPressed "p") ] [ text "P" ]
-            , button [ onClick (KeyPressed "q") ] [ text "Q" ]
-            , button [ onClick (KeyPressed "r") ] [ text "R" ]
-            , button [ onClick (KeyPressed "s") ] [ text "S" ]
-            , button [ onClick (KeyPressed "t") ] [ text "T" ]
-            , button [ onClick (KeyPressed "u") ] [ text "U" ]
-            , button [ onClick (KeyPressed "v") ] [ text "V" ]
-            , button [ onClick (KeyPressed "w") ] [ text "W" ]
-            , button [ onClick (KeyPressed "x") ] [ text "X" ]
-            , button [ onClick (KeyPressed "y") ] [ text "Y" ]
-            , button [ onClick (KeyPressed "z") ] [ text "Z" ]
-            ]
+        , div [] (letterButtons 0 12)
+        , div [] (letterButtons 13 25)
 
         -- output
         , hr [] []
@@ -161,7 +151,7 @@ update msg model =
             ( { model | guessWord = "", result = "" }, initialCmd )
 
         KeyPressed string ->
-            ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
+            ( { model | guessWord = append model.guessWord string }, Cmd.none )
 
         EraseLetter word ->
             ( { model | guessWord = dropRight 1 word }, Cmd.none )
@@ -183,14 +173,6 @@ checkResult guess check =
 
     else
         "Oh no :( " ++ guess ++ " isn't right."
-
-
-nothingWord : NewWord
-nothingWord =
-    { word = "Nothing"
-    , definition = "Nothing"
-    , pronunciation = "Nothing"
-    }
 
 
 unwrapNewWordList : List NewWord -> NewWord
