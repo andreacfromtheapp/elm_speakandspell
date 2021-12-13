@@ -9,8 +9,8 @@ import Json.Decode.Pipeline exposing (required)
 import String exposing (append, dropRight, isEmpty, toUpper)
 
 
-randomWordAPIRequest : String
-randomWordAPIRequest =
+randomWordApiUrl : String
+randomWordApiUrl =
     "https://random-words-api.vercel.app/word"
 
 
