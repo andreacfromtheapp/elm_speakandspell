@@ -176,10 +176,13 @@ update msg model =
 checkResult : GuessWord -> CheckWord -> String
 checkResult guess check =
     if guess == check then
-        "success"
+        "Congratulations :) " ++ guess ++ " is correct!"
+
+    else if String.isEmpty guess then
+        "Nope! An empty string isn't right.."
 
     else
-        "dada"
+        "Oh no :( " ++ guess ++ " isn't right."
 
 
 nothingWord : NewWord
