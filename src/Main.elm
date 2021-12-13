@@ -200,7 +200,10 @@ unwrapNewWordList wordsList =
             word
 
         Nothing ->
-            nothingWord
+            { word = "Nothing"
+            , definition = "Nothing"
+            , pronunciation = "Nothing"
+            }
 
 
 newWordDecoder : Decoder NewWord
