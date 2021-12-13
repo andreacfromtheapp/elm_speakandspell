@@ -16,7 +16,7 @@ randomWordAPIRequest =
 
 type Msg
     = GetNewWord (Result Http.Error (List NewWord))
-    | FetchAnotherWord
+    | GetAnotherWord
     | KeyPressed String
     | EraseLetter String
     | SubmitWord GuessWord CheckWord
@@ -133,7 +133,7 @@ view model =
         -- commands
         , hr [] []
         , div []
-            [ button [ onClick FetchAnotherWord ] [ text "New Word" ]
+            [ button [ onClick GetAnotherWord ] [ text "New Word" ]
             , button [] [ text "Say Word" ]
             , button [] [ text "Spell Word" ]
             ]
@@ -157,8 +157,8 @@ update msg model =
         GetNewWord (Err _) ->
             ( { model | title = "Server Error!" }, Cmd.none )
 
-        FetchAnotherWord ->
-            ( model, initialCmd )
+        GetAnotherWord ->
+            ( { model | guessWord = "", result = "" }, initialCmd )
 
         KeyPressed string ->
             ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
