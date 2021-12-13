@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
-import String exposing (append, dropRight, toUpper)
+import String
 
 
 randomWordAPIRequest : String
@@ -87,7 +87,7 @@ view model =
         , div []
             -- screen
             [ hr [] []
-            , p [] [ text ("your word is: " ++ toUpper model.newWord.word) ]
+            , p [] [ text ("your word is: " ++ String.toUpper model.newWord.word) ]
             , p [] [ text ("definition: " ++ model.newWord.definition) ]
             , p [] [ text ("pronunciation: " ++ model.newWord.pronunciation) ]
             ]
@@ -161,13 +161,13 @@ update msg model =
             ( { model | guessWord = "", result = "" }, initialCmd )
 
         KeyPressed string ->
-            ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
+            ( { model | guessWord = String.append model.guessWord (String.toUpper string) }, Cmd.none )
 
         EraseLetter word ->
-            ( { model | guessWord = dropRight 1 word }, Cmd.none )
+            ( { model | guessWord = String.dropRight 1 word }, Cmd.none )
 
         SubmitWord guess check ->
-            ( { model | result = checkResult guess (toUpper check) }, Cmd.none )
+            ( { model | result = checkResult guess (String.toUpper check) }, Cmd.none )
 
         ResetWord ->
             ( { model | guessWord = "", result = "" }, Cmd.none )
