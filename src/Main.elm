@@ -15,15 +15,19 @@ randomWordAPIRequest =
 
 
 type Msg
-    = KeyPressed String
-    | EraseLetter String
-    | ResetWord
-    | GetNewWord (Result Http.Error (List NewWord))
+    = GetNewWord (Result Http.Error (List NewWord))
     | FetchAnotherWord
-    | SubmitWord GuessWord
+    | KeyPressed String
+    | EraseLetter String
+    | SubmitWord GuessWord CheckWord
+    | ResetWord
 
 
 type alias GuessWord =
+    String
+
+
+type alias CheckWord =
     String
 
 
@@ -39,6 +43,8 @@ type alias Model =
       title : String
     , newWord : NewWord
     , guessWord : GuessWord
+    , checkWord : CheckWord
+    , result : String
     }
 
 
@@ -52,6 +58,8 @@ initialModel =
         , pronunciation = "pronunciation"
         }
     , guessWord = ""
+    , checkWord = ""
+    , result = ""
     }
 
 
@@ -120,6 +128,7 @@ view model =
         -- output
         , hr [] []
         , p [] [ text model.guessWord ]
+        , p [] [ text model.result ]
 
         -- commands
         , hr [] []
@@ -131,7 +140,8 @@ view model =
         , div []
             [ button [ onClick ResetWord ] [ text "Reset Word" ]
             , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
-            , button [ onClick (SubmitWord model.guessWord) ] [ text "Submit Word" ]
+            , button [ onClick (SubmitWord model.guessWord model.newWord.word) ] [ text "Submit Word" ]
+            , button [ onClick ResetWord ] [ text "Rerty Word" ]
             ]
         ]
 
@@ -139,18 +149,6 @@ view model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        KeyPressed string ->
-            ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
-
-        ResetWord ->
-            ( { model | guessWord = "" }, Cmd.none )
-
-        EraseLetter word ->
-            ( { model | guessWord = dropRight 1 word }, Cmd.none )
-
-        SubmitWord word ->
-            ( { model | guessWord = word ++ " this is not implemented yet!!!" }, Cmd.none )
-
         GetNewWord (Ok word) ->
             ( { model | newWord = unwrapNewWordList word }, Cmd.none )
 
@@ -159,6 +157,27 @@ update msg model =
 
         FetchAnotherWord ->
             ( model, initialCmd )
+
+        KeyPressed string ->
+            ( { model | guessWord = append model.guessWord (toUpper string) }, Cmd.none )
+
+        EraseLetter word ->
+            ( { model | guessWord = dropRight 1 word }, Cmd.none )
+
+        SubmitWord guess check ->
+            ( { model | result = checkResult guess (toUpper check) }, Cmd.none )
+
+        ResetWord ->
+            ( { model | guessWord = "", result = "" }, Cmd.none )
+
+
+checkResult : GuessWord -> CheckWord -> String
+checkResult guess check =
+    if guess == check then
+        "success"
+
+    else
+        "dada"
 
 
 nothingWord : NewWord
