@@ -217,7 +217,7 @@ newWordDecoder =
 initialCmd : Cmd Msg
 initialCmd =
     Http.get
-        { url = randomWordAPIRequest
+        { url = randomWordApiUrl
         , expect = Http.expectJson GetNewWord (list newWordDecoder)
         }
 
