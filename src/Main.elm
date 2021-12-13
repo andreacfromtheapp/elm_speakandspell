@@ -53,9 +53,9 @@ initialModel =
     { -- status = Loading
       title = "Speak & Spell"
     , newWord =
-        { word = "word"
-        , definition = "definition"
-        , pronunciation = "pronunciation"
+        { word = "init word"
+        , definition = "init definition"
+        , pronunciation = "init pronunciation"
         }
     , guessWord = ""
     , checkWord = ""
