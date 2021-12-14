@@ -179,7 +179,7 @@ checkResult guess check =
         "Congratulations :) " ++ guess ++ " is correct!"
 
     else if isEmpty guess then
-        "Nope! An empty string isn't right.."
+        "Nope! An empty string is never the answer..."
 
     else
         "Oh no :( " ++ guess ++ " isn't right."
