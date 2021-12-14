@@ -8,7 +8,7 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 
 ## TODO
 
-- stateful logic
+- improve stateful logic
 - user keyboard input (with a native Elm keyboard input package)
   - visual feedback for the onscreen keyboard
 - text to speech
