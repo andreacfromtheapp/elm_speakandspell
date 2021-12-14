@@ -1,12 +1,13 @@
 module Main exposing (main)
 
+import Array
 import Browser
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
-import String exposing (append, dropRight, fromChar, isEmpty, toUpper)
+import String exposing (append, dropRight, fromChar, isEmpty, toList, toUpper)
 
 
 randomWordApiUrl : String
@@ -80,21 +81,29 @@ initialModel =
 --                 [ text ("Error: " ++ errorMessage) ]
 
 
-toLetter : Int -> Char
-toLetter index =
-    (('a' |> Char.toCode) + index)
-        |> Char.fromCode
+alphabetList : List Char
+alphabetList =
+    toList "abcdefghijklmnopqrstuvwxyz"
 
 
-letterButtons : Int -> Int -> List (Html Msg)
-letterButtons firstLetter lastLetter =
-    List.range firstLetter lastLetter
-        |> List.map (toLetter >> fromChar)
+alphabetListToChar : Int -> List Char -> String
+alphabetListToChar letter alphabet =
+    case Array.get letter (Array.fromList alphabet) of
+        Just char ->
+            toUpper (fromChar char)
+
+        Nothing ->
+            "*"
+
+
+alphabetRow : Int -> Int -> List Char -> List (Html Msg)
+alphabetRow start end alphabet =
+    List.range start end
         |> List.map
-            (\letterText ->
+            (\index ->
                 button
-                    [ onClick (KeyPressed (toUpper letterText)) ]
-                    [ text (toUpper letterText) ]
+                    [ onClick (KeyPressed (alphabetListToChar index alphabet)) ]
+                    [ text (alphabetListToChar index alphabet) ]
             )
 
 
@@ -112,8 +121,8 @@ view model =
 
         -- keyboard
         , hr [] []
-        , div [] (letterButtons 0 12)
-        , div [] (letterButtons 13 25)
+        , div [] (alphabetRow 0 12 alphabetList)
+        , div [] (alphabetRow 13 25 alphabetList)
 
         -- output
         , hr [] []
