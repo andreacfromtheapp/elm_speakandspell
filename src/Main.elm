@@ -24,6 +24,12 @@ type Msg
     | ResetWord
 
 
+type Status
+    = Loading
+    | Loaded NewWord
+    | Errored String
+
+
 type alias GuessWord =
     String
 
@@ -62,12 +68,6 @@ initialModel =
     , checkWord = ""
     , result = ""
     }
-
-
-type Status
-    = Loading
-    | Loaded NewWord
-    | Errored String
 
 
 view : Model -> Html Msg
@@ -153,10 +153,15 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNewWord (Ok word) ->
-            ( { model | status = Loaded (unwrapNewWordList word) }, Cmd.none )
+            case word of
+                _ :: _ ->
+                    ( { model | status = Loaded (unwrapNewWordList word) }, Cmd.none )
 
-        GetNewWord (Err _) ->
-            ( { model | status = Errored "Server Error!" }, Cmd.none )
+                [] ->
+                    ( { model | status = Errored "No words found :(" }, Cmd.none )
+
+        GetNewWord (Err err) ->
+            ( { model | status = Errored (Debug.toString err) }, Cmd.none )
 
         GetAnotherWord ->
             ( { model | guessWord = "", result = "" }, initialCmd )
