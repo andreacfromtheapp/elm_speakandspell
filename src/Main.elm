@@ -91,7 +91,7 @@ viewLoaded : NewWord -> Model -> List (Html Msg)
 viewLoaded newWord model =
     [ div []
         [ h1 [] [ text model.title ]
-        , button [ onClick Help ] [ text "help" ]
+        , button [ onClick Help ] [ text "Help" ]
         , p [] [ text model.help ]
         ]
     , div []
@@ -104,13 +104,12 @@ viewLoaded newWord model =
         [ hr [] []
         , div [] (alphabetRow 65 77)
         , div [] (alphabetRow 78 90)
-        , br [] []
-        , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
         ]
     , div []
         [ hr [] []
         , p [] [ text model.guessWord ]
         , p [] [ text model.result ]
+        , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
         ]
     , div []
