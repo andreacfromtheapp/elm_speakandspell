@@ -22,6 +22,7 @@ type Msg
     | EraseLetter String
     | SubmitWord GuessWord CheckWord
     | ResetWord
+    | Help
 
 
 type Status
@@ -52,6 +53,7 @@ type alias Model =
     , guessWord : GuessWord
     , checkWord : CheckWord
     , result : String
+    , help : String
     }
 
 
@@ -67,6 +69,7 @@ initialModel =
     , guessWord = ""
     , checkWord = ""
     , result = ""
+    , help = ""
     }
 
 
@@ -86,7 +89,11 @@ view model =
 
 viewLoaded : NewWord -> Model -> List (Html Msg)
 viewLoaded newWord model =
-    [ h1 [] [ text model.title ]
+    [ div []
+        [ h1 [] [ text model.title ]
+        , button [ onClick Help ] [ text "help" ]
+        , p [] [ text model.help ]
+        ]
     , div []
         [ hr [] []
         , p [] [ text ("your word is: " ++ toUpper newWord.word) ]
@@ -156,6 +163,14 @@ update msg model =
 
         ResetWord ->
             ( { model | guessWord = "", result = "" }, Cmd.none )
+
+        Help ->
+            ( { model | help = showHelp }, Cmd.none )
+
+
+showHelp : String
+showHelp =
+    "dada"
 
 
 checkResult : GuessWord -> CheckWord -> String
