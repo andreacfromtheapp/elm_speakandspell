@@ -1,13 +1,13 @@
 module Main exposing (main)
 
-import Array
 import Browser
+import Char exposing (fromCode)
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
-import String exposing (append, dropRight, fromChar, isEmpty, toList, toUpper)
+import String exposing (append, dropRight, fromChar, isEmpty, toUpper)
 
 
 randomWordApiUrl : String
@@ -95,8 +95,8 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , div [] (alphabetRow 0 12 alphabetList)
-        , div [] (alphabetRow 13 25 alphabetList)
+        , div [] (alphabetRow 65 77)
+        , div [] (alphabetRow 78 90)
         , br [] []
         , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
         ]
@@ -117,29 +117,14 @@ viewLoaded newWord model =
     ]
 
 
-alphabetList : List Char
-alphabetList =
-    toList "abcdefghijklmnopqrstuvwxyz"
-
-
-alphabetListToChar : Int -> List Char -> String
-alphabetListToChar letter alphabet =
-    case Array.get letter (Array.fromList alphabet) of
-        Just char ->
-            fromChar char
-
-        Nothing ->
-            "*"
-
-
-alphabetRow : Int -> Int -> List Char -> List (Html Msg)
-alphabetRow start end alphabet =
+alphabetRow : Int -> Int -> List (Html Msg)
+alphabetRow start end =
     List.range start end
         |> List.map
             (\index ->
                 button
-                    [ onClick (KeyPressed (toUpper (alphabetListToChar index alphabet))) ]
-                    [ text (toUpper (alphabetListToChar index alphabet)) ]
+                    [ onClick (KeyPressed (fromChar (fromCode index))) ]
+                    [ text (fromChar (fromCode index)) ]
             )
 
 
