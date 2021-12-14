@@ -164,7 +164,7 @@ update msg model =
             ( { model | guessWord = append model.guessWord string }, Cmd.none )
 
         EraseLetter word ->
-            ( { model | guessWord = dropRight 1 word }, Cmd.none )
+            ( { model | guessWord = dropRight 1 word, result = "" }, Cmd.none )
 
         SubmitWord guess check ->
             ( { model | result = checkResult guess check }, Cmd.none )
