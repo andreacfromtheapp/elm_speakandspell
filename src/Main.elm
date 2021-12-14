@@ -40,8 +40,8 @@ type alias NewWord =
 
 
 type alias Model =
-    { -- status : Status
-      title : String
+    { status : Status
+    , title : String
     , newWord : NewWord
     , guessWord : GuessWord
     , checkWord : CheckWord
@@ -51,8 +51,8 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { -- status = Loading
-      title = "Speak & Spell"
+    { status = Loading
+    , title = "Speak & Spell"
     , newWord =
         { word = "init"
         , definition = ""
@@ -64,21 +64,63 @@ initialModel =
     }
 
 
+type Status
+    = Loading
+    | Loaded NewWord
+    | Errored String
 
--- type Status
---     = Loading
---     | Loaded NewWord
---     | Errored String
--- view : Model -> Html Msg
--- view model =
---     div [] <|
---         case model.status of
---             Loaded word ->
---                 viewLoaded word model
---             Loading ->
---                 [ text "Loading..." ]
---             Errored errorMessage ->
---                 [ text ("Error: " ++ errorMessage) ]
+
+view : Model -> Html Msg
+view model =
+    div [] <|
+        case model.status of
+            Loaded word ->
+                viewLoaded word model
+
+            Loading ->
+                [ text "Loading..." ]
+
+            Errored errorMessage ->
+                [ text ("Error: " ++ errorMessage) ]
+
+
+viewLoaded : NewWord -> Model -> List (Html Msg)
+viewLoaded newWord model =
+    [ h1 [] [ text model.title ]
+    , div []
+        -- screen
+        [ hr [] []
+        , p [] [ text ("your word is: " ++ toUpper newWord.word) ]
+        , p [] [ text ("definition: " ++ newWord.definition) ]
+        , p [] [ text ("pronunciation: " ++ newWord.pronunciation) ]
+        ]
+
+    -- keyboard
+    , hr [] []
+    , div [] (alphabetRow 0 12 alphabetList)
+    , div [] (alphabetRow 13 25 alphabetList)
+
+    -- output
+    , hr [] []
+    , p [] [ text model.guessWord ]
+    , p [] [ text model.result ]
+
+    -- commands
+    , hr [] []
+    , div []
+        [ button [ onClick GetAnotherWord ] [ text "New Word" ]
+        , button [ onClick ResetWord ] [ text "Retry Word" ]
+        , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit Word" ]
+        ]
+    , div []
+        [ button [] [ text "Say Word" ]
+        , button [] [ text "Spell Word" ]
+        ]
+    , div []
+        [ button [ onClick ResetWord ] [ text "Reset Input" ]
+        , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
+        ]
+    ]
 
 
 alphabetList : List Char
@@ -90,7 +132,7 @@ alphabetListToChar : Int -> List Char -> String
 alphabetListToChar letter alphabet =
     case Array.get letter (Array.fromList alphabet) of
         Just char ->
-            toUpper (fromChar char)
+            fromChar char
 
         Nothing ->
             "*"
@@ -102,59 +144,19 @@ alphabetRow start end alphabet =
         |> List.map
             (\index ->
                 button
-                    [ onClick (KeyPressed (alphabetListToChar index alphabet)) ]
-                    [ text (alphabetListToChar index alphabet) ]
+                    [ onClick (KeyPressed (toUpper (alphabetListToChar index alphabet))) ]
+                    [ text (toUpper (alphabetListToChar index alphabet)) ]
             )
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ h1 [] [ text model.title ]
-        , div []
-            -- screen
-            [ hr [] []
-            , p [] [ text ("your word is: " ++ toUpper model.newWord.word) ]
-            , p [] [ text ("definition: " ++ model.newWord.definition) ]
-            , p [] [ text ("pronunciation: " ++ model.newWord.pronunciation) ]
-            ]
-
-        -- keyboard
-        , hr [] []
-        , div [] (alphabetRow 0 12 alphabetList)
-        , div [] (alphabetRow 13 25 alphabetList)
-
-        -- output
-        , hr [] []
-        , p [] [ text model.guessWord ]
-        , p [] [ text model.result ]
-
-        -- commands
-        , hr [] []
-        , div []
-            [ button [ onClick GetAnotherWord ] [ text "New Word" ]
-            , button [] [ text "Say Word" ]
-            , button [] [ text "Spell Word" ]
-            ]
-        , div []
-            [ button [ onClick ResetWord ] [ text "Reset Word" ]
-            , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
-            ]
-        , div []
-            [ button [ onClick (SubmitWord model.guessWord model.newWord.word) ] [ text "Submit Word" ]
-            , button [ onClick ResetWord ] [ text "Rerty Word" ]
-            ]
-        ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNewWord (Ok word) ->
-            ( { model | newWord = unwrapNewWordList word }, Cmd.none )
+            ( { model | status = Loaded (unwrapNewWordList word) }, Cmd.none )
 
         GetNewWord (Err _) ->
-            ( { model | title = "Server Error!" }, Cmd.none )
+            ( { model | status = Errored "Server Error!" }, Cmd.none )
 
         GetAnotherWord ->
             ( { model | guessWord = "", result = "" }, initialCmd )
@@ -166,7 +168,7 @@ update msg model =
             ( { model | guessWord = dropRight 1 word }, Cmd.none )
 
         SubmitWord guess check ->
-            ( { model | result = checkResult guess (toUpper check) }, Cmd.none )
+            ( { model | result = checkResult guess check }, Cmd.none )
 
         ResetWord ->
             ( { model | guessWord = "", result = "" }, Cmd.none )
