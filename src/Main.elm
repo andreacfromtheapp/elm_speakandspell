@@ -88,37 +88,31 @@ viewLoaded : NewWord -> Model -> List (Html Msg)
 viewLoaded newWord model =
     [ h1 [] [ text model.title ]
     , div []
-        -- screen
         [ hr [] []
         , p [] [ text ("your word is: " ++ toUpper newWord.word) ]
         , p [] [ text ("definition: " ++ newWord.definition) ]
         , p [] [ text ("pronunciation: " ++ newWord.pronunciation) ]
         ]
-
-    -- keyboard
-    , hr [] []
-    , div [] (alphabetRow 0 12 alphabetList)
-    , div [] (alphabetRow 13 25 alphabetList)
-
-    -- output
-    , hr [] []
-    , p [] [ text model.guessWord ]
-    , p [] [ text model.result ]
-
-    -- commands
-    , hr [] []
     , div []
-        [ button [ onClick GetAnotherWord ] [ text "New Word" ]
-        , button [ onClick ResetWord ] [ text "Retry Word" ]
-        , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit Word" ]
-        ]
-    , div []
-        [ button [] [ text "Say Word" ]
-        , button [] [ text "Spell Word" ]
-        ]
-    , div []
-        [ button [ onClick ResetWord ] [ text "Reset Input" ]
+        [ hr [] []
+        , div [] (alphabetRow 0 12 alphabetList)
+        , div [] (alphabetRow 13 25 alphabetList)
+        , br [] []
         , button [ onClick (EraseLetter model.guessWord) ] [ text "Erase Letter" ]
+        ]
+    , div []
+        [ hr [] []
+        , p [] [ text model.guessWord ]
+        , p [] [ text model.result ]
+        , button [ onClick ResetWord ] [ text "Reset Output" ]
+        ]
+    , div []
+        [ hr [] []
+        , button [ onClick GetAnotherWord ] [ text "New Word" ]
+        , button [] [ text "Say It" ]
+        , button [] [ text "Spell It" ]
+        , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit It" ]
+        , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
 
