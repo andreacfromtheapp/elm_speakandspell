@@ -13,8 +13,9 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 - [ ] user input
   - [ ] use a native Elm keyboard input package
   - [ ] should I use a Maybe String for GuessWord?
-- [ ] text to speech
-  - [ ] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port/Sub
+- [x] text to speech
+  - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
+  - [x] no need for Sub (for now?)
 - [ ] UI/UX
   - [ ] look as close as possible to a Speak & Spell
     - [ ] CSS? elm-css? elm-ui?
