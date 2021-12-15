@@ -81,10 +81,19 @@ view model =
                 viewLoaded word model
 
             Loading ->
-                [ text "Loading..." ]
+                viewLoading
 
             Errored errorMessage ->
                 [ text ("Error: " ++ errorMessage) ]
+
+
+viewLoading : List (Html Msg)
+viewLoading =
+    [ blockquote []
+        [ p [] [ text "Methods are never the answer in Elm; over here it's all vanilla functions, all the time." ]
+        , footer [] [ text "— ", cite [] [ text "Richard Feldman" ] ]
+        ]
+    ]
 
 
 viewLoaded : NewWord -> Model -> List (Html Msg)
