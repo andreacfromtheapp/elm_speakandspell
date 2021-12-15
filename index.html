@@ -24,13 +24,13 @@
       msg.rate = 0.76;
 
       // We receive the word here and speak it
-      app.ports.speakWord.subscribe(function (message) {
+      app.ports.speak.subscribe(function (message) {
         msg.text = message;
         window.speechSynthesis.speak(msg);
       });
 
-      // We receive the word here and spell it
-      app.ports.spellWord.subscribe(function (message) {
+      // We receive the split word here and spell it
+      app.ports.spell.subscribe(function (message) {
         msg.text = message;
         window.speechSynthesis.speak(msg);
       });
