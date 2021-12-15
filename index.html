@@ -34,6 +34,12 @@
         msg.text = message;
         window.speechSynthesis.speak(msg);
       });
+
+      // add ports/subs for voice params change
+      // and let user decide via drop down menu
+      // speechSynthesis.getVoices().forEach(function (voice) {
+      //   console.log(voice.name, voice.default ? voice.default : "");
+      // });
     </script>
   </body>
 </body>
