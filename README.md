@@ -8,15 +8,19 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 
 ## TODO
 
-- improve stateful logic
-- user keyboard input (with a native Elm keyboard input package)
-  - visual feedback for the onscreen keyboard
-- text to speech
-  - webaudio? js port?
-- UI/UX
-  - look as close as possible to a Speak & Spell
-  - CSS animations; visual feedback.
-    - keys (vowels, consonants, commands to look different)
-    - keys (do something when users type)
-    - screen (flashy flashy)
-    - feedback after checking the spelling and all that
+- [x] stateful logic 🥳
+  - [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
+- [ ] user keyboard input
+  - [ ] use a native Elm keyboard input package
+- [ ] text to speech
+  - [ ] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port/Sub
+- [ ] UI/UX
+  - [ ] look as close as possible to a Speak & Spell
+    - [ ] CSS? elm-css? elm-ui?
+    - [ ] expandable screen "side loading tray"
+    - [ ] keys (vowels, consonants, commands, to look different)
+  - [ ] user feedback
+    - [ ] visual feedback with CSS (animations?) for keypresses
+    - [ ] auditory feedback with SpeechSynthesis for keypresses
+    - [ ] screen (flashy flashy)
+    - [ ] feedback after checking the spelling and all that
