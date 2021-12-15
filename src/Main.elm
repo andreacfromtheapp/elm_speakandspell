@@ -136,10 +136,10 @@ alphabetRow : Int -> Int -> List (Html Msg)
 alphabetRow start end =
     List.range start end
         |> List.map
-            (\index ->
+            (\asciiCode ->
                 button
-                    [ onClick (KeyPressed (fromChar (fromCode index))) ]
-                    [ text (fromChar (fromCode index)) ]
+                    [ onClick (KeyPressed (fromChar (fromCode asciiCode))) ]
+                    [ text (fromChar (fromCode asciiCode)) ]
             )
 
 
