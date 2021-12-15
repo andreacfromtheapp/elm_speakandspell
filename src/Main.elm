@@ -21,6 +21,8 @@ type Msg
     | KeyPressed String
     | EraseLetter String
     | SubmitWord GuessWord CheckWord
+      -- | Say GuessWord
+      -- | Spell GuessWord
     | ResetWord
     | Help
 
@@ -83,9 +85,6 @@ view model =
             Loaded word ->
                 viewLoaded word model
 
-            Loading ->
-                viewLoading
-
             Errored errorMessage ->
                 [ text ("Error: " ++ errorMessage) ]
 
@@ -93,7 +92,12 @@ view model =
 viewLoading : List (Html Msg)
 viewLoading =
     [ blockquote []
-        [ p [] [ text "Methods are never the answer in Elm; over here it's all vanilla functions, all the time." ]
+        [ p []
+            [ text """
+                Methods are never the answer in Elm;
+                over here it's all vanilla functions, all the time.
+                """
+            ]
         , footer [] [ text "— ", cite [] [ text "Richard Feldman" ] ]
         ]
     ]
@@ -169,11 +173,11 @@ update msg model =
         EraseLetter word ->
             ( { model | guessWord = dropRight 1 word, result = "" }, Cmd.none )
 
-        SubmitWord guess check ->
-            ( { model | result = checkResult guess check }, Cmd.none )
-
         ResetWord ->
             ( { model | guessWord = "", result = "" }, Cmd.none )
+
+        SubmitWord guess check ->
+            ( { model | result = checkResult guess check }, Cmd.none )
 
         Help ->
             ( { model | help = showHelp }, Cmd.none )
@@ -181,7 +185,7 @@ update msg model =
 
 showHelp : String
 showHelp =
-    "dada"
+    "HALP!"
 
 
 checkResult : GuessWord -> CheckWord -> String
