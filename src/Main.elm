@@ -77,6 +77,9 @@ view : Model -> Html Msg
 view model =
     div [] <|
         case model.status of
+            Loading ->
+                viewLoading
+
             Loaded word ->
                 viewLoaded word model
 
