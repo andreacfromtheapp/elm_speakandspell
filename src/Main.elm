@@ -25,7 +25,7 @@ type Msg
     | KeyPressed String
     | EraseLetter String
     | SubmitWord GuessWord CheckWord
-    | Say GuessWord
+    | Speak GuessWord
     | Spell GuessWord
     | ResetWord
     | Help
@@ -155,7 +155,7 @@ viewLoaded newWord model =
     , div []
         [ hr [] []
         , button [ onClick GetAnotherWord ] [ text "New Word" ]
-        , button [ onClick (Say (toLower model.guessWord)) ] [ text "Say It" ]
+        , button [ onClick (Speak (toLower model.guessWord)) ] [ text "Speak It" ]
         , button [ onClick (Spell (toLower model.guessWord)) ] [ text "Spell It" ]
         , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit It" ]
         , button [ onClick ResetWord ] [ text "Retry" ]
@@ -199,7 +199,7 @@ update msg model =
         Help ->
             ( { model | help = showHelp }, Cmd.none )
 
-        Say word ->
+        Speak word ->
             ( model, speak word )
 
         Spell word ->
