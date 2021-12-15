@@ -13,7 +13,7 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 - [ ] user input
   - [ ] use a native Elm keyboard input package
   - [ ] should I use a Maybe String for GuessWord?
-- [x] text to speech
+- [x] text to speech 🤖🤖🤖
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
   - [x] no need for Sub (for now?)
 - [ ] UI/UX
