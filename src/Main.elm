@@ -185,7 +185,7 @@ update msg model =
             ( { model | guessWord = "", result = "" }, initialCmd )
 
         KeyPressed string ->
-            ( { model | guessWord = append model.guessWord string }, Cmd.none )
+            ( { model | guessWord = append model.guessWord string }, speak string )
 
         EraseLetter word ->
             ( { model | guessWord = dropRight 1 word, result = "" }, Cmd.none )
@@ -194,16 +194,16 @@ update msg model =
             ( { model | guessWord = "", result = "" }, Cmd.none )
 
         SubmitWord guess check ->
-            ( { model | result = checkResult guess check }, Cmd.none )
+            ( { model | result = checkResult guess check }, speak (checkResult guess check) )
 
         Help ->
             ( { model | help = showHelp }, Cmd.none )
 
         Say word ->
-            ( model, speakWord word )
+            ( model, speak word )
 
         Spell word ->
-            ( model, spellWord (splitToSpell word) )
+            ( model, spell (splitToSpell word) )
 
 
 splitToSpell : String -> List String
@@ -222,10 +222,10 @@ checkResult guess check =
         "Nope! An empty string is never the answer..."
 
     else if guess == check then
-        "Congratulations :) " ++ toUpper guess ++ " is correct!"
+        "Congratulations! " ++ guess ++ " is correct!"
 
     else
-        "Oh no :( " ++ toUpper guess ++ " isn't right."
+        "Oh no... " ++ guess ++ " isn't right.."
 
 
 unwrapNewWordList : List NewWord -> NewWord
@@ -275,7 +275,7 @@ newWordDecoder =
 -- PORTS
 
 
-port speakWord : String -> Cmd msg
+port speak : String -> Cmd msg
 
 
-port spellWord : List String -> Cmd msg
+port spell : List String -> Cmd msg
