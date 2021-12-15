@@ -7,7 +7,7 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
-import String exposing (append, dropRight, fromChar, isEmpty, toUpper)
+import String exposing (append, dropRight, fromChar, isEmpty, toLower, toUpper)
 
 
 randomWordApiUrl : String
@@ -106,7 +106,12 @@ viewLoading =
                 over here it's all vanilla functions, all the time.
                 """
             ]
-        , footer [] [ text "— ", cite [] [ text "Richard Feldman" ] ]
+        , footer []
+            [ text "— "
+            , cite []
+                [ text "excerpt of Elm in Action, by Richard Feldman"
+                ]
+            ]
         ]
     ]
 
@@ -152,7 +157,7 @@ viewLoaded newWord model =
         , button [ onClick GetAnotherWord ] [ text "New Word" ]
         , button [ onClick (Say model.guessWord) ] [ text "Say It" ]
         , button [ onClick (Spell model.guessWord) ] [ text "Spell It" ]
-        , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit It" ]
+        , button [ onClick (SubmitWord (toLower model.guessWord) (toLower newWord.word)) ] [ text "Submit It" ]
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
@@ -217,10 +222,10 @@ checkResult guess check =
         "Nope! An empty string is never the answer..."
 
     else if guess == check then
-        "Congratulations :) " ++ guess ++ " is correct!"
+        "Congratulations :) " ++ toUpper guess ++ " is correct!"
 
     else
-        "Oh no :( " ++ guess ++ " isn't right."
+        "Oh no :( " ++ toUpper guess ++ " isn't right."
 
 
 unwrapNewWordList : List NewWord -> NewWord
