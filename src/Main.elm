@@ -174,11 +174,11 @@ showHelp =
 
 checkResult : GuessWord -> CheckWord -> String
 checkResult guess check =
-    if guess == check then
-        "Congratulations :) " ++ guess ++ " is correct!"
-
-    else if isEmpty guess then
+    if isEmpty guess then
         "Nope! An empty string is never the answer..."
+
+    else if guess == check then
+        "Congratulations :) " ++ guess ++ " is correct!"
 
     else
         "Oh no :( " ++ guess ++ " isn't right."
