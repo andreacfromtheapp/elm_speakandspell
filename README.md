@@ -16,15 +16,16 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 - [x] text to speech 🤖🤖🤖
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
   - [x] no need for Sub (for now?)
+- [ ] UI/UX
   - [ ] let user choose voice params/gender via drop down menu
   - [ ] let user disable voice:
     - [ ] completely
     - [ ] for some features (e.g: just keys, just feedback)
-- [ ] UI/UX
   - [ ] look as close as possible to a Speak & Spell
     - [ ] CSS? elm-css? elm-ui?
     - [ ] expandable screen "side loading tray"
     - [ ] keys (vowels, consonants, commands, to look different)
+    - [ ] use random emojis in lieu of logo
   - [ ] user feedback
     - [ ] visual feedback with CSS (animations?) for keypresses
     - [x] auditory feedback with SpeechSynthesis for keypresses
