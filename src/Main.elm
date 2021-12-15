@@ -15,6 +15,10 @@ randomWordApiUrl =
     "https://random-words-api.vercel.app/word"
 
 
+
+-- MODEL
+
+
 type Msg
     = GetNewWord (Result Http.Error (List NewWord))
     | GetAnotherWord
@@ -76,13 +80,7 @@ initialModel =
 
 
 
--- PORTS
-
-
-port speakWord : String -> Cmd msg
-
-
-port spellWord : String -> Cmd msg
+-- VIEW
 
 
 view : Model -> Html Msg
@@ -111,6 +109,17 @@ viewLoading =
         , footer [] [ text "— ", cite [] [ text "Richard Feldman" ] ]
         ]
     ]
+
+
+alphabetRow : Int -> Int -> List (Html Msg)
+alphabetRow start end =
+    List.range start end
+        |> List.map
+            (\asciiCode ->
+                button
+                    [ onClick (KeyPressed (fromChar (fromCode asciiCode))) ]
+                    [ text (fromChar (fromCode asciiCode)) ]
+            )
 
 
 viewLoaded : NewWord -> Model -> List (Html Msg)
@@ -149,15 +158,8 @@ viewLoaded newWord model =
     ]
 
 
-alphabetRow : Int -> Int -> List (Html Msg)
-alphabetRow start end =
-    List.range start end
-        |> List.map
-            (\asciiCode ->
-                button
-                    [ onClick (KeyPressed (fromChar (fromCode asciiCode))) ]
-                    [ text (fromChar (fromCode asciiCode)) ]
-            )
+
+-- UPDATE
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -196,7 +198,12 @@ update msg model =
             ( model, speakWord word )
 
         Spell word ->
-            ( model, spellWord word )
+            ( model, spellWord (splitToSpell word) )
+
+
+splitToSpell : String -> List String
+splitToSpell word =
+    String.split "" word
 
 
 showHelp : String
@@ -229,22 +236,6 @@ unwrapNewWordList wordsList =
             }
 
 
-newWordDecoder : Decoder NewWord
-newWordDecoder =
-    succeed NewWord
-        |> required "word" string
-        |> required "definition" string
-        |> required "pronunciation" string
-
-
-initialCmd : Cmd Msg
-initialCmd =
-    Http.get
-        { url = randomWordApiUrl
-        , expect = Http.expectJson GetNewWord (list newWordDecoder)
-        }
-
-
 
 -- MAIN
 
@@ -257,3 +248,29 @@ main =
         , update = update
         , subscriptions = \_ -> Sub.none
         }
+
+
+initialCmd : Cmd Msg
+initialCmd =
+    Http.get
+        { url = randomWordApiUrl
+        , expect = Http.expectJson GetNewWord (list newWordDecoder)
+        }
+
+
+newWordDecoder : Decoder NewWord
+newWordDecoder =
+    succeed NewWord
+        |> required "word" string
+        |> required "definition" string
+        |> required "pronunciation" string
+
+
+
+-- PORTS
+
+
+port speakWord : String -> Cmd msg
+
+
+port spellWord : List String -> Cmd msg
