@@ -13,7 +13,27 @@
   <body>
     <main></main>
     <script>
-      let app = Elm.Main.init({ node: document.querySelector("main") });
+      // Start the Elm application.
+      let app = Elm.Main.init({
+        node: document.querySelector("main"),
+      });
+
+      // Instantiate Speech Synth API
+      let msg = new SpeechSynthesisUtterance();
+      // Set voice rate (talking speed)
+      msg.rate = 0.76;
+
+      // We receive the word here and speak it
+      app.ports.speakWord.subscribe(function (message) {
+        msg.text = message;
+        window.speechSynthesis.speak(msg);
+      });
+
+      // We receive the word here and spell it
+      app.ports.spellWord.subscribe(function (message) {
+        msg.text = message;
+        window.speechSynthesis.speak(msg);
+      });
     </script>
   </body>
 </body>

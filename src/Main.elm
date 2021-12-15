@@ -1,4 +1,4 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 import Browser
 import Char exposing (fromCode)
@@ -21,8 +21,8 @@ type Msg
     | KeyPressed String
     | EraseLetter String
     | SubmitWord GuessWord CheckWord
-      -- | Say GuessWord
-      -- | Spell GuessWord
+    | Say GuessWord
+    | Spell GuessWord
     | ResetWord
     | Help
 
@@ -73,6 +73,16 @@ initialModel =
     , result = ""
     , help = ""
     }
+
+
+
+-- PORTS
+
+
+port speakWord : String -> Cmd msg
+
+
+port spellWord : String -> Cmd msg
 
 
 view : Model -> Html Msg
@@ -131,8 +141,8 @@ viewLoaded newWord model =
     , div []
         [ hr [] []
         , button [ onClick GetAnotherWord ] [ text "New Word" ]
-        , button [] [ text "Say It" ]
-        , button [] [ text "Spell It" ]
+        , button [ onClick (Say model.guessWord) ] [ text "Say It" ]
+        , button [ onClick (Spell model.guessWord) ] [ text "Spell It" ]
         , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit It" ]
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
@@ -182,6 +192,12 @@ update msg model =
         Help ->
             ( { model | help = showHelp }, Cmd.none )
 
+        Say word ->
+            ( model, speakWord word )
+
+        Spell word ->
+            ( model, spellWord word )
+
 
 showHelp : String
 showHelp =
@@ -227,6 +243,10 @@ initialCmd =
         { url = randomWordApiUrl
         , expect = Http.expectJson GetNewWord (list newWordDecoder)
         }
+
+
+
+-- MAIN
 
 
 main : Program () Model Msg
