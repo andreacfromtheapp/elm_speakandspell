@@ -17,7 +17,7 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
   - [x] no need for Sub (for now?)
 - [ ] UI/UX
-  - [ ] let user choose voice params/gender via drop down menu
+  - [x] ~~let user choose voice params/gender via drop down menu~~ **WON'T DO: voice change messes up everything.**
   - [ ] let user disable voice:
     - [ ] completely
     - [ ] for some features (e.g: just keys, just feedback)
