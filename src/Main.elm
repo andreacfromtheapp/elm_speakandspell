@@ -246,7 +246,7 @@ helpText helpStr =
             [ p []
                 [ text """
                     When I was younger, so much younger than today,
-                    I never needed anybody's help in any way
+                    I never needed anybody's help in any way.
                     """
                 ]
             , p []
