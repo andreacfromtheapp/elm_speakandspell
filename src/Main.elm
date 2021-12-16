@@ -7,6 +7,7 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
+import List
 import String exposing (append, dropRight, fromChar, isEmpty, toLower, toUpper)
 
 
@@ -52,7 +53,7 @@ type alias CheckWord =
 
 
 type alias Help =
-    String
+    List (Html Msg)
 
 
 type alias NewWord =
@@ -86,7 +87,7 @@ initialModel =
     , guessWord = ""
     , checkWord = ""
     , result = ""
-    , help = ""
+    , help = []
     , sound = On
     }
 
@@ -146,7 +147,7 @@ viewLoaded newWord model =
         , button [ onClick (ToggleHelpText model.help) ] [ text "Help" ]
         , button [ onClick (SetSound On) ] [ text "Sound On" ]
         , button [ onClick (SetSound Off) ] [ text "Sound Off" ]
-        , p [] [ text model.help ]
+        , div [] <| model.help
         ]
     , div []
         [ hr [] []
@@ -238,13 +239,29 @@ splitToSpell word =
     String.split "" word
 
 
-helpText : String -> String
+helpText : Help -> List (Html Msg)
 helpText helpStr =
-    if isEmpty helpStr then
-        """Help"""
+    if List.isEmpty helpStr then
+        [ blockquote []
+            [ p []
+                [ text """
+                    When I was younger, so much younger than today
+                    I never needed anybody's help in any way
+                    But now these days are gone, and I'm not so self assured
+                    Now I find I've changed my mind, I've opened up the doors
+                    """
+                ]
+            , footer []
+                [ text "— "
+                , cite []
+                    [ text """John Belusci"""
+                    ]
+                ]
+            ]
+        ]
 
     else
-        ""
+        []
 
 
 checkResult : GuessWord -> CheckWord -> String
