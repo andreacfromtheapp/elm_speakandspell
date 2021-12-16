@@ -17,16 +17,16 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
   - [x] no need for Sub (for now?)
 - [ ] UI/UX
-  - [ ] let user disable voice:
-    - [ ] completely (type Maybe Sound)
-    - [ ] for some features: (parametrized function)
+  - [ ] let user disable voice
+    - [ ] completely
+    - [ ] for some features
       - [ ] just keys
       - [ ] ust feedback
   - [ ] loosely look like Speak & Spell
     - [ ] still make it look like a toy looking device
     - [ ] CSS? elm-css? elm-ui?
     - [ ] keys (vowels, consonants, commands, to look different)
-    - [ ] use random emojis in lieu of logo
+    - [ ] use random emojis in lieu of the logo
   - [ ] user feedback
     - [x] feedback for keypresses
       - [x] auditory feedback with SpeechSynthesis
@@ -35,14 +35,15 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
       - [x] written feedback
       - [x] auditory feedback
   - [ ] screen
-    - [ ] flashy flashy? 8bit looking?
+    - [ ] flashy flashy? low-fi/8bit looking?
     - [ ] expandable "side loading screen" for the description?
     - [ ] expandable "bottom loading screen" for the help section
-    - [ ] fixed "field for the user output and commands
+    - [ ] fixed "field" for the user output
+    - [ ] separate help and commands section
 
 ## Maybe
 
-Provded that the necessary polyglot API (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
+Provided that the necessary polyglot API (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
 
 - [ ] let user choose:
   - [ ] a different dictionary language
