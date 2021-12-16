@@ -20,7 +20,6 @@
 
       // Instantiate Speech Synth API
       let msg = new SpeechSynthesisUtterance();
-      // Set voice rate (talking speed)
 
       // We receive the word here and speak it
       app.ports.speak.subscribe(function (message) {
@@ -33,12 +32,6 @@
         msg.text = message;
         window.speechSynthesis.speak(msg);
       });
-
-      // add ports/subs for voice params change
-      // and let user decide via drop down menu
-      // speechSynthesis.getVoices().forEach(function (voice) {
-      //   console.log(voice.name, voice.default ? voice.default : "");
-      // });
     </script>
   </body>
 </body>
