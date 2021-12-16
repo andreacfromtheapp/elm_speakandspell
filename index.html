@@ -21,7 +21,7 @@
       // Instantiate Speech Synth API
       let msg = new SpeechSynthesisUtterance();
 
-      // We receive the word here and speak it
+      // We receive the whole word here and speak it
       app.ports.speak.subscribe(function (message) {
         msg.text = message;
         window.speechSynthesis.speak(msg);
