@@ -25,10 +25,10 @@
       // Set volume to 0 or 1 (SetSound On | Off)
       app.ports.sound.subscribe(function (message) {
         synth.cancel();
-        if (message == false) {
-          synth.pause();
-        } else {
+        if (message == true) {
           synth.resume();
+        } else {
+          synth.pause();
         }
       });
 
