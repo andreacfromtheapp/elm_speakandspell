@@ -28,7 +28,7 @@ type Msg
     | SubmitWord GuessWord CheckWord
     | Speak GuessWord
     | Spell GuessWord
-    | Help
+    | ToggleHelpText Help
     | SetSound Sound
 
 
@@ -51,6 +51,10 @@ type alias CheckWord =
     String
 
 
+type alias Help =
+    String
+
+
 type alias NewWord =
     { word : String
     , definition : String
@@ -65,7 +69,7 @@ type alias Model =
     , guessWord : GuessWord
     , checkWord : CheckWord
     , result : String
-    , help : String
+    , help : Help
     , sound : Sound
     }
 
@@ -139,7 +143,7 @@ viewLoaded : NewWord -> Model -> List (Html Msg)
 viewLoaded newWord model =
     [ div []
         [ h1 [] [ text model.title ]
-        , button [ onClick Help ] [ text "Help" ]
+        , button [ onClick (ToggleHelpText model.help) ] [ text "Help" ]
         , button [ onClick (SetSound On) ] [ text "Sound On" ]
         , button [ onClick (SetSound Off) ] [ text "Sound Off" ]
         , p [] [ text model.help ]
@@ -206,8 +210,8 @@ update msg model =
         SubmitWord guess check ->
             ( { model | result = checkResult guess check }, speak (checkResult guess check) )
 
-        Help ->
-            ( { model | help = showHelp }, Cmd.none )
+        ToggleHelpText param ->
+            ( { model | help = helpText param }, Cmd.none )
 
         SetSound param ->
             ( model, setSound param )
@@ -234,9 +238,13 @@ splitToSpell word =
     String.split "" word
 
 
-showHelp : String
-showHelp =
-    "HALP!"
+helpText : String -> String
+helpText helpStr =
+    if isEmpty helpStr then
+        """Help"""
+
+    else
+        ""
 
 
 checkResult : GuessWord -> CheckWord -> String
