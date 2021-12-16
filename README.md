@@ -15,13 +15,13 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
   - [ ] should I use a Maybe String for GuessWord?
 - [x] text to speech 🤖🤖🤖
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
+  - [x] let user disable voice
+    - [x] completely
+    - [x] ~~for some features~~ **(this ain't possible 'cause API only pauses/resumes global voice state)**
+      - [x] ~~just keys~~
+      - [x] ~~just feedback~~
   - [x] no need for Sub (for now?)
 - [ ] UI/UX
-  - [ ] let user disable voice
-    - [ ] completely
-    - [ ] for some features
-      - [ ] just keys
-      - [ ] ust feedback
   - [ ] loosely look like Speak & Spell
     - [ ] still make it look like a toy looking device
     - [ ] CSS? elm-css? elm-ui?

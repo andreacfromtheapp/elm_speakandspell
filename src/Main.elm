@@ -38,9 +38,8 @@ type Status
     | Errored String
 
 
-type Sound
-    = On
-    | Off
+type alias Sound =
+    Bool
 
 
 type alias GuessWord =
@@ -66,7 +65,7 @@ type alias Model =
     , checkWord : CheckWord
     , result : String
     , help : String
-    , sound : Sound
+    , sound : Bool
     }
 
 
@@ -83,7 +82,7 @@ initialModel =
     , checkWord = ""
     , result = ""
     , help = ""
-    , sound = On
+    , sound = True
     }
 
 
@@ -140,8 +139,8 @@ viewLoaded newWord model =
     [ div []
         [ h1 [] [ text model.title ]
         , button [ onClick Help ] [ text "Help" ]
-        , button [ onClick (SetSound On) ] [ text "Sound On" ]
-        , button [ onClick (SetSound Off) ] [ text "Sound Off" ]
+        , button [ onClick (SetSound True) ] [ text "Sound On" ]
+        , button [ onClick (SetSound False) ] [ text "Sound Off" ]
         , p [] [ text model.help ]
         ]
     , div []
@@ -210,7 +209,7 @@ update msg model =
             ( { model | help = showHelp }, Cmd.none )
 
         SetSound param ->
-            ( { model | sound = param }, Cmd.none )
+            ( model, sound param )
 
         Speak word ->
             ( model, speak word )
@@ -292,3 +291,6 @@ port speak : String -> Cmd msg
 
 
 port spell : List String -> Cmd msg
+
+
+port sound : Bool -> Cmd msg

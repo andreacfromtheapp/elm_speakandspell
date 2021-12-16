@@ -19,18 +19,29 @@
       });
 
       // Instantiate Speech Synth API
-      let msg = new SpeechSynthesisUtterance();
+      let synth = window.speechSynthesis;
+      let utter = new SpeechSynthesisUtterance();
+
+      // Set volume to 0 or 1 (SetSound On | Off)
+      app.ports.sound.subscribe(function (message) {
+        synth.cancel();
+        if (message == false) {
+          synth.pause();
+        } else {
+          synth.resume();
+        }
+      });
 
       // We receive the whole word here and speak it
       app.ports.speak.subscribe(function (message) {
-        msg.text = message;
-        window.speechSynthesis.speak(msg);
+        utter.text = message;
+        synth.speak(utter);
       });
 
       // We receive the split word here and spell it
       app.ports.spell.subscribe(function (message) {
-        msg.text = message;
-        window.speechSynthesis.speak(msg);
+        utter.text = message;
+        synth.speak(utter);
       });
     </script>
   </body>
