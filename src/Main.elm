@@ -1,12 +1,14 @@
 port module Main exposing (main)
 
 import Browser
+import Browser.Events exposing (onKeyDown)
 import Char exposing (fromCode)
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode exposing (Decoder, list, string, succeed)
+import Json.Decode exposing (Decoder, string, succeed)
 import Json.Decode.Pipeline exposing (required)
+import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 import List
 import String exposing (append, dropRight, fromChar, isEmpty, toLower, toUpper)
 
@@ -23,7 +25,8 @@ randomWordApiUrl =
 type Msg
     = GetNewWord (Result Http.Error (List NewWord))
     | GetAnotherWord
-    | KeyPressed String
+    | KeyPressed KeyboardEvent
+    | KeyClicked String
     | EraseLetter String
     | ResetWord
     | SubmitWord GuessWord CheckWord
@@ -31,6 +34,7 @@ type Msg
     | Spell GuessWord
     | ToggleHelpText Help
     | SetSound Sound
+    | NoOp
 
 
 type Status
@@ -72,6 +76,7 @@ type alias Model =
     , result : String
     , help : Help
     , sound : Sound
+    , lastEvent : Maybe KeyboardEvent
     }
 
 
@@ -89,6 +94,7 @@ initialModel =
     , result = ""
     , help = []
     , sound = On
+    , lastEvent = Nothing
     }
 
 
@@ -135,9 +141,30 @@ alphabetRow start end =
         |> List.map
             (\asciiCode ->
                 button
-                    [ onClick (KeyPressed (fromChar (fromCode asciiCode))) ]
+                    [ onClick (KeyClicked (fromChar (fromCode asciiCode))) ]
                     [ text (fromChar (fromCode asciiCode)) ]
             )
+
+
+viewEvent : Maybe KeyboardEvent -> Html Msg
+viewEvent maybeEvent =
+    case maybeEvent of
+        Just event ->
+            pre []
+                [ text <|
+                    String.join "\n"
+                        [ "altKey: " ++ Debug.toString event.altKey
+                        , "ctrlKey: " ++ Debug.toString event.ctrlKey
+                        , "key: " ++ Debug.toString event.key
+                        , "keyCode: " ++ Debug.toString event.keyCode
+                        , "metaKey: " ++ Debug.toString event.metaKey
+                        , "repeat: " ++ Debug.toString event.repeat
+                        , "shiftKey: " ++ Debug.toString event.shiftKey
+                        ]
+                ]
+
+        Nothing ->
+            p [] [ text "No event yet" ]
 
 
 viewLoaded : NewWord -> Model -> List (Html Msg)
@@ -148,6 +175,7 @@ viewLoaded newWord model =
         , button [ onClick (SetSound On) ] [ text "Sound On" ]
         , button [ onClick (SetSound Off) ] [ text "Sound Off" ]
         , div [] <| model.help
+        , viewEvent model.lastEvent
         ]
     , div []
         [ hr [] []
@@ -199,8 +227,14 @@ update msg model =
         GetAnotherWord ->
             ( { model | guessWord = "", result = "" }, initialCmd )
 
-        KeyPressed string ->
+        KeyClicked string ->
             ( { model | guessWord = append model.guessWord string }, speak string )
+
+        KeyPressed event ->
+            ( { model | lastEvent = Just event }, Cmd.none )
+
+        NoOp ->
+            ( model, Cmd.none )
 
         EraseLetter word ->
             ( { model | guessWord = dropRight 1 word, result = "" }, Cmd.none )
@@ -303,7 +337,7 @@ main =
         { init = \_ -> ( initialModel, initialCmd )
         , view = view
         , update = update
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         }
 
 
@@ -311,7 +345,7 @@ initialCmd : Cmd Msg
 initialCmd =
     Http.get
         { url = randomWordApiUrl
-        , expect = Http.expectJson GetNewWord (list newWordDecoder)
+        , expect = Http.expectJson GetNewWord (Json.Decode.list newWordDecoder)
         }
 
 
@@ -321,6 +355,11 @@ newWordDecoder =
         |> required "word" string
         |> required "definition" string
         |> required "pronunciation" string
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    onKeyDown (Json.Decode.map KeyPressed decodeKeyboardEvent)
 
 
 
