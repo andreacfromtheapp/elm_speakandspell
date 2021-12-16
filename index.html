@@ -21,7 +21,6 @@
       // Instantiate Speech Synth API
       let msg = new SpeechSynthesisUtterance();
       // Set voice rate (talking speed)
-      msg.rate = 0.76;
 
       // We receive the word here and speak it
       app.ports.speak.subscribe(function (message) {
