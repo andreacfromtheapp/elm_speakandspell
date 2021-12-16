@@ -9,9 +9,16 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 ## TODO
 
 - [x] stateful logic 🥳
-- [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
+  - [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
 - [x] [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) avoided (type Sound) 🥳 🥳 🥳
-- [ ] use a native Elm keyboard input package
+- [ ] keyboard
+  - [x] display keyboard onscreen
+  - [x] onclick events to output
+  - [x] onclick events to sound
+  - [x] use an [package](https://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest/) to get user typing
+  - [ ] get keycode from typing into onscreen keyboard
+    - [ ] filter is alpha
+    - [ ] send keycode *to do stuff* (see "user feedback" section)
 - [ ] should I use a Maybe String for GuessWord?
 - [x] text to speech 🤖🤖🤖
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
