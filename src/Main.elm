@@ -28,7 +28,6 @@ type Msg
     | SubmitWord GuessWord CheckWord
     | Speak GuessWord
     | Spell GuessWord
-    | ResetWord
     | Help
     | SetSound Sound
 
