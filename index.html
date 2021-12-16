@@ -22,7 +22,7 @@
       let synth = window.speechSynthesis;
       let utter = new SpeechSynthesisUtterance();
 
-      // Set volume to 0 or 1 (SetSound On | Off)
+      // Pause/Resume Speech Synth API (SetSound On | Off)
       app.ports.sound.subscribe(function (message) {
         synth.cancel();
         if (message == true) {
