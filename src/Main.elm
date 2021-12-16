@@ -245,16 +245,20 @@ helpText helpStr =
         [ blockquote []
             [ p []
                 [ text """
-                    When I was younger, so much younger than today
+                    When I was younger, so much younger than today,
                     I never needed anybody's help in any way
-                    But now these days are gone, and I'm not so self assured
-                    Now I find I've changed my mind, I've opened up the doors
+                    """
+                ]
+            , p []
+                [ text """
+                    But now these days are gone, and I'm not so self assured.
+                    Now I find I've changed my mind, I've opened up the doors.
                     """
                 ]
             , footer []
                 [ text "— "
                 , cite []
-                    [ text """John Belusci"""
+                    [ text """John Belushi"""
                     ]
                 ]
             ]
