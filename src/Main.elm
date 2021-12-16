@@ -24,6 +24,7 @@ type Msg
     | GetAnotherWord
     | KeyPressed String
     | EraseLetter String
+    | ResetWord
     | SubmitWord GuessWord CheckWord
     | Speak GuessWord
     | Spell GuessWord
