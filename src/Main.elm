@@ -117,7 +117,7 @@ viewLoading =
         , footer []
             [ text "— "
             , cite []
-                [ text "excerpt of Elm in Action, by Richard Feldman"
+                [ text """excerpt from "Elm in Action", by Richard Feldman"""
                 ]
             ]
         ]
