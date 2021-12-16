@@ -10,6 +10,7 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
 
 - [x] stateful logic 🥳
   - [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
+- [x] [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) avoided (type Sound) 🥳 🥳 🥳
 - [ ] user input
   - [ ] use a native Elm keyboard input package
   - [ ] should I use a Maybe String for GuessWord?
@@ -38,6 +39,7 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
     - [ ] flashy flashy? low-fi/8bit looking?
     - [ ] expandable "side loading screen" for the description?
     - [ ] expandable "bottom loading screen" for the help section
+      - [x] help toggle "solution" in Elm (temporary. exercise more than anything)
     - [ ] fixed "field" for the user output
     - [ ] separate help and commands section
 
