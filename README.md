@@ -17,17 +17,33 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
   - [x] no need for Sub (for now?)
 - [ ] UI/UX
-  - [x] ~~let user choose voice params/gender via drop down menu~~ **WON'T DO: voice change messes up everything.**
   - [ ] let user disable voice:
-    - [ ] completely
-    - [ ] for some features (e.g: just keys, just feedback)
-  - [ ] look as close as possible to a Speak & Spell
+    - [ ] completely (type Maybe Sound)
+    - [ ] for some features: (parametrized function)
+      - [ ] just keys
+      - [ ] ust feedback
+  - [ ] loosely look like Speak & Spell
+    - [ ] still make it look like a toy looking device
     - [ ] CSS? elm-css? elm-ui?
-    - [ ] expandable screen "side loading tray"
     - [ ] keys (vowels, consonants, commands, to look different)
     - [ ] use random emojis in lieu of logo
   - [ ] user feedback
-    - [ ] visual feedback with CSS (animations?) for keypresses
-    - [x] auditory feedback with SpeechSynthesis for keypresses
-    - [ ] screen (flashy flashy)
-    - [x] feedback after checking the spelling and all that
+    - [x] feedback for keypresses
+      - [x] auditory feedback with SpeechSynthesis
+      - [ ] visual feedback with CSS (animations?)
+    - [x] feedback upon checking the spelling
+      - [x] written feedback
+      - [x] auditory feedback
+  - [ ] screen
+    - [ ] flashy flashy? 8bit looking?
+    - [ ] expandable "side loading screen" for the description?
+    - [ ] expandable "bottom loading screen" for the help section
+    - [ ] fixed "field for the user output and commands
+
+## Maybe
+
+Provded that the necessary polyglot API (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
+
+- [ ] let user choose:
+  - [ ] a different dictionary language
+  - [ ] the voice language, params, and gender
