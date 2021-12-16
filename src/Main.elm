@@ -210,8 +210,8 @@ update msg model =
         SubmitWord guess check ->
             ( { model | result = checkResult guess check }, speak (checkResult guess check) )
 
-        ToggleHelpText param ->
-            ( { model | help = helpText param }, Cmd.none )
+        ToggleHelpText helpStr ->
+            ( { model | help = helpText helpStr }, Cmd.none )
 
         SetSound param ->
             ( model, setSound param )
