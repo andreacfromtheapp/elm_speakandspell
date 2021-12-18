@@ -4,7 +4,7 @@ This is my very first attempt at an [Elm](https://elm-lang.org/) app. I'm doing 
 
 I picked Speak & Spell because it's a good mix of UI/UX and as a starting point to learn and practice. It will never be more than a simple exercise. A good "*first project*" kinda thing.
 
-The code certainly stinks, and I’m well aware that it needs more love and that there is room for improvement. Which is the entire point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.
+The code certainly stinks, and I’m well aware that it needs more love and that there is room for improvement. That's the point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.
 
 ## Try it
 
