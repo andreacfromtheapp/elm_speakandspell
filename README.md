@@ -21,7 +21,9 @@ Want to try Speak & Spell and don't want to install Elm? Paste [Main.elm](./src/
   - [x] onclick events to sound
   - [x] use an [package](https://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest/) to get user typing
   - [x] get keycode from typing into onscreen keyboard
-  - [x] filter out KeyPressed to only allow alphabet characters
+  - [x] filter out KeyPressed to
+    - [x] if alt/meta/shift/ctrl/repeat is pressed do nothing
+    - [x] only allow alphabet characters
     - [x] only allow single character
     - [x] send keycode to screen (see "user feedback" section)
     - [x] send keycode to speak (see "user feedback" section)
