@@ -1,10 +1,16 @@
 # Speak & Spell in Elm
 
-This is my very first attempt at an [Elm](https://elm-lang.org/) app. I'm doing this to test my understanding of Elm and my learning with ["Elm in Action"](https://www.manning.com/books/elm-in-action). I didn’t finish the book yet and I could not resist trying to apply what I've learned so far.
+This is my very first attempt at an [Elm](https://elm-lang.org/) app. I'm doing this to test my understanding of Elm and of my learning with ["Elm in Action"](https://www.manning.com/books/elm-in-action). I haven't finish the book yet and I could not resist trying to apply what I've learned so far.
 
 I picked Speak & Spell because it's a good mix of UI/UX and as a starting point to learn and practice. It will never be more than a simple exercise. A good "*first project*" kinda thing.
 
-The code certainly stinks, a lot. I’m well aware that it needs more love and that I could improve it. Which is the point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.
+The code certainly stinks, and I’m well aware that it needs more love and that there is room for improvement. Which is the entire point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.
+
+## Try it
+
+Want to try Speak & Spell and don't want to install Elm? Paste [Main.elm](./src/Main.elm) and [index.html](./index.html) on [Ellie App](https://ellie-app.com/new) to run it in your browser.
+
+----
 
 ## TODO
 
@@ -12,13 +18,18 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
   - [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
 - [x] [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) avoided (type Sound) 🥳 🥳 🥳
 - [ ] should I use a Maybe String for GuessWord?
+- [ ] should I use a Maybe KeyboardEvent?
+- [ ] refactor ```update``` and use helper functions
 - [ ] keyboard
   - [x] display keyboard onscreen
   - [x] onclick events to output
   - [x] onclick events to sound
   - [x] use an [package](https://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest/) to get user typing
   - [x] get keycode from typing into onscreen keyboard
-    - [ ] improve filter on "isAlpha" to match letters only
+    - [ ] filter out KeyPressed and
+      - [ ] only allow alphabet
+      - [ ] only allow command keys
+      - [ ] do a case of on output and trigger something different/specific
     - [x] send keycode to screen (see "user feedback" section)
     - [x] send keycode to speak (see "user feedback" section)
 - [x] text to speech 🤖🤖🤖
@@ -50,9 +61,9 @@ The code certainly stinks, a lot. I’m well aware that it needs more love and t
     - [ ] fixed "field" for the user output
     - [ ] separate help and commands section
 
-## Maybe
+### Maybe
 
-Provided that the necessary polyglot API (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
+Provided that a *polyglot API* (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
 
 - [ ] let user choose:
   - [ ] a different dictionary language
