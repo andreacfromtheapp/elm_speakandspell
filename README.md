@@ -8,7 +8,7 @@ The code certainly stinks, and I’m well aware that it needs more love and that
 
 ## Try it
 
-Want to try Speak & Spell and don't want to install Elm? Paste [Main.elm](./src/Main.elm) and [index.html](./index.html) on [Ellie App](https://ellie-app.com/new) to run it in your browser.
+Don't want to install Elm? Paste [Main.elm](./src/Main.elm) and [index.html](./index.html) on [Ellie App](https://ellie-app.com/new) to run it in your browser.
 
 ## TODO
 
