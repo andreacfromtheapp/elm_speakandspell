@@ -245,19 +245,36 @@ splitToSpell word =
     String.split "" word
 
 
-filterEventString : String -> String
-filterEventString string =
-    if String.length string == 1 then
-        string
+isCharAlpha : String -> List Char
+isCharAlpha string =
+    String.toList string
+        |> List.map
+            (\letter ->
+                if Char.isAlpha letter then
+                    Char.toUpper letter
 
-    else
-        ""
+                else
+                    ' '
+            )
+
+
+isSingleChar : List Char -> String
+isSingleChar charList =
+    String.fromList charList
+        |> (\char ->
+                if String.length char == 1 then
+                    char
+
+                else
+                    ""
+           )
 
 
 kbdEventToString : KeyboardEvent -> String
 kbdEventToString event =
     Debug.toString event.keyCode
-        |> filterEventString
+        |> isCharAlpha
+        |> isSingleChar
 
 
 helpText : Help -> List (Html Msg)

@@ -10,26 +10,19 @@ The code certainly stinks, and I’m well aware that it needs more love and that
 
 Want to try Speak & Spell and don't want to install Elm? Paste [Main.elm](./src/Main.elm) and [index.html](./index.html) on [Ellie App](https://ellie-app.com/new) to run it in your browser.
 
-----
-
 ## TODO
 
 - [x] stateful logic 🥳
   - [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
 - [x] [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) avoided (type Sound) 🥳 🥳 🥳
-- [ ] should I use a Maybe String for GuessWord?
-- [ ] should I use a Maybe KeyboardEvent?
-- [ ] refactor ```update``` and use helper functions
-- [ ] keyboard
+- [x] keyboard
   - [x] display keyboard onscreen
   - [x] onclick events to output
   - [x] onclick events to sound
   - [x] use an [package](https://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest/) to get user typing
   - [x] get keycode from typing into onscreen keyboard
-    - [ ] filter out KeyPressed and
-      - [ ] only allow alphabet
-      - [ ] only allow command keys
-      - [ ] do a case of on output and trigger something different/specific
+  - [x] filter out KeyPressed to only allow alphabet characters
+    - [x] only allow single character
     - [x] send keycode to screen (see "user feedback" section)
     - [x] send keycode to speak (see "user feedback" section)
 - [x] text to speech 🤖🤖🤖
@@ -40,6 +33,10 @@ Want to try Speak & Spell and don't want to install Elm? Paste [Main.elm](./src/
       - [x] ~~just keys~~
       - [x] ~~just feedback~~
   - [x] no need for Sub (for now?)
+- [ ] improvements
+  - [ ] should I use a Maybe String for GuessWord?
+  - [ ] should I use a Maybe KeyboardEvent?
+  - [ ] refactor ```update``` and use helper functions?
 - [ ] UI/UX
   - [ ] loosely look like Speak & Spell
     - [ ] still make it look like a toy looking device
