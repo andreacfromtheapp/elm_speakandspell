@@ -35,10 +35,6 @@ Don't want to install Elm? Paste [Main.elm](./src/Main.elm) and [index.html](./i
       - [x] ~~just keys~~
       - [x] ~~just feedback~~
   - [x] no need for Sub (for now?)
-- [ ] improvements
-  - [ ] should I use a Maybe String for GuessWord?
-  - [ ] should I use a Maybe KeyboardEvent?
-  - [ ] refactor ```update``` and use helper functions?
 - [ ] UI/UX
   - [ ] loosely look like Speak & Spell
     - [ ] still make it look like a toy looking device
@@ -59,6 +55,13 @@ Don't want to install Elm? Paste [Main.elm](./src/Main.elm) and [index.html](./i
       - [x] help toggle "solution" in Elm (temporary. exercise more than anything)
     - [ ] fixed "field" for the user output
     - [ ] separate help and commands section
+
+### Improvements
+
+- [ ] should I use a Maybe String for GuessWord?
+- [ ] should I use a Maybe KeyboardEvent?
+- [ ] should I implement commands keyboard shortcuts?
+- [ ] refactor ```update``` and use helper functions?
 
 ### Maybe
 
