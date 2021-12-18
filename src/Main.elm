@@ -272,7 +272,13 @@ isSingleChar charList =
 
 kbdEventToString : KeyboardEvent -> String
 kbdEventToString event =
-    if event.altKey || event.ctrlKey || event.metaKey || event.repeat || event.shiftKey then
+    if
+        event.altKey
+            || event.ctrlKey
+            || event.metaKey
+            || event.repeat
+            || event.shiftKey
+    then
         ""
 
     else
