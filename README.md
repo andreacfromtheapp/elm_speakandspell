@@ -25,7 +25,7 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
     - [x] if alt/meta/shift/ctrl/repeat is pressed do nothing
     - [x] allow alphabet characters
     - [x] allow commands keyboard shortcuts
-      - [ ] **FIX**: Sumbit It keyboard shortcut doesn't use the right word
+      - [x] ~~**FIX**: Sumbit It keyboard shortcut doesn't use the right word~~
     - [x] send keycode to screen (see "user feedback" section)
     - [x] send keycode to speak (see "user feedback" section)
 - [x] text to speech 🤖🤖🤖
