@@ -245,6 +245,52 @@ splitToSpell word =
     String.split "" word
 
 
+kbdEventToCommand : KeyboardEvent -> Model -> ( Model, Cmd Msg )
+kbdEventToCommand event model =
+    if Debug.toString event.keyCode == "One" then
+        ( { model | help = helpText model.help }, Cmd.none )
+
+    else if Debug.toString event.keyCode == "Two" then
+        ( model, setSound On )
+
+    else if Debug.toString event.keyCode == "Three" then
+        ( model, setSound Off )
+
+    else if Debug.toString event.keyCode == "Backspace" then
+        ( { model | guessWord = dropRight 1 model.guessWord, result = "" }, Cmd.none )
+
+    else if Debug.toString event.keyCode == "Enter" then
+        ( { model | checkWord = toUpper model.newWord.word, result = checkResult model.guessWord model.checkWord }
+        , speak (checkResult model.guessWord model.checkWord)
+        )
+
+    else if Debug.toString event.keyCode == "Five" || Debug.toString event.keyCode == "Six" then
+        ( { model | guessWord = "", result = "" }, Cmd.none )
+
+    else if Debug.toString event.keyCode == "Eight" then
+        ( model, speak (String.toLower model.guessWord) )
+
+    else if Debug.toString event.keyCode == "Nine" then
+        ( model, spell (splitToSpell (String.toLower model.guessWord)) )
+
+    else if Debug.toString event.keyCode == "Zero" then
+        ( { model | guessWord = "", result = "" }, initialCmd )
+
+    else if
+        event.altKey
+            || event.ctrlKey
+            || event.metaKey
+            || event.repeat
+            || event.shiftKey
+    then
+        ( model, Cmd.none )
+
+    else
+        ( { model | guessWord = append model.guessWord (kbdEventToString event) }
+        , speak (kbdEventToString event)
+        )
+
+
 isCharAlpha : String -> List Char
 isCharAlpha string =
     String.toList string
