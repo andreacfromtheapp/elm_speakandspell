@@ -395,8 +395,14 @@ helpText helpStr =
         [ div []
             [ p []
                 [ text """
+                   This personal exercise is a limited reproduction of the original game.
+                    Match the word on the screen, and use the commands. That's it.
+                   """
+                ]
+            , p []
+                [ text """
                     You can use your mouse and press the buttons on screen.
-                    You can use your keyboard, normally, or mapped to these keys:
+                    You can type on your keyboard, and use the mapped keys:
                     """
                 ]
             , ul []
