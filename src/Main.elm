@@ -326,24 +326,24 @@ kbdEventToString event =
 helpText : Help -> List (Html Msg)
 helpText helpStr =
     if List.isEmpty helpStr then
-        [ blockquote []
+        [ div []
             [ p []
                 [ text """
-                    When I was younger, so much younger than today,
-                    I never needed anybody's help in any way.
+                    You can use your mouse and press the buttons on screen.
+                    You can use your keyboard, normally, or mapped to these keys:
                     """
                 ]
-            , p []
-                [ text """
-                    But now these days are gone, and I'm not so self assured.
-                    Now I find I've changed my mind, I've opened up the doors.
-                    """
-                ]
-            , footer []
-                [ text "— "
-                , cite []
-                    [ text """John Belushi"""
-                    ]
+            , ul []
+                [ li [] [ text "1 --> Help" ]
+                , li [] [ text "2 --> Sound On" ]
+                , li [] [ text "3 --> Sound Off" ]
+                , li [] [ text "Backspace --> Erase Letter" ]
+                , li [] [ text "5 --> Reset Ouput" ]
+                , li [] [ text "0 --> New Word" ]
+                , li [] [ text "8 --> Speak It" ]
+                , li [] [ text "9 --> Spell It" ]
+                , li [] [ text "Enter --> Submit It" ]
+                , li [] [ text "6 --> Retry" ]
                 ]
             ]
         ]
