@@ -199,14 +199,14 @@ update msg model =
         GetNewWord (Err err) ->
             ( { model | status = Errored (Debug.toString err) }, Cmd.none )
 
-        GetAnotherWord ->
-            ( { model | guessWord = "", result = "" }, initialCmd )
+        KeyPressed event ->
+            kbdEventToCommand event model
 
         KeyClicked string ->
             ( { model | guessWord = append model.guessWord string }, speak string )
 
-        KeyPressed event ->
-            ( { model | guessWord = append model.guessWord (kbdEventToString event) }, speak (kbdEventToString event) )
+        GetAnotherWord ->
+            ( { model | guessWord = "", result = "" }, initialCmd )
 
         EraseLetter word ->
             ( { model | guessWord = dropRight 1 word, result = "" }, Cmd.none )
