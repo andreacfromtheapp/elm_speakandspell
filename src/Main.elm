@@ -185,36 +185,6 @@ viewLoaded newWord model =
 -- UPDATE
 
 
-appendToGuessWord : Model -> String -> Model
-appendToGuessWord model string =
-    { model | guessWord = append model.guessWord string }
-
-
-fnGetAnotherWord : Model -> Model
-fnGetAnotherWord model =
-    { model | guessWord = "", result = "" }
-
-
-fnEraseLetter : Model -> Model
-fnEraseLetter model =
-    { model | guessWord = dropRight 1 model.guessWord, result = "" }
-
-
-fnResetWord : Model -> Model
-fnResetWord model =
-    { model | guessWord = "", result = "" }
-
-
-fnSubmitWord : Model -> Model
-fnSubmitWord model =
-    { model | result = checkResult model.guessWord model.checkWord }
-
-
-fnToggleHelpText : Model -> Model
-fnToggleHelpText model =
-    { model | help = helpText model.help }
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -320,6 +290,36 @@ kbdEventToCommand event model =
                 ( appendToGuessWord model (kbdEventToString event)
                 , speak (kbdEventToString event)
                 )
+
+
+appendToGuessWord : Model -> String -> Model
+appendToGuessWord model string =
+    { model | guessWord = append model.guessWord string }
+
+
+fnGetAnotherWord : Model -> Model
+fnGetAnotherWord model =
+    { model | guessWord = "", result = "" }
+
+
+fnEraseLetter : Model -> Model
+fnEraseLetter model =
+    { model | guessWord = dropRight 1 model.guessWord, result = "" }
+
+
+fnResetWord : Model -> Model
+fnResetWord model =
+    { model | guessWord = "", result = "" }
+
+
+fnSubmitWord : Model -> Model
+fnSubmitWord model =
+    { model | result = checkResult model.guessWord model.checkWord }
+
+
+fnToggleHelpText : Model -> Model
+fnToggleHelpText model =
+    { model | help = helpText model.help }
 
 
 setSound : Sound -> Cmd Msg
