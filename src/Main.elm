@@ -87,7 +87,7 @@ initialModel =
         , definition = ""
         , pronunciation = ""
         }
-    , guessWord = "start typing to match the word on the screen. press 1 for help"
+    , guessWord = ""
     , checkWord = ""
     , result = ""
     , help = []
