@@ -272,19 +272,9 @@ isSingleChar charList =
 
 kbdEventToString : KeyboardEvent -> String
 kbdEventToString event =
-    if
-        event.altKey
-            || event.ctrlKey
-            || event.metaKey
-            || event.repeat
-            || event.shiftKey
-    then
-        ""
-
-    else
-        Debug.toString event.keyCode
-            |> isCharAlpha
-            |> isSingleChar
+    Debug.toString event.keyCode
+        |> isCharAlpha
+        |> isSingleChar
 
 
 helpText : Help -> List (Html Msg)
