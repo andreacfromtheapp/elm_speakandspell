@@ -251,21 +251,6 @@ update msg model =
             ( model, spell (splitToSpell word) )
 
 
-setSound : Sound -> Cmd Msg
-setSound switch =
-    case switch of
-        On ->
-            sound True
-
-        Off ->
-            sound False
-
-
-splitToSpell : String -> List String
-splitToSpell word =
-    String.split "" word
-
-
 kbdEventToCommand : KeyboardEvent -> Model -> ( Model, Cmd Msg )
 kbdEventToCommand event model =
     if
@@ -327,6 +312,21 @@ kbdEventToCommand event model =
                 )
 
 
+setSound : Sound -> Cmd Msg
+setSound switch =
+    case switch of
+        On ->
+            sound True
+
+        Off ->
+            sound False
+
+
+splitToSpell : String -> List String
+splitToSpell word =
+    String.split "" word
+
+
 isCharAlpha : String -> List Char
 isCharAlpha string =
     String.toList string
@@ -359,6 +359,36 @@ kbdEventToString event =
         |> isSingleChar
 
 
+unwrapNewWordList : List NewWord -> NewWord
+unwrapNewWordList wordsList =
+    case List.head wordsList of
+        Just word ->
+            word
+
+        Nothing ->
+            { word = "Nothing"
+            , definition = "Nothing"
+            , pronunciation = "Nothing"
+            }
+
+
+setCheckWord : NewWord -> CheckWord
+setCheckWord wordsList =
+    String.toUpper wordsList.word
+
+
+checkResult : GuessWord -> CheckWord -> String
+checkResult guess check =
+    if isEmpty guess then
+        "Nope! An empty string is never the answer..."
+
+    else if guess == check then
+        "Congratulations! " ++ guess ++ " is correct!"
+
+    else
+        "Oh no... " ++ guess ++ " isn't right.."
+
+
 helpText : Help -> List (Html Msg)
 helpText helpStr =
     if List.isEmpty helpStr then
@@ -386,36 +416,6 @@ helpText helpStr =
 
     else
         []
-
-
-setCheckWord : NewWord -> CheckWord
-setCheckWord wordsList =
-    String.toUpper wordsList.word
-
-
-checkResult : GuessWord -> CheckWord -> String
-checkResult guess check =
-    if isEmpty guess then
-        "Nope! An empty string is never the answer..."
-
-    else if guess == check then
-        "Congratulations! " ++ guess ++ " is correct!"
-
-    else
-        "Oh no... " ++ guess ++ " isn't right.."
-
-
-unwrapNewWordList : List NewWord -> NewWord
-unwrapNewWordList wordsList =
-    case List.head wordsList of
-        Just word ->
-            word
-
-        Nothing ->
-            { word = "Nothing"
-            , definition = "Nothing"
-            , pronunciation = "Nothing"
-            }
 
 
 
