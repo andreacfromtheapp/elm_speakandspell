@@ -23,8 +23,9 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] get keycode from typing into onscreen keyboard
   - [x] filter out KeyPressed to
     - [x] if alt/meta/shift/ctrl/repeat is pressed do nothing
-    - [x] only allow alphabet characters
-    - [x] only allow single character
+    - [x] allow alphabet characters
+    - [x] allow commands keyboard shortcuts
+      - [ ] **FIX**: Sumbit It keyboard shortcut doesn't use the right word
     - [x] send keycode to screen (see "user feedback" section)
     - [x] send keycode to speak (see "user feedback" section)
 - [x] text to speech 🤖🤖🤖
@@ -62,8 +63,9 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 - [ ] should I use a Maybe String for GuessWord?
 - [ ] should I use a Maybe KeyboardEvent?
-- [ ] should I implement commands keyboard shortcuts?
 - [ ] refactor ```update``` and use helper functions?
+- [ ] refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?
+  - [ ] would this be too convoluted? Elm likes clarity over complexity
 
 ### Maybe
 
