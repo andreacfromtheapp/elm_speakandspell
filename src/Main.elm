@@ -175,7 +175,7 @@ viewLoaded newWord model =
         , button [ onClick GetAnotherWord ] [ text "New Word" ]
         , button [ onClick (Speak (toLower model.guessWord)) ] [ text "Speak It" ]
         , button [ onClick (Spell (toLower model.guessWord)) ] [ text "Spell It" ]
-        , button [ onClick (SubmitWord model.guessWord (toUpper newWord.word)) ] [ text "Submit It" ]
+        , button [ onClick (SubmitWord model.guessWord model.checkWord) ] [ text "Submit It" ]
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
@@ -191,34 +191,55 @@ update msg model =
         GetNewWord (Ok word) ->
             case word of
                 _ :: _ ->
-                    ( { model | status = Loaded (unwrapNewWordList word) }, Cmd.none )
+                    ( { model
+                        | status = Loaded (unwrapNewWordList word)
+                        , checkWord = setCheckWord (unwrapNewWordList word)
+                      }
+                    , Cmd.none
+                    )
 
                 [] ->
-                    ( { model | status = Errored "No words found :(" }, Cmd.none )
+                    ( { model | status = Errored "No words found :(" }
+                    , Cmd.none
+                    )
 
         GetNewWord (Err err) ->
-            ( { model | status = Errored (Debug.toString err) }, Cmd.none )
+            ( { model | status = Errored (Debug.toString err) }
+            , Cmd.none
+            )
 
         KeyPressed event ->
             kbdEventToCommand event model
 
         KeyClicked string ->
-            ( { model | guessWord = append model.guessWord string }, speak string )
+            ( { model | guessWord = append model.guessWord string }
+            , speak string
+            )
 
         GetAnotherWord ->
-            ( { model | guessWord = "", result = "" }, initialCmd )
+            ( { model | guessWord = "", result = "" }
+            , initialCmd
+            )
 
         EraseLetter word ->
-            ( { model | guessWord = dropRight 1 word, result = "" }, Cmd.none )
+            ( { model | guessWord = dropRight 1 word, result = "" }
+            , Cmd.none
+            )
 
         ResetWord ->
-            ( { model | guessWord = "", result = "" }, Cmd.none )
+            ( { model | guessWord = "", result = "" }
+            , Cmd.none
+            )
 
         SubmitWord guess check ->
-            ( { model | result = checkResult guess check }, speak (checkResult guess check) )
+            ( { model | result = checkResult guess check }
+            , speak (checkResult guess check)
+            )
 
         ToggleHelpText helpStr ->
-            ( { model | help = helpText helpStr }, Cmd.none )
+            ( { model | help = helpText helpStr }
+            , Cmd.none
+            )
 
         SetSound param ->
             ( model, setSound param )
@@ -259,7 +280,9 @@ kbdEventToCommand event model =
     else
         case Debug.toString event.keyCode of
             "One" ->
-                ( { model | help = helpText model.help }, Cmd.none )
+                ( { model | help = helpText model.help }
+                , Cmd.none
+                )
 
             "Two" ->
                 ( model, setSound On )
@@ -268,18 +291,24 @@ kbdEventToCommand event model =
                 ( model, setSound Off )
 
             "Backspace" ->
-                ( { model | guessWord = dropRight 1 model.guessWord, result = "" }, Cmd.none )
+                ( { model | guessWord = dropRight 1 model.guessWord, result = "" }
+                , Cmd.none
+                )
 
             "Enter" ->
-                ( { model | checkWord = toUpper model.newWord.word, result = checkResult model.guessWord model.checkWord }
+                ( { model | result = checkResult model.guessWord model.checkWord }
                 , speak (checkResult model.guessWord model.checkWord)
                 )
 
             "Five" ->
-                ( { model | guessWord = "", result = "" }, Cmd.none )
+                ( { model | guessWord = "", result = "" }
+                , Cmd.none
+                )
 
             "Six" ->
-                ( { model | guessWord = "", result = "" }, Cmd.none )
+                ( { model | guessWord = "", result = "" }
+                , Cmd.none
+                )
 
             "Eight" ->
                 ( model, speak (String.toLower model.guessWord) )
@@ -288,7 +317,9 @@ kbdEventToCommand event model =
                 ( model, spell (splitToSpell (String.toLower model.guessWord)) )
 
             "Zero" ->
-                ( { model | guessWord = "", result = "" }, initialCmd )
+                ( { model | guessWord = "", result = "" }
+                , initialCmd
+                )
 
             _ ->
                 ( { model | guessWord = append model.guessWord (kbdEventToString event) }
@@ -355,6 +386,11 @@ helpText helpStr =
 
     else
         []
+
+
+setCheckWord : NewWord -> CheckWord
+setCheckWord wordsList =
+    String.toUpper wordsList.word
 
 
 checkResult : GuessWord -> CheckWord -> String
