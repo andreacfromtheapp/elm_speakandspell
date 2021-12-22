@@ -132,14 +132,19 @@ viewLoading =
     ]
 
 
+codeToString : Int -> String
+codeToString asciiCode =
+    String.fromChar (Char.fromCode asciiCode)
+
+
 alphabetRow : Int -> Int -> List (Html Msg)
 alphabetRow start end =
     List.range start end
         |> List.map
             (\asciiCode ->
                 button
-                    [ onClick (KeyClicked (String.fromChar (Char.fromCode asciiCode))) ]
-                    [ text (String.fromChar (Char.fromCode asciiCode)) ]
+                    [ onClick (KeyClicked (codeToString asciiCode)) ]
+                    [ text (codeToString asciiCode) ]
             )
 
 
