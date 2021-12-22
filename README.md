@@ -61,12 +61,14 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ### Improvements
 
-- [ ] should I use a Maybe String for GuessWord?
-- [ ] should I use a Maybe KeyboardEvent?
 - [x] refactor ```update``` and use helper functions
   - [x] reuse helper functions to streamline code
   - [x] declutter view's onClick events and use update for Msg
   - [x] not all Msg need to be parametrized
+- [x] use a Maybe String for GuessWord
+  - [ ] implement conditionals for commands (some things *misbehave*)
+  - [ ] work on "edge cases"
+- [ ] should I use a Maybe KeyboardEvent?
 - [ ] refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?
   - [ ] would this be too convoluted? Elm likes clarity over complexity
 

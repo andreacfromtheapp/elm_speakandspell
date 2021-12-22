@@ -65,19 +65,22 @@ type alias NewWord =
 
 type alias Model =
     { status : Status
+    , clicked : Maybe String
+    , sound : Sound
     , title : String
     , newWord : NewWord
     , guessWord : GuessWord
     , checkWord : CheckWord
     , result : String
     , help : Help
-    , sound : Sound
     }
 
 
 initialModel : Model
 initialModel =
     { status = Loading
+    , clicked = Nothing
+    , sound = On
     , title = "Speak & Spell"
     , newWord =
         { word = "init"
@@ -167,7 +170,15 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , p [] [ text model.guessWord ]
+        , p []
+            [ text <|
+                case model.clicked of
+                    Just _ ->
+                        model.guessWord
+
+                    Nothing ->
+                        "Start typing to match the word above"
+            ]
         , p [] [ text model.result ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
@@ -296,12 +307,12 @@ kbdEventToCommand event model =
 
 appendToGuessWord : Model -> String -> Model
 appendToGuessWord model string =
-    { model | guessWord = String.append model.guessWord string }
+    { model | clicked = Just string, guessWord = String.append model.guessWord string }
 
 
 fnGetAnotherWord : Model -> Model
 fnGetAnotherWord model =
-    { model | guessWord = "", result = "" }
+    { model | clicked = Nothing, guessWord = "", result = "" }
 
 
 fnEraseLetter : Model -> Model
@@ -311,7 +322,7 @@ fnEraseLetter model =
 
 fnResetWord : Model -> Model
 fnResetWord model =
-    { model | guessWord = "", result = "" }
+    { model | clicked = Nothing, guessWord = "", result = "" }
 
 
 fnSubmitWord : Model -> Model
