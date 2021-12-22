@@ -2,7 +2,7 @@ port module Main exposing (main)
 
 import Browser
 import Browser.Events exposing (onKeyDown)
-import Char exposing (fromCode)
+import Char
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
@@ -10,7 +10,7 @@ import Json.Decode exposing (Decoder, string, succeed)
 import Json.Decode.Pipeline exposing (required)
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 import List
-import String exposing (append, dropRight, fromChar, isEmpty, toLower, toUpper)
+import String
 
 
 randomWordApiUrl : String
@@ -138,8 +138,8 @@ alphabetRow start end =
         |> List.map
             (\asciiCode ->
                 button
-                    [ onClick (KeyClicked (fromChar (fromCode asciiCode))) ]
-                    [ text (fromChar (fromCode asciiCode)) ]
+                    [ onClick (KeyClicked (String.fromChar (Char.fromCode asciiCode))) ]
+                    [ text (String.fromChar (Char.fromCode asciiCode)) ]
             )
 
 
@@ -154,7 +154,7 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , p [] [ text ("your word is: " ++ toUpper newWord.word) ]
+        , p [] [ text ("your word is: " ++ String.toUpper newWord.word) ]
         , p [] [ text ("definition: " ++ newWord.definition) ]
         , p [] [ text ("pronunciation: " ++ newWord.pronunciation) ]
         ]
@@ -235,10 +235,10 @@ update msg model =
             ( model, setSound param )
 
         Speak ->
-            ( model, speak (toLower model.guessWord) )
+            ( model, speak (String.toLower model.guessWord) )
 
         Spell ->
-            ( model, spell (splitToSpell (toLower model.guessWord)) )
+            ( model, spell (splitToSpell (String.toLower model.guessWord)) )
 
 
 kbdEventToCommand : KeyboardEvent -> Model -> ( Model, Cmd Msg )
@@ -278,10 +278,10 @@ kbdEventToCommand event model =
                 ( fnResetWord model, Cmd.none )
 
             "Eight" ->
-                ( model, speak (toLower model.guessWord) )
+                ( model, speak (String.toLower model.guessWord) )
 
             "Nine" ->
-                ( model, spell (splitToSpell (toLower model.guessWord)) )
+                ( model, spell (splitToSpell (String.toLower model.guessWord)) )
 
             "Zero" ->
                 ( fnGetAnotherWord model, initialCmd )
@@ -294,7 +294,7 @@ kbdEventToCommand event model =
 
 appendToGuessWord : Model -> String -> Model
 appendToGuessWord model string =
-    { model | guessWord = append model.guessWord string }
+    { model | guessWord = String.append model.guessWord string }
 
 
 fnGetAnotherWord : Model -> Model
@@ -304,7 +304,7 @@ fnGetAnotherWord model =
 
 fnEraseLetter : Model -> Model
 fnEraseLetter model =
-    { model | guessWord = dropRight 1 model.guessWord, result = "" }
+    { model | guessWord = String.dropRight 1 model.guessWord, result = "" }
 
 
 fnResetWord : Model -> Model
@@ -389,7 +389,7 @@ setCheckWord wordsList =
 
 checkResult : GuessWord -> CheckWord -> String
 checkResult guess check =
-    if isEmpty guess then
+    if String.isEmpty guess then
         "Nope! An empty string is never the answer..."
 
     else if guess == check then
