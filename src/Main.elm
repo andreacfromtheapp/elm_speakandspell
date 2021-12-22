@@ -227,7 +227,7 @@ update msg model =
 
         SubmitWord ->
             ( fnSubmitWord model
-            , speak (checkResult model.guessWord model.checkWord)
+            , speak (checkResult model)
             )
 
         ToggleHelpText ->
@@ -270,7 +270,7 @@ kbdEventToCommand event model =
 
             "Enter" ->
                 ( fnSubmitWord model
-                , speak (checkResult model.guessWord model.checkWord)
+                , speak (checkResult model)
                 )
 
             "Five" ->
@@ -316,7 +316,7 @@ fnResetWord model =
 
 fnSubmitWord : Model -> Model
 fnSubmitWord model =
-    { model | result = checkResult model.guessWord model.checkWord }
+    { model | result = checkResult model }
 
 
 fnToggleHelpText : Model -> Model
@@ -389,16 +389,16 @@ setCheckWord wordsList =
     String.toUpper wordsList.word
 
 
-checkResult : GuessWord -> CheckWord -> String
-checkResult guess check =
-    if String.isEmpty guess then
+checkResult : Model -> String
+checkResult model =
+    if String.isEmpty model.guessWord then
         "Nope! An empty string is never the answer..."
 
-    else if guess == check then
-        "Congratulations! " ++ guess ++ " is correct!"
+    else if model.guessWord == model.checkWord then
+        "Congratulations! " ++ model.guessWord ++ " is correct!"
 
     else
-        "Oh no... " ++ guess ++ " isn't right.."
+        "Oh no... " ++ model.guessWord ++ " isn't right.."
 
 
 helpText : Help -> List (Html Msg)
