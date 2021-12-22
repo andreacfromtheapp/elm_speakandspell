@@ -91,7 +91,6 @@ initialModel =
     , checkWord = ""
     , result = ""
     , help = []
-    , sound = On
     }
 
 
@@ -225,16 +224,24 @@ update msg model =
             kbdEventToCommand event model
 
         KeyClicked string ->
-            ( appendToGuessWord model string, speak string )
+            ( appendToGuessWord model string
+            , speak string
+            )
 
         GetAnotherWord ->
-            ( fnGetAnotherWord model, initialCmd )
+            ( fnGetAnotherWord model
+            , initialCmd
+            )
 
         EraseLetter ->
-            ( fnEraseLetter model, Cmd.none )
+            ( fnEraseLetter model
+            , Cmd.none
+            )
 
         ResetWord ->
-            ( fnResetWord model, Cmd.none )
+            ( fnResetWord model
+            , Cmd.none
+            )
 
         SubmitWord ->
             ( fnSubmitWord model
@@ -242,16 +249,24 @@ update msg model =
             )
 
         ToggleHelpText ->
-            ( fnToggleHelpText model, Cmd.none )
+            ( fnToggleHelpText model
+            , Cmd.none
+            )
 
         SetSound param ->
-            ( model, setSound param )
+            ( model
+            , setSound param
+            )
 
         Speak ->
-            ( model, speak (String.toLower model.guessWord) )
+            ( model
+            , speak (String.toLower model.guessWord)
+            )
 
         Spell ->
-            ( model, spell (splitToSpell (String.toLower model.guessWord)) )
+            ( model
+            , spell (splitToSpell (String.toLower model.guessWord))
+            )
 
 
 kbdEventToCommand : KeyboardEvent -> Model -> ( Model, Cmd Msg )
@@ -268,16 +283,24 @@ kbdEventToCommand event model =
     else
         case Debug.toString event.keyCode of
             "One" ->
-                ( fnToggleHelpText model, Cmd.none )
+                ( fnToggleHelpText model
+                , Cmd.none
+                )
 
             "Two" ->
-                ( model, setSound On )
+                ( model
+                , setSound On
+                )
 
             "Three" ->
-                ( model, setSound Off )
+                ( model
+                , setSound Off
+                )
 
             "Backspace" ->
-                ( fnEraseLetter model, Cmd.none )
+                ( fnEraseLetter model
+                , Cmd.none
+                )
 
             "Enter" ->
                 ( fnSubmitWord model
@@ -285,19 +308,29 @@ kbdEventToCommand event model =
                 )
 
             "Five" ->
-                ( fnResetWord model, Cmd.none )
+                ( fnResetWord model
+                , Cmd.none
+                )
 
             "Six" ->
-                ( fnResetWord model, Cmd.none )
+                ( fnResetWord model
+                , Cmd.none
+                )
 
             "Eight" ->
-                ( model, speak (String.toLower model.guessWord) )
+                ( model
+                , speak (String.toLower model.guessWord)
+                )
 
             "Nine" ->
-                ( model, spell (splitToSpell (String.toLower model.guessWord)) )
+                ( model
+                , spell (splitToSpell (String.toLower model.guessWord))
+                )
 
             "Zero" ->
-                ( fnGetAnotherWord model, initialCmd )
+                ( fnGetAnotherWord model
+                , initialCmd
+                )
 
             _ ->
                 ( appendToGuessWord model (kbdEventToString event)
