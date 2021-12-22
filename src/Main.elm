@@ -2,15 +2,12 @@ port module Main exposing (main)
 
 import Browser
 import Browser.Events exposing (onKeyDown)
-import Char
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, string, succeed)
 import Json.Decode.Pipeline exposing (required)
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
-import List
-import String
 
 
 randomWordApiUrl : String
