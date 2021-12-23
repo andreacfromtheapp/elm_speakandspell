@@ -185,6 +185,37 @@ codeToString asciiCode =
     String.fromChar (Char.fromCode asciiCode)
 
 
+helpHtml : List (Html Msg)
+helpHtml =
+    [ div []
+        [ p []
+            [ text """
+                   This is a limited reproduction of the original game.
+                    Match the word on the screen, and use the commands. That's it.
+                   """
+            ]
+        , p []
+            [ text """
+                    You can use your mouse to press the onscreen buttons.
+                    You can type on your keyboard, and use the mapped keys:
+                    """
+            ]
+        , ul []
+            [ li [] [ text "0 --> New Word" ]
+            , li [] [ text "1 --> Help" ]
+            , li [] [ text "2 --> Sound On" ]
+            , li [] [ text "3 --> Sound Off" ]
+            , li [] [ text "5 --> Reset Ouput" ]
+            , li [] [ text "6 --> Retry" ]
+            , li [] [ text "8 --> Speak It" ]
+            , li [] [ text "9 --> Spell It" ]
+            , li [] [ text "Backspace --> Erase Letter" ]
+            , li [] [ text "Enter --> Submit It" ]
+            ]
+        ]
+    ]
+
+
 
 -- UPDATE
 
@@ -397,6 +428,15 @@ toggleHelpText model =
     { model | help = helpToggle model.help }
 
 
+helpToggle : List (Html Msg) -> List (Html Msg)
+helpToggle helpText =
+    if List.isEmpty helpText then
+        helpHtml
+
+    else
+        []
+
+
 setSound : Sound -> Cmd Msg
 setSound switch =
     case switch of
@@ -465,41 +505,6 @@ unwrapNewWordList wordsList =
 setCheckWord : NewWord -> String
 setCheckWord wordsList =
     String.toUpper wordsList.word
-
-
-helpToggle : List (Html Msg) -> List (Html Msg)
-helpToggle helpText =
-    if List.isEmpty helpText then
-        [ div []
-            [ p []
-                [ text """
-                   This is a limited reproduction of the original game.
-                    Match the word on the screen, and use the commands. That's it.
-                   """
-                ]
-            , p []
-                [ text """
-                    You can use your mouse to press the onscreen buttons.
-                    You can type on your keyboard, and use the mapped keys:
-                    """
-                ]
-            , ul []
-                [ li [] [ text "0 --> New Word" ]
-                , li [] [ text "1 --> Help" ]
-                , li [] [ text "2 --> Sound On" ]
-                , li [] [ text "3 --> Sound Off" ]
-                , li [] [ text "5 --> Reset Ouput" ]
-                , li [] [ text "6 --> Retry" ]
-                , li [] [ text "8 --> Speak It" ]
-                , li [] [ text "9 --> Spell It" ]
-                , li [] [ text "Backspace --> Erase Letter" ]
-                , li [] [ text "Enter --> Submit It" ]
-                ]
-            ]
-        ]
-
-    else
-        []
 
 
 
