@@ -48,10 +48,6 @@ type Sound
     | Off
 
 
-type alias Help =
-    List (Html Msg)
-
-
 type alias NewWord =
     { word : String
     , definition : String
@@ -68,7 +64,7 @@ type alias Model =
     , guessWord : String
     , checkWord : String
     , result : String
-    , help : Help
+    , help : List (Html Msg)
     }
 
 
@@ -471,9 +467,9 @@ setCheckWord wordsList =
     String.toUpper wordsList.word
 
 
-helpText : Help -> List (Html Msg)
-helpText helpStr =
-    if List.isEmpty helpStr then
+helpText : List (Html Msg) -> List (Html Msg)
+helpText helpElem =
+    if List.isEmpty helpElem then
         [ div []
             [ p []
                 [ text """
