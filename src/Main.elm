@@ -61,7 +61,7 @@ type alias NewWord =
 
 type alias Model =
     { status : Status
-    , clicked : Maybe String
+    , hasEnteredWord : Maybe String
     , sound : Sound
     , title : String
     , newWord : NewWord
@@ -75,7 +75,7 @@ type alias Model =
 initialModel : Model
 initialModel =
     { status = Loading
-    , clicked = Nothing
+    , hasEnteredWord = Nothing
     , sound = On
     , title = "Speak & Spell"
     , newWord =
@@ -149,7 +149,15 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , p [] [ text <| guessWordOrNothing model ]
+        , p []
+            [ text <|
+                case model.hasEnteredWord of
+                    Just _ ->
+                        model.guessWord
+
+                    Nothing ->
+                        "Start typing to match the word above"
+            ]
         , p [] [ text model.result ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
@@ -179,16 +187,6 @@ alphabetRow start end =
 codeToString : Int -> String
 codeToString asciiCode =
     String.fromChar (Char.fromCode asciiCode)
-
-
-guessWordOrNothing : Model -> String
-guessWordOrNothing model =
-    case model.clicked of
-        Just _ ->
-            model.guessWord
-
-        Nothing ->
-            "Start typing to match the word above"
 
 
 
@@ -368,12 +366,12 @@ isGuessEmtpy model =
 
 appendToGuessWord : Model -> String -> Model
 appendToGuessWord model string =
-    { model | clicked = Just string, guessWord = String.append model.guessWord string }
+    { model | hasEnteredWord = Just string, guessWord = String.append model.guessWord string }
 
 
 resetWord : Model -> Model
 resetWord model =
-    { model | clicked = Nothing, guessWord = "", result = "" }
+    { model | hasEnteredWord = Nothing, guessWord = "", result = "" }
 
 
 eraseLetter : Model -> Model
