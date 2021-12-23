@@ -147,6 +147,16 @@ alphabetRow start end =
             )
 
 
+guessWordOrNothing : Model -> String
+guessWordOrNothing model =
+    case model.clicked of
+        Just _ ->
+            model.guessWord
+
+        Nothing ->
+            "Start typing to match the word above"
+
+
 viewLoaded : NewWord -> Model -> List (Html Msg)
 viewLoaded newWord model =
     [ div []
@@ -169,15 +179,7 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , p []
-            [ text <|
-                case model.clicked of
-                    Just _ ->
-                        model.guessWord
-
-                    Nothing ->
-                        "Start typing to match the word above"
-            ]
+        , p [] [ text <| guessWordOrNothing model ]
         , p [] [ text model.result ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
