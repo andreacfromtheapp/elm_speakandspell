@@ -231,27 +231,27 @@ update msg model =
             )
 
         GetAnotherWord ->
-            ( fnGetAnotherWord model
+            ( getAnotherWord model
             , initialCmd
             )
 
         EraseLetter ->
-            ( fnEraseLetter model
+            ( eraseLetter model
             , Cmd.none
             )
 
         ResetWord ->
-            ( fnResetWord model
+            ( resetWord model
             , Cmd.none
             )
 
         SubmitWord ->
-            ( fnSubmitWord model
+            ( submitWord model
             , speak (checkResult model)
             )
 
         ToggleHelpText ->
-            ( fnToggleHelpText model
+            ( toggleHelpText model
             , Cmd.none
             )
 
@@ -285,7 +285,7 @@ kbdEventToCommand event model =
     else
         case Debug.toString event.keyCode of
             "One" ->
-                ( fnToggleHelpText model
+                ( toggleHelpText model
                 , Cmd.none
                 )
 
@@ -300,22 +300,22 @@ kbdEventToCommand event model =
                 )
 
             "Backspace" ->
-                ( fnEraseLetter model
+                ( eraseLetter model
                 , Cmd.none
                 )
 
             "Enter" ->
-                ( fnSubmitWord model
+                ( submitWord model
                 , speak (checkResult model)
                 )
 
             "Five" ->
-                ( fnResetWord model
+                ( resetWord model
                 , Cmd.none
                 )
 
             "Six" ->
-                ( fnResetWord model
+                ( resetWord model
                 , Cmd.none
                 )
 
@@ -330,7 +330,7 @@ kbdEventToCommand event model =
                 )
 
             "Zero" ->
-                ( fnGetAnotherWord model
+                ( getAnotherWord model
                 , initialCmd
                 )
 
@@ -349,28 +349,28 @@ appendToGuessWord model string =
     { model | clicked = Just string, guessWord = String.append model.guessWord string }
 
 
-fnGetAnotherWord : Model -> Model
-fnGetAnotherWord model =
+getAnotherWord : Model -> Model
+getAnotherWord model =
     { model | clicked = Nothing, guessWord = "", result = "" }
 
 
-fnEraseLetter : Model -> Model
-fnEraseLetter model =
+eraseLetter : Model -> Model
+eraseLetter model =
     { model | guessWord = String.dropRight 1 model.guessWord, result = "" }
 
 
-fnResetWord : Model -> Model
-fnResetWord model =
+resetWord : Model -> Model
+resetWord model =
     { model | clicked = Nothing, guessWord = "", result = "" }
 
 
-fnSubmitWord : Model -> Model
-fnSubmitWord model =
+submitWord : Model -> Model
+submitWord model =
     { model | result = checkResult model }
 
 
-fnToggleHelpText : Model -> Model
-fnToggleHelpText model =
+toggleHelpText : Model -> Model
+toggleHelpText model =
     { model | help = helpText model.help }
 
 
