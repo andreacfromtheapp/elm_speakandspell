@@ -352,19 +352,13 @@ kbdEventToCommand event model =
                 )
 
 
-appendToGuessWord : Model -> String -> Model
-appendToGuessWord model string =
-    { model | clicked = Just string, guessWord = String.append model.guessWord string }
+isAlphaStringValid : String -> Bool
+isAlphaStringValid string =
+    if String.isEmpty string then
+        False
 
-
-getAnotherWord : Model -> Model
-getAnotherWord model =
-    { model | clicked = Nothing, guessWord = "", result = "" }
-
-
-eraseLetter : Model -> Model
-eraseLetter model =
-    { model | guessWord = String.dropRight 1 model.guessWord, result = "" }
+    else
+        True
 
 
 isGuessEmtpy : Model -> Bool
@@ -376,9 +370,19 @@ isGuessEmtpy model =
         False
 
 
+appendToGuessWord : Model -> String -> Model
+appendToGuessWord model string =
+    { model | clicked = Just string, guessWord = String.append model.guessWord string }
+
+
 resetWord : Model -> Model
 resetWord model =
     { model | clicked = Nothing, guessWord = "", result = "" }
+
+
+eraseLetter : Model -> Model
+eraseLetter model =
+    { model | guessWord = String.dropRight 1 model.guessWord, result = "" }
 
 
 submitWord : Model -> Model
@@ -389,11 +393,6 @@ submitWord model =
 toggleHelpText : Model -> Model
 toggleHelpText model =
     { model | help = helpText model.help }
-
-
-wordToSpeak : Model -> String
-wordToSpeak model =
-    String.toLower model.guessWord
 
 
 setSound : Sound -> Cmd Msg
@@ -409,6 +408,11 @@ setSound switch =
 splitToSpell : String -> List String
 splitToSpell word =
     String.split "" word
+
+
+wordToSpeak : Model -> String
+wordToSpeak model =
+    String.toLower model.guessWord
 
 
 isCharAlpha : String -> List Char
@@ -434,15 +438,6 @@ isSingleChar charList =
                 else
                     ""
            )
-
-
-isAlphaStringValid : String -> Bool
-isAlphaStringValid string =
-    if String.isEmpty string then
-        False
-
-    else
-        True
 
 
 kbdEventToString : KeyboardEvent -> String
