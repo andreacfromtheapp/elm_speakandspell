@@ -262,12 +262,12 @@ update msg model =
 
         Speak ->
             ( model
-            , speak (String.toLower model.guessWord)
+            , speak (wordToSpeak model)
             )
 
         Spell ->
             ( model
-            , spell (splitToSpell (String.toLower model.guessWord))
+            , spell (splitToSpell (wordToSpeak model))
             )
 
 
@@ -321,12 +321,12 @@ kbdEventToCommand event model =
 
             "Eight" ->
                 ( model
-                , speak (String.toLower model.guessWord)
+                , speak (wordToSpeak model)
                 )
 
             "Nine" ->
                 ( model
-                , spell (splitToSpell (String.toLower model.guessWord))
+                , spell (splitToSpell (wordToSpeak model))
                 )
 
             "Zero" ->
@@ -372,6 +372,11 @@ fnSubmitWord model =
 fnToggleHelpText : Model -> Model
 fnToggleHelpText model =
     { model | help = helpText model.help }
+
+
+wordToSpeak : Model -> String
+wordToSpeak model =
+    String.toLower model.guessWord
 
 
 setSound : Sound -> Cmd Msg
