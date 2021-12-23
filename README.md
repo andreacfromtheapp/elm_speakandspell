@@ -79,3 +79,6 @@ Provided that a *polyglot API* (or separate different languages APIs) exist, the
 - [ ] let user choose:
   - [ ] a different dictionary language
   - [ ] the voice language, params, and gender
+  - [ ] Elm internationalization of text on screen
+    - [ ] help
+    - [ ] commands
