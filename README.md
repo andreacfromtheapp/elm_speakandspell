@@ -65,9 +65,9 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] reuse helper functions to streamline code
   - [x] declutter view's onClick events and use update for Msg
   - [x] not all Msg need to be parametrized
-- [x] use a Maybe String for GuessWord
-  - [ ] implement conditionals for commands (some things *misbehave*)
-  - [ ] work on "edge cases"
+- [x] use a Maybe String for model.click to
+  - [x] show default message or GuessWord
+  - [x] implement a conditional to only show GuessWord if valid
 - [ ] should I use a Maybe KeyboardEvent?
 - [ ] refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?
   - [ ] would this be too convoluted? Elm likes clarity over complexity

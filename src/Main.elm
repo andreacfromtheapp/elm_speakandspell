@@ -335,7 +335,11 @@ kbdEventToCommand event model =
                 )
 
             _ ->
-                ( appendToGuessWord model (kbdEventToString event)
+                ( if isAlphaStringValid (kbdEventToString event) then
+                    appendToGuessWord model (kbdEventToString event)
+
+                  else
+                    model
                 , speak (kbdEventToString event)
                 )
 
@@ -408,6 +412,15 @@ isSingleChar charList =
                 else
                     ""
            )
+
+
+isAlphaStringValid : String -> Bool
+isAlphaStringValid string =
+    if String.isEmpty string then
+        False
+
+    else
+        True
 
 
 kbdEventToString : KeyboardEvent -> String
