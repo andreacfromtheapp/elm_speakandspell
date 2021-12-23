@@ -47,23 +47,28 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ### UI/UX
 
-- [ ] loosely look like Speak & Spell
-  - [ ] still make it look like a toy looking device
-  - [ ] CSS? elm-css? elm-ui?
-  - [ ] keys (vowels, consonants, commands, to look different)
-  - [ ] use random emojis in lieu of the logo
+- [ ] vanilla CSS? SASS? PostCSS? elm-css? elm-ui? or even SVG?!?
+- [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
+- [ ] responsive design
+  - [ ] mobile first
+  - [ ] no onscreen keyboard on mobile
+- [ ] loosely look like Speak & Spell (make it look & feel like a toy)
+  - [ ] keys (vowels, consonants, commands) to look different
+  - [ ] use random emojis in lieu of the Elm logo?
 - [ ] user feedback
   - [x] feedback for keypresses
+    - [x] written feedback
     - [x] auditory feedback with SpeechSynthesis
-    - [ ] visual feedback with CSS (animations?)
+    - [ ] visual feedback (CSS animations?)
   - [x] feedback upon checking the spelling
     - [x] written feedback
     - [x] auditory feedback
+    - [ ] visual feedback (CSS animations?)
 - [ ] screen
-  - [ ] flashy flashy? low-fi/8bit looking?
+  - [ ] retro-looking/low-fi/8bit
   - [ ] expandable "side loading screen" for the description?
   - [ ] expandable "bottom loading screen" for the help section
-    - [x] help toggle "solution" in Elm (temporary. exercise more than anything)
+    - [x] help toggle in Elm (temporary. exercise more than anything)
   - [ ] fixed "field" for the user output
   - [ ] separate help and commands section
 
@@ -80,6 +85,6 @@ Provided that a *polyglot API* (or separate different languages APIs) exist, the
 - [ ] let user choose:
   - [ ] a different dictionary language
   - [ ] the voice language, params, and gender
-  - [ ] Elm internationalization of text on screen
-    - [ ] help
-    - [ ] commands
+- [ ] internationalization depending on dict language
+  - [ ] help
+  - [ ] commands
