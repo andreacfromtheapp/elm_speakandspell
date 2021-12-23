@@ -394,7 +394,7 @@ checkResult model =
 
 toggleHelpText : Model -> Model
 toggleHelpText model =
-    { model | help = helpText model.help }
+    { model | help = helpToggle model.help }
 
 
 setSound : Sound -> Cmd Msg
@@ -467,9 +467,9 @@ setCheckWord wordsList =
     String.toUpper wordsList.word
 
 
-helpText : List (Html Msg) -> List (Html Msg)
-helpText helpElem =
-    if List.isEmpty helpElem then
+helpToggle : List (Html Msg) -> List (Html Msg)
+helpToggle helpText =
+    if List.isEmpty helpText then
         [ div []
             [ p []
                 [ text """
