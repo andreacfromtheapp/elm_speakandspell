@@ -487,7 +487,7 @@ helpText helpStr =
         [ div []
             [ p []
                 [ text """
-                   This personal exercise is a limited reproduction of the original game.
+                   This is a limited reproduction of the original game.
                     Match the word on the screen, and use the commands. That's it.
                    """
                 ]
