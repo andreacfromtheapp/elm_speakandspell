@@ -48,14 +48,6 @@ type Sound
     | Off
 
 
-type alias GuessWord =
-    String
-
-
-type alias CheckWord =
-    String
-
-
 type alias Help =
     List (Html Msg)
 
@@ -73,8 +65,8 @@ type alias Model =
     , sound : Sound
     , title : String
     , newWord : NewWord
-    , guessWord : GuessWord
-    , checkWord : CheckWord
+    , guessWord : String
+    , checkWord : String
     , result : String
     , help : Help
     }
@@ -476,7 +468,7 @@ unwrapNewWordList wordsList =
             }
 
 
-setCheckWord : NewWord -> CheckWord
+setCheckWord : NewWord -> String
 setCheckWord wordsList =
     String.toUpper wordsList.word
 
