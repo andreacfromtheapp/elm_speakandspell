@@ -168,9 +168,9 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , p [] [ text ("your word is: " ++ String.toUpper newWord.word) ]
-        , p [] [ text ("definition: " ++ newWord.definition) ]
-        , p [] [ text ("pronunciation: " ++ newWord.pronunciation) ]
+        , p [] [ text ("Your word is: " ++ String.toUpper newWord.word) ]
+        , p [] [ text ("Definition: " ++ newWord.definition) ]
+        , p [] [ text ("Pronunciation: " ++ newWord.pronunciation) ]
         ]
     , div []
         [ hr [] []
@@ -444,7 +444,7 @@ checkResult model =
         "Congratulations! " ++ model.guessWord ++ " is correct!"
 
     else
-        "Oh no... " ++ model.guessWord ++ " isn't right.."
+        "Oh no... " ++ model.guessWord ++ " isn't right..."
 
 
 helpText : Help -> List (Html Msg)
@@ -459,21 +459,21 @@ helpText helpStr =
                 ]
             , p []
                 [ text """
-                    You can use your mouse and press the buttons on screen.
+                    You can use your mouse to press the onscreen buttons.
                     You can type on your keyboard, and use the mapped keys:
                     """
                 ]
             , ul []
-                [ li [] [ text "1 --> Help" ]
+                [ li [] [ text "0 --> New Word" ]
+                , li [] [ text "1 --> Help" ]
                 , li [] [ text "2 --> Sound On" ]
                 , li [] [ text "3 --> Sound Off" ]
-                , li [] [ text "Backspace --> Erase Letter" ]
                 , li [] [ text "5 --> Reset Ouput" ]
-                , li [] [ text "0 --> New Word" ]
+                , li [] [ text "6 --> Retry" ]
                 , li [] [ text "8 --> Speak It" ]
                 , li [] [ text "9 --> Spell It" ]
+                , li [] [ text "Backspace --> Erase Letter" ]
                 , li [] [ text "Enter --> Submit It" ]
-                , li [] [ text "6 --> Retry" ]
                 ]
             ]
         ]
