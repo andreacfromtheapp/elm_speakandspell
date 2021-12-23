@@ -43,6 +43,7 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [x] use a Maybe String for model.click to
   - [x] show default message or GuessWord
   - [x] implement a conditional to only show GuessWord if valid
+  - [x] awlays show clicked Nothing if GuessWord is empty
 
 ### UI/UX
 

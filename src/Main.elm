@@ -236,7 +236,11 @@ update msg model =
             )
 
         EraseLetter ->
-            ( eraseLetter model
+            ( if isGuessEmtpy (eraseLetter model) then
+                resetWord model
+
+              else
+                eraseLetter model
             , Cmd.none
             )
 
@@ -300,7 +304,11 @@ kbdEventToCommand event model =
                 )
 
             "Backspace" ->
-                ( eraseLetter model
+                ( if isGuessEmtpy (eraseLetter model) then
+                    resetWord model
+
+                  else
+                    eraseLetter model
                 , Cmd.none
                 )
 
@@ -357,6 +365,15 @@ getAnotherWord model =
 eraseLetter : Model -> Model
 eraseLetter model =
     { model | guessWord = String.dropRight 1 model.guessWord, result = "" }
+
+
+isGuessEmtpy : Model -> Bool
+isGuessEmtpy model =
+    if String.isEmpty model.guessWord then
+        True
+
+    else
+        False
 
 
 resetWord : Model -> Model
