@@ -231,7 +231,7 @@ update msg model =
             )
 
         GetAnotherWord ->
-            ( getAnotherWord model
+            ( resetWord model
             , initialCmd
             )
 
@@ -338,7 +338,7 @@ kbdEventToCommand event model =
                 )
 
             "Zero" ->
-                ( getAnotherWord model
+                ( resetWord model
                 , initialCmd
                 )
 
