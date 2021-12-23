@@ -303,20 +303,6 @@ kbdEventToCommand event model =
                 , setSound Off
                 )
 
-            "Backspace" ->
-                ( if isGuessEmtpy (eraseLetter model) then
-                    resetWord model
-
-                  else
-                    eraseLetter model
-                , Cmd.none
-                )
-
-            "Enter" ->
-                ( submitWord model
-                , speak (checkResult model)
-                )
-
             "Five" ->
                 ( resetWord model
                 , Cmd.none
@@ -340,6 +326,20 @@ kbdEventToCommand event model =
             "Zero" ->
                 ( resetWord model
                 , initialCmd
+                )
+
+            "Backspace" ->
+                ( if isGuessEmtpy (eraseLetter model) then
+                    resetWord model
+
+                  else
+                    eraseLetter model
+                , Cmd.none
+                )
+
+            "Enter" ->
+                ( submitWord model
+                , speak (checkResult model)
                 )
 
             _ ->
