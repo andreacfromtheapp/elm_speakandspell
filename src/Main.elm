@@ -131,32 +131,6 @@ viewLoading =
     ]
 
 
-codeToString : Int -> String
-codeToString asciiCode =
-    String.fromChar (Char.fromCode asciiCode)
-
-
-alphabetRow : Int -> Int -> List (Html Msg)
-alphabetRow start end =
-    List.range start end
-        |> List.map
-            (\asciiCode ->
-                button
-                    [ onClick (KeyClicked (codeToString asciiCode)) ]
-                    [ text (codeToString asciiCode) ]
-            )
-
-
-guessWordOrNothing : Model -> String
-guessWordOrNothing model =
-    case model.clicked of
-        Just _ ->
-            model.guessWord
-
-        Nothing ->
-            "Start typing to match the word above"
-
-
 viewLoaded : NewWord -> Model -> List (Html Msg)
 viewLoaded newWord model =
     [ div []
@@ -193,6 +167,32 @@ viewLoaded newWord model =
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
+
+
+alphabetRow : Int -> Int -> List (Html Msg)
+alphabetRow start end =
+    List.range start end
+        |> List.map
+            (\asciiCode ->
+                button
+                    [ onClick (KeyClicked (codeToString asciiCode)) ]
+                    [ text (codeToString asciiCode) ]
+            )
+
+
+codeToString : Int -> String
+codeToString asciiCode =
+    String.fromChar (Char.fromCode asciiCode)
+
+
+guessWordOrNothing : Model -> String
+guessWordOrNothing model =
+    case model.clicked of
+        Just _ ->
+            model.guessWord
+
+        Nothing ->
+            "Start typing to match the word above"
 
 
 
@@ -390,6 +390,18 @@ submitWord model =
     { model | result = checkResult model }
 
 
+checkResult : Model -> String
+checkResult model =
+    if String.isEmpty model.guessWord then
+        "Nope! An empty string is never the answer..."
+
+    else if model.guessWord == model.checkWord then
+        "Congratulations! " ++ model.guessWord ++ " is correct!"
+
+    else
+        "Oh no... " ++ model.guessWord ++ " isn't right..."
+
+
 toggleHelpText : Model -> Model
 toggleHelpText model =
     { model | help = helpText model.help }
@@ -413,6 +425,13 @@ splitToSpell word =
 wordToSpeak : Model -> String
 wordToSpeak model =
     String.toLower model.guessWord
+
+
+kbdEventToString : KeyboardEvent -> String
+kbdEventToString event =
+    Debug.toString event.keyCode
+        |> isCharAlpha
+        |> isSingleChar
 
 
 isCharAlpha : String -> List Char
@@ -440,13 +459,6 @@ isSingleChar charList =
            )
 
 
-kbdEventToString : KeyboardEvent -> String
-kbdEventToString event =
-    Debug.toString event.keyCode
-        |> isCharAlpha
-        |> isSingleChar
-
-
 unwrapNewWordList : List NewWord -> NewWord
 unwrapNewWordList wordsList =
     case List.head wordsList of
@@ -463,18 +475,6 @@ unwrapNewWordList wordsList =
 setCheckWord : NewWord -> CheckWord
 setCheckWord wordsList =
     String.toUpper wordsList.word
-
-
-checkResult : Model -> String
-checkResult model =
-    if String.isEmpty model.guessWord then
-        "Nope! An empty string is never the answer..."
-
-    else if model.guessWord == model.checkWord then
-        "Congratulations! " ++ model.guessWord ++ " is correct!"
-
-    else
-        "Oh no... " ++ model.guessWord ++ " isn't right..."
 
 
 helpText : Help -> List (Html Msg)
