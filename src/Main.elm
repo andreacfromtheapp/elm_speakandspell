@@ -61,6 +61,8 @@ type alias Model =
     , sound : Sound
     , title : String
     , newWord : NewWord
+
+    -- , placeholder : String -- this was just a fun test
     , guessWord : String
     , checkWord : String
     , result : String
@@ -79,6 +81,8 @@ initialModel =
         , definition = ""
         , pronunciation = ""
         }
+
+    -- , placeholder = "" -- this was just a fun test
     , guessWord = ""
     , checkWord = ""
     , result = ""
@@ -152,6 +156,7 @@ viewLoaded newWord model =
                         model.guessWord
 
                     Nothing ->
+                        -- model.placeholder -- this was just a fun test
                         "Start typing to match the word above"
             ]
         , p [] [ text model.result ]
@@ -229,6 +234,8 @@ update msg model =
                     ( { model
                         | status = Loaded (unwrapNewWordList word)
                         , checkWord = setCheckWord (unwrapNewWordList word)
+
+                        -- , placeholder = setPlaceHolder (unwrapNewWordList word) -- this was just a fun test
                       }
                     , Cmd.none
                     )
@@ -508,6 +515,12 @@ setCheckWord wordsList =
 
 
 
+{-
+   -- this was just a fun test
+   setPlaceHolder : NewWord -> String
+   setPlaceHolder wordsList =
+       String.repeat (String.length wordsList.word) "_ "
+-}
 -- MAIN
 
 
