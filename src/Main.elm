@@ -517,7 +517,7 @@ main =
         { init = \_ -> ( initialModel, initialCmd )
         , view = view
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = onKeyDownSubscription
         }
 
 
@@ -537,8 +537,8 @@ newWordDecoder =
         |> required "pronunciation" string
 
 
-subscriptions : Model -> Sub Msg
-subscriptions _ =
+onKeyDownSubscription : Model -> Sub Msg
+onKeyDownSubscription _ =
     onKeyDown (Json.Decode.map KeyPressed decodeKeyboardEvent)
 
 
