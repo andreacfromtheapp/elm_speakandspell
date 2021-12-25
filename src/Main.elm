@@ -466,7 +466,11 @@ setSound switch =
 
 wordToScreen : Model -> Model
 wordToScreen model =
-    { model | output = Word }
+    if String.isEmpty model.guessWord then
+        { model | output = Init }
+
+    else
+        { model | output = Word }
 
 
 splitToSpell : String -> List String
