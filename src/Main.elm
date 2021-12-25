@@ -177,7 +177,7 @@ outputText model =
 
         Holder ->
             -- this is an alternative to 'output = Init'
-            -- try 'output = Holder' in 'initialModel' and 'resetWord'
+            -- try it in 'initialModel' 'resetWord' & 'wordToScreen'
             model.placeholder
 
         Word ->
