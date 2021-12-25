@@ -71,7 +71,8 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ### UI/UX
 
-- [ ] vanilla CSS? SASS? PostCSS? elm-css? elm-ui? or even SVG?!?
+- [ ] vanilla CSS? CSS framework? elm-css? elm-ui? [or|plus] SVG?!?
+- [ ] should I care for PostCSS (and its plugins)?
 - [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [ ] responsive design
   - [ ] mobile first
