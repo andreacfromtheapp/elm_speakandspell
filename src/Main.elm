@@ -45,6 +45,7 @@ type Status
 
 type Output
     = Init
+    | Holder
     | Word
     | Result
 
@@ -67,8 +68,7 @@ type alias Model =
     , sound : Sound
     , newWord : NewWord
     , title : String
-
-    -- , placeholder : String -- this was just a fun test
+    , placeholder : String
     , guessWord : String
     , checkWord : String
     , result : String
@@ -87,8 +87,7 @@ initialModel =
         , pronunciation = ""
         }
     , title = "Speak & Spell"
-
-    -- , placeholder = "" -- this was just a fun test
+    , placeholder = ""
     , guessWord = ""
     , checkWord = ""
     , result = ""
@@ -159,8 +158,12 @@ viewLoaded newWord model =
             [ text <|
                 case model.output of
                     Init ->
-                        -- model.placeholder -- this was just a fun test
                         "Start typing to match the word above"
+
+                    Holder ->
+                        -- this is an alternative to 'output = Init'
+                        -- try setting it in 'initialModel' and 'resetWord'
+                        model.placeholder
 
                     Word ->
                         model.guessWord
@@ -251,8 +254,7 @@ update msg model =
                     ( { model
                         | status = Loaded (unwrapNewWordList word)
                         , checkWord = setCheckWord (unwrapNewWordList word)
-
-                        -- , placeholder = setPlaceHolder (unwrapNewWordList word) -- this was just a fun test
+                        , placeholder = setPlaceHolder (unwrapNewWordList word)
                       }
                     , Cmd.none
                     )
@@ -522,13 +524,12 @@ setCheckWord wordsList =
     String.toUpper wordsList.word
 
 
+setPlaceHolder : NewWord -> String
+setPlaceHolder wordsList =
+    String.repeat (String.length wordsList.word) "_ "
 
-{-
-   -- this was just a fun test
-   setPlaceHolder : NewWord -> String
-   setPlaceHolder wordsList =
-       String.repeat (String.length wordsList.word) "_ "
--}
+
+
 -- MAIN
 
 
