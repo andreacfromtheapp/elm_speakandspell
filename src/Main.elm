@@ -190,6 +190,15 @@ codeToString asciiCode =
     String.fromChar (Char.fromCode asciiCode)
 
 
+helpToggle : List (Html Msg) -> List (Html Msg)
+helpToggle helpText =
+    if List.isEmpty helpText then
+        helpHtml
+
+    else
+        []
+
+
 helpHtml : List (Html Msg)
 helpHtml =
     [ div []
@@ -433,15 +442,6 @@ checkResult model =
 toggleHelpText : Model -> Model
 toggleHelpText model =
     { model | help = helpToggle model.help }
-
-
-helpToggle : List (Html Msg) -> List (Html Msg)
-helpToggle helpText =
-    if List.isEmpty helpText then
-        helpHtml
-
-    else
-        []
 
 
 setSound : Sound -> Cmd Msg
