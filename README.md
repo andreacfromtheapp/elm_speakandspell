@@ -40,10 +40,15 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] reuse helper functions to streamline code
   - [x] declutter view's onClick events and use update for Msg
   - [x] not all Msg need to be parametrized
-- [x] use a Maybe String for model.click to
-  - [x] show default message or GuessWord
-  - [x] implement a conditional to only show GuessWord if valid
-  - [x] awlays show clicked Nothing if GuessWord is empty
+---
+- [x] now using a type Output with a case
+  - [x] much clearer and less convoluted code
+  - [x] it can either be Info (init text), Word, or Result upon sumbit
+- [x] ~~use a Maybe String for model.click to~~
+  - [x] ~~show default message or GuessWord~~
+  - [x] ~~implement a conditional to only show GuessWord if valid~~
+  - [x] ~~awlays show clicked Nothing if GuessWord is empty~~
+---
 - [x] output screen
   - [x] has user started entering a word?
     - [x] no: display default messasge telling the user what to do

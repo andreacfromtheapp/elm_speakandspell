@@ -43,6 +43,12 @@ type Status
     | Errored String
 
 
+type Output
+    = Init
+    | Word
+    | Result
+
+
 type Sound
     = On
     | Off
@@ -57,11 +63,10 @@ type alias NewWord =
 
 type alias Model =
     { status : Status
-    , hasWord : Maybe String
-    , hasResult : Maybe String
+    , output : Output
     , sound : Sound
-    , title : String
     , newWord : NewWord
+    , title : String
 
     -- , placeholder : String -- this was just a fun test
     , guessWord : String
@@ -74,15 +79,14 @@ type alias Model =
 initialModel : Model
 initialModel =
     { status = Loading
-    , hasWord = Nothing
-    , hasResult = Nothing
+    , output = Init
     , sound = On
-    , title = "Speak & Spell"
     , newWord =
         { word = "init"
         , definition = ""
         , pronunciation = ""
         }
+    , title = "Speak & Spell"
 
     -- , placeholder = "" -- this was just a fun test
     , guessWord = ""
@@ -153,12 +157,15 @@ viewLoaded newWord model =
         [ hr [] []
         , p []
             [ text <|
-                case model.hasResult of
-                    Just _ ->
-                        model.result
+                case model.output of
+                    Init ->
+                        "Start typing to match the word above"
 
-                    Nothing ->
-                        hasWord model
+                    Word ->
+                        model.guessWord
+
+                    Result ->
+                        model.result
             ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
@@ -172,17 +179,6 @@ viewLoaded newWord model =
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
-
-
-hasWord : Model -> String
-hasWord model =
-    case model.hasWord of
-        Just _ ->
-            model.guessWord
-
-        Nothing ->
-            -- model.placeholder -- this was just a fun test
-            "Start typing to match the word above"
 
 
 alphabetRow : Int -> Int -> List (Html Msg)
@@ -420,22 +416,22 @@ isGuessEmtpy model =
 
 appendToGuessWord : Model -> String -> Model
 appendToGuessWord model string =
-    { model | hasWord = Just string, guessWord = String.append model.guessWord string }
+    { model | guessWord = String.append model.guessWord string, output = Word }
 
 
 resetWord : Model -> Model
 resetWord model =
-    { model | hasWord = Nothing, hasResult = Nothing, guessWord = "", result = "" }
+    { model | guessWord = "", result = "", output = Init }
 
 
 eraseLetter : Model -> Model
 eraseLetter model =
-    { model | guessWord = String.dropRight 1 model.guessWord, hasResult = Nothing, result = "" }
+    { model | guessWord = String.dropRight 1 model.guessWord, result = "", output = Word }
 
 
 submitWord : Model -> Model
 submitWord model =
-    { model | hasWord = Just "", hasResult = Just "", result = checkResult model }
+    { model | result = checkResult model, output = Result }
 
 
 checkResult : Model -> String
