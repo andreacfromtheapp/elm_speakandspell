@@ -415,7 +415,7 @@ eraseLetter model =
 
 submitWord : Model -> Model
 submitWord model =
-    { model | result = checkResult model }
+    { model | hasWord = Just "", guessWord = "", result = checkResult model }
 
 
 checkResult : Model -> String
