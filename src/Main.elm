@@ -154,23 +154,7 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , p []
-            [ text <|
-                case model.output of
-                    Init ->
-                        "Start typing to match the word above"
-
-                    Holder ->
-                        -- this is an alternative to 'output = Init'
-                        -- try setting it in 'initialModel' and 'resetWord'
-                        model.placeholder
-
-                    Word ->
-                        model.guessWord
-
-                    Result ->
-                        model.result
-            ]
+        , p [] [ text (outputText model) ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
         ]
@@ -183,6 +167,24 @@ viewLoaded newWord model =
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
+
+
+outputText : Model -> String
+outputText model =
+    case model.output of
+        Init ->
+            "Start typing to match the word above"
+
+        Holder ->
+            -- this is an alternative to 'output = Init'
+            -- try 'output = Holder' in 'initialModel' and 'resetWord'
+            model.placeholder
+
+        Word ->
+            model.guessWord
+
+        Result ->
+            model.result
 
 
 alphabetRow : Int -> Int -> List (Html Msg)
