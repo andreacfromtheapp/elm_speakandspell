@@ -390,22 +390,22 @@ kbdEventToCommand event model =
                 )
 
             _ ->
-                ( if isAlphaStringValid (kbdEventToString event) then
-                    appendToGuessWord model (kbdEventToString event)
+                ( if isStringEmpty (kbdEventToString event) then
+                    model
 
                   else
-                    model
+                    appendToGuessWord model (kbdEventToString event)
                 , speak (kbdEventToString event)
                 )
 
 
-isAlphaStringValid : String -> Bool
-isAlphaStringValid string =
+isStringEmpty : String -> Bool
+isStringEmpty string =
     if String.isEmpty string then
-        False
+        True
 
     else
-        True
+        False
 
 
 isGuessEmtpy : Model -> Bool
