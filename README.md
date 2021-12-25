@@ -44,6 +44,13 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] show default message or GuessWord
   - [x] implement a conditional to only show GuessWord if valid
   - [x] awlays show clicked Nothing if GuessWord is empty
+- [x] output screen
+  - [x] has user started entering a word?
+    - [x] no: display default messasge telling the user what to do
+    - [x] yes: display typed text
+  - [x] erase letter: if guess word is emtpy display default message
+  - [x] retry/reset: display default message
+  - [x] submit: result text to take over as the only text on screen
 
 ### UI/UX
 
