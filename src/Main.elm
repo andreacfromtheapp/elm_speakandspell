@@ -159,6 +159,7 @@ viewLoaded newWord model =
             [ text <|
                 case model.output of
                     Init ->
+                        -- model.placeholder -- this was just a fun test
                         "Start typing to match the word above"
 
                     Word ->
