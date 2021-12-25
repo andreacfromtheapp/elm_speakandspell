@@ -13,8 +13,18 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 ## TODO
 
 - [x] stateful logic 🥳
-  - [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
+- [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
+- [x] now using ```type Output``` with a case  ~~use a Maybe String for model.click to~~
+  - [x] much clearer and less convoluted code
+  - [x] it can either be Init, Holder, Word, or Result upon sumbit
+  - [x] ~~show default message or GuessWord~~
+  - [x] ~~implement a conditional to only show GuessWord if valid~~
+  - [x] ~~awlays show clicked Nothing if GuessWord is empty~~
+
 - [x] [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) avoided (type Sound) 🥳 🥳 🥳
+
+---
+
 - [x] keyboard
   - [x] display keyboard onscreen
   - [x] onclick events to output
@@ -28,6 +38,9 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
       - [x] ~~**FIX**: Sumbit It keyboard shortcut doesn't use the right word~~
     - [x] send keycode to screen (see "user feedback" section)
     - [x] send keycode to speak (see "user feedback" section)
+
+---
+
 - [x] text to speech 🤖🤖🤖
   - [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
   - [x] let user disable voice
@@ -36,19 +49,16 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
       - [x] ~~just keys~~
       - [x] ~~just feedback~~
   - [x] no need for Sub (for now?)
+
+---
+
 - [x] refactor ```update``` and use helper functions
   - [x] reuse helper functions to streamline code
   - [x] declutter view's onClick events and use update for Msg
   - [x] not all Msg need to be parametrized
+
 ---
-- [x] now using a type Output with a case
-  - [x] much clearer and less convoluted code
-  - [x] it can either be Info (init text), Word, or Result upon sumbit
-- [x] ~~use a Maybe String for model.click to~~
-  - [x] ~~show default message or GuessWord~~
-  - [x] ~~implement a conditional to only show GuessWord if valid~~
-  - [x] ~~awlays show clicked Nothing if GuessWord is empty~~
----
+
 - [x] output screen
   - [x] has user started entering a word?
     - [x] no: display default messasge telling the user what to do
@@ -56,6 +66,8 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] erase letter: if guess word is emtpy display default message
   - [x] retry/reset: display default message
   - [x] submit: result text to take over as the only text on screen
+
+---
 
 ### UI/UX
 
@@ -84,11 +96,15 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [ ] fixed "field" for the user output
   - [ ] separate help and commands section
 
+---
+
 ### Improvements
 
 - [ ] should I use a Maybe KeyboardEvent?
 - [ ] refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?
   - [ ] would this be too convoluted? Elm likes clarity over complexity
+
+---
 
 ### Maybe
 
