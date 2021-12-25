@@ -312,12 +312,12 @@ update msg model =
             )
 
         Speak ->
-            ( model
+            ( wordToScreen model
             , speak (wordToSpeak model)
             )
 
         Spell ->
-            ( model
+            ( wordToScreen model
             , spell (splitToSpell (wordToSpeak model))
             )
 
@@ -361,12 +361,12 @@ kbdEventToCommand event model =
                 )
 
             "Eight" ->
-                ( model
+                ( wordToScreen model
                 , speak (wordToSpeak model)
                 )
 
             "Nine" ->
-                ( model
+                ( wordToScreen model
                 , spell (splitToSpell (wordToSpeak model))
                 )
 
@@ -462,6 +462,11 @@ setSound switch =
 
         Off ->
             sound False
+
+
+wordToScreen : Model -> Model
+wordToScreen model =
+    { model | output = Word }
 
 
 splitToSpell : String -> List String
