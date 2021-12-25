@@ -58,6 +58,7 @@ type alias NewWord =
 type alias Model =
     { status : Status
     , hasWord : Maybe String
+    , hasResult : Maybe String
     , sound : Sound
     , title : String
     , newWord : NewWord
@@ -74,6 +75,7 @@ initialModel : Model
 initialModel =
     { status = Loading
     , hasWord = Nothing
+    , hasResult = Nothing
     , sound = On
     , title = "Speak & Spell"
     , newWord =
@@ -151,15 +153,13 @@ viewLoaded newWord model =
         [ hr [] []
         , p []
             [ text <|
-                case model.hasWord of
+                case model.hasResult of
                     Just _ ->
-                        model.guessWord
+                        model.result
 
                     Nothing ->
-                        -- model.placeholder -- this was just a fun test
-                        "Start typing to match the word above"
+                        hasWord model
             ]
-        , p [] [ text model.result ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
         ]
@@ -172,6 +172,17 @@ viewLoaded newWord model =
         , button [ onClick ResetWord ] [ text "Retry" ]
         ]
     ]
+
+
+hasWord : Model -> String
+hasWord model =
+    case model.hasWord of
+        Just _ ->
+            model.guessWord
+
+        Nothing ->
+            -- model.placeholder -- this was just a fun test
+            "Start typing to match the word above"
 
 
 alphabetRow : Int -> Int -> List (Html Msg)
@@ -414,17 +425,17 @@ appendToGuessWord model string =
 
 resetWord : Model -> Model
 resetWord model =
-    { model | hasWord = Nothing, guessWord = "", result = "" }
+    { model | hasWord = Nothing, hasResult = Nothing, guessWord = "", result = "" }
 
 
 eraseLetter : Model -> Model
 eraseLetter model =
-    { model | guessWord = String.dropRight 1 model.guessWord, result = "" }
+    { model | guessWord = String.dropRight 1 model.guessWord, hasResult = Nothing, result = "" }
 
 
 submitWord : Model -> Model
 submitWord model =
-    { model | hasWord = Just "", guessWord = "", result = checkResult model }
+    { model | hasWord = Just "", hasResult = Just "", result = checkResult model }
 
 
 checkResult : Model -> String
