@@ -214,31 +214,29 @@ helpToggle helpText =
 
 helpHtml : List (Html Msg)
 helpHtml =
-    [ div []
-        [ p []
-            [ text """
+    [ p []
+        [ text """
                    This is a limited reproduction of the original game.
                     Match the word on the screen, and use the commands. That's it.
                    """
-            ]
-        , p []
-            [ text """
+        ]
+    , p []
+        [ text """
                     You can use your mouse to press the onscreen buttons.
                     You can type on your keyboard, and use the mapped keys:
                     """
-            ]
-        , ul []
-            [ li [] [ text "0 --> New Word" ]
-            , li [] [ text "1 --> Help" ]
-            , li [] [ text "2 --> Sound On" ]
-            , li [] [ text "3 --> Sound Off" ]
-            , li [] [ text "5 --> Reset Ouput" ]
-            , li [] [ text "6 --> Retry" ]
-            , li [] [ text "8 --> Speak It" ]
-            , li [] [ text "9 --> Spell It" ]
-            , li [] [ text "Backspace --> Erase Letter" ]
-            , li [] [ text "Enter --> Submit It" ]
-            ]
+        ]
+    , ul []
+        [ li [] [ text "0 --> New Word" ]
+        , li [] [ text "1 --> Help" ]
+        , li [] [ text "2 --> Sound On" ]
+        , li [] [ text "3 --> Sound Off" ]
+        , li [] [ text "5 --> Reset Ouput" ]
+        , li [] [ text "6 --> Retry" ]
+        , li [] [ text "8 --> Speak It" ]
+        , li [] [ text "9 --> Spell It" ]
+        , li [] [ text "Backspace --> Erase Letter" ]
+        , li [] [ text "Enter --> Submit It" ]
         ]
     ]
 
