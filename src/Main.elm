@@ -149,12 +149,12 @@ viewLoaded newWord model =
         ]
     , div []
         [ hr [] []
-        , div [] (alphabetRow 65 77)
-        , div [] (alphabetRow 78 90)
+        , div [] <| alphabetRow 65 77
+        , div [] <| alphabetRow 78 90
         ]
     , div []
         [ hr [] []
-        , p [] [ text (outputText model) ]
+        , p [] [ text <| outputText model ]
         , button [ onClick EraseLetter ] [ text "Erase Letter" ]
         , button [ onClick ResetWord ] [ text "Reset Output" ]
         ]
