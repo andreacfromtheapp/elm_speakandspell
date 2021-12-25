@@ -57,7 +57,7 @@ type alias NewWord =
 
 type alias Model =
     { status : Status
-    , hasEnteredWord : Maybe String
+    , hasWord : Maybe String
     , sound : Sound
     , title : String
     , newWord : NewWord
@@ -73,7 +73,7 @@ type alias Model =
 initialModel : Model
 initialModel =
     { status = Loading
-    , hasEnteredWord = Nothing
+    , hasWord = Nothing
     , sound = On
     , title = "Speak & Spell"
     , newWord =
@@ -151,7 +151,7 @@ viewLoaded newWord model =
         [ hr [] []
         , p []
             [ text <|
-                case model.hasEnteredWord of
+                case model.hasWord of
                     Just _ ->
                         model.guessWord
 
@@ -400,12 +400,12 @@ isGuessEmtpy model =
 
 appendToGuessWord : Model -> String -> Model
 appendToGuessWord model string =
-    { model | hasEnteredWord = Just string, guessWord = String.append model.guessWord string }
+    { model | hasWord = Just string, guessWord = String.append model.guessWord string }
 
 
 resetWord : Model -> Model
 resetWord model =
-    { model | hasEnteredWord = Nothing, guessWord = "", result = "" }
+    { model | hasWord = Nothing, guessWord = "", result = "" }
 
 
 eraseLetter : Model -> Model
