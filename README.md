@@ -4,7 +4,9 @@ This is my very first attempt at an [Elm](https://elm-lang.org/) app. I'm doing 
 
 I picked Speak & Spell because it's a good mix of UI/UX and it makes for a great starting point to learn and practice. It will never be more than a simple "*first project*" exercise. Being a *toy project* (no pun intended), it won't have too many features. I'll make it good enough to learn, and move on to resume my Elm learning path.
 
-The code certainly stinks, and I’m aware that it needs more love and that there is room for improvement. That's the point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.
+~~The code certainly stinks, and I’m aware that it needs more love and that there is room for improvement. That's the point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.~~
+
+This is a limited reproduction of the original game: match the word on the screen, and use the commands. It won't have Mystery Word or other play modes that the original Speak & Spell had. The point of this exercise is to: study, internalize, apply, learn some more, improve skills and code, rinse and repeat. Not to be a an exact copy.
 
 ## Try it
 
@@ -117,3 +119,14 @@ Provided that a *polyglot API* (or separate different languages APIs) exist, the
 - [ ] internationalization depending on dict language
   - [ ] help
   - [ ] commands
+
+---
+
+### Deploy
+
+Once complete, deploy a static website:
+
+- [ ] implement [GitHub Actions](https://github.com/features/actions)
+  - [ ] use one of the [existing Elm Actions](https://github.com/marketplace?type=actions&query=elm+?)
+  - [ ] create my own?
+- [ ] deploy to [GitHub Pages](https://docs.github.com/en/pages)
