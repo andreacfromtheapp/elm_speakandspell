@@ -102,6 +102,14 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ## Improvements
 
+### deal with Errors
+
+- [ ] create error pages for different status and messages
+- [ ] custom (parsed) message depending on the error nature
+- [ ] custom CSS to resemble the UI (e.g: spell ERROR with Speak & Spell styled keys)
+
+### others
+
 - [ ] ~~should I use a Maybe KeyboardEvent?~~
 - [ ] ~~refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?~~
   - [ ] ~~would this be too convoluted? Elm likes clarity over complexity~~
