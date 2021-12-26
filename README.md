@@ -108,6 +108,12 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [ ] custom (parsed) message depending on the error nature
 - [ ] custom CSS to resemble the UI (e.g: spell ERROR with Speak & Spell styled keys)
 
+### loading page
+
+- [ ] create a custom loading page
+  - [ ] use CSS to spell LOADING with Speak & Spell styled keys
+  - [ ] animated the LOADING words on screen
+
 ### others
 
 - [ ] ~~should I use a Maybe KeyboardEvent?~~
