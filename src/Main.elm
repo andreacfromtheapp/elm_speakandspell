@@ -5,7 +5,7 @@ import Browser.Events exposing (onKeyDown)
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode exposing (Decoder, string, succeed)
+import Json.Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (required)
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 
@@ -562,10 +562,10 @@ initialCmd =
 
 newWordDecoder : Decoder NewWord
 newWordDecoder =
-    succeed NewWord
-        |> required "word" string
-        |> required "definition" string
-        |> required "pronunciation" string
+    Json.Decode.succeed NewWord
+        |> required "word" Json.Decode.string
+        |> required "definition" Json.Decode.string
+        |> required "pronunciation" Json.Decode.string
 
 
 onKeyDownSub : Model -> Sub Msg
