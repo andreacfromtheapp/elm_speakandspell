@@ -5,8 +5,8 @@ import Browser.Events exposing (onKeyDown)
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode exposing (Decoder)
-import Json.Decode.Pipeline exposing (required)
+import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Pipeline as Pipeline
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 
 
@@ -556,21 +556,21 @@ initialCmd : Cmd Msg
 initialCmd =
     Http.get
         { url = randomWordApiUrl
-        , expect = Http.expectJson GetNewWord (Json.Decode.list newWordDecoder)
+        , expect = Http.expectJson GetNewWord (Decode.list newWordDecoder)
         }
 
 
 newWordDecoder : Decoder NewWord
 newWordDecoder =
-    Json.Decode.succeed NewWord
-        |> required "word" Json.Decode.string
-        |> required "definition" Json.Decode.string
-        |> required "pronunciation" Json.Decode.string
+    Decode.succeed NewWord
+        |> Pipeline.required "word" Decode.string
+        |> Pipeline.required "definition" Decode.string
+        |> Pipeline.required "pronunciation" Decode.string
 
 
 onKeyDownSub : Model -> Sub Msg
 onKeyDownSub _ =
-    onKeyDown (Json.Decode.map KeyPressed decodeKeyboardEvent)
+    onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
 
 
 
