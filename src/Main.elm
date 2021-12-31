@@ -39,7 +39,6 @@ type Msg
     | SubmitWord
     | Speak
     | Spell
-    | ToggleHelpText
     | SetSound Sound
 
 
@@ -78,7 +77,6 @@ type alias Model =
     , guessWord : String
     , checkWord : String
     , result : String
-    , help : List (Element Msg)
     }
 
 
@@ -97,7 +95,6 @@ initialModel =
     , guessWord = ""
     , checkWord = ""
     , result = ""
-    , help = [ none ]
     }
 
 
@@ -132,19 +129,9 @@ viewLoading =
 
 viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
-    column [ centerX, centerY ]
-        [ el [ Region.heading 1, paddingXY 0 10 ] (text model.title)
-        , row [ paddingXY 0 10, spacing 12 ]
-            [ Input.button [] { onPress = Just ToggleHelpText, label = text "Toggle Help" }
-            , Input.button [] { onPress = Just (SetSound On), label = text "Sound On" }
-            , Input.button [] { onPress = Just (SetSound Off), label = text "Sound Off" }
-            ]
-        , column [ paddingXY 0 10 ] <| model.help
-        , column [ paddingXY 0 10 ]
-            [ el [] (text ("Your word is: " ++ String.toUpper newWord.word))
-            , el [] (text ("Definition: " ++ newWord.definition))
-            , el [] (text ("Pronunciation: " ++ newWord.pronunciation))
-            ]
+        ]
+        [ row
+            [ width fill
         , row [] <| alphabetRow 65 77
         , row [] <| alphabetRow 78 90
         , row [ paddingXY 0 10 ] [ el [] (text (outputText model)) ]
@@ -195,46 +182,6 @@ alphabetRow start end =
 codeToString : Int -> String
 codeToString asciiCode =
     String.fromChar (Char.fromCode asciiCode)
-
-
-helpToggle : List (Element Msg) -> List (Element Msg)
-helpToggle helpText =
-    if helpText == [ none ] then
-        helpHtml
-
-    else
-        [ none ]
-
-
-helpHtml : List (Element Msg)
-helpHtml =
-    [ textColumn []
-        [ paragraph [ paddingXY 0 10 ]
-            [ text """
-            This is a limited reproduction of the original game.
-            Match the word on the screen, and use the commands. That's it.
-            """
-            ]
-        , paragraph [ paddingXY 0 10 ]
-            [ text """
-            You can use your mouse to press the onscreen buttons.
-            You can type on your keyboard, and use the mapped keys:
-            """
-            ]
-        ]
-    , textColumn [ paddingXY 0 10, spacing 8 ]
-        [ paragraph [] [ text "1 --> Help" ]
-        , paragraph [] [ text "2 --> Sound On" ]
-        , paragraph [] [ text "3 --> Sound Off" ]
-        , paragraph [] [ text "5 --> Reset Ouput" ]
-        , paragraph [] [ text "6 --> Retry" ]
-        , paragraph [] [ text "8 --> Speak It" ]
-        , paragraph [] [ text "9 --> Spell It" ]
-        , paragraph [] [ text "0 --> New Word" ]
-        , paragraph [] [ text "Backspace --> Erase Letter" ]
-        , paragraph [] [ text "Enter --> Submit It" ]
-        ]
-    ]
 
 
 
@@ -297,11 +244,6 @@ update msg model =
             , speak (checkResult model)
             )
 
-        ToggleHelpText ->
-            ( toggleHelpText model
-            , Cmd.none
-            )
-
         SetSound param ->
             ( model
             , setSound param
@@ -331,11 +273,6 @@ kbdEventToCommand event model =
 
     else
         case Debug.toString event.keyCode of
-            "One" ->
-                ( toggleHelpText model
-                , Cmd.none
-                )
-
             "Two" ->
                 ( model
                 , setSound On
@@ -442,12 +379,7 @@ checkResult model =
         "Congratulations! " ++ model.guessWord ++ " is correct!"
 
     else
-        "Oh no... " ++ model.guessWord ++ " isn't right..."
-
-
-toggleHelpText : Model -> Model
-toggleHelpText model =
-    { model | help = helpToggle model.help }
+        
 
 
 setSound : Sound -> Cmd Msg
