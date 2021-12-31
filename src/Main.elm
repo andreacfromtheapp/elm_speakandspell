@@ -129,22 +129,189 @@ viewLoading =
 
 viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
+    column
+        [ Background.color (rgba255 251 50 0 1)
+        , centerX
+        , centerY
+        , Border.rounded 24
         ]
         [ row
             [ width fill
-        , row [] <| alphabetRow 65 77
-        , row [] <| alphabetRow 78 90
-        , row [ paddingXY 0 10 ] [ el [] (text (outputText model)) ]
-        , row [ paddingXY 0 10, spacing 12 ]
-            [ Input.button [] { onPress = Just EraseLetter, label = text "Erase Letter" }
-            , Input.button [] { onPress = Just ResetWord, label = text "Reset Output" }
+            , padding 20
+            , spacing 10
+            , Font.family
+                [ Font.typeface "LiberationMonoRegular"
+                , Font.monospace
+                ]
             ]
-        , row [ paddingXY 0 10, spacing 12 ]
-            [ Input.button [] { onPress = Just GetAnotherWord, label = text "New Word" }
-            , Input.button [] { onPress = Just Speak, label = text "Speak It" }
-            , Input.button [] { onPress = Just Spell, label = text "Spell It" }
-            , Input.button [] { onPress = Just SubmitWord, label = text "Submit It" }
-            , Input.button [] { onPress = Just ResetWord, label = text "Retry" }
+            [ column
+                [ Background.color (rgba255 20 153 223 1)
+                , Font.color (rgb255 255 255 255)
+                , Font.medium
+                , Font.size 20
+                , Border.color (rgba255 0 0 20 1)
+                , Border.width 1
+                , Border.solid
+                , Border.rounded 10
+                , padding 20
+                , spacing 8
+                , width fill
+                ]
+                [ el [] (text ("Your word is: " ++ String.toUpper newWord.word))
+                , el [] (text ("Definition: " ++ newWord.definition))
+                , el [] (text ("Pronunciation: " ++ newWord.pronunciation))
+                ]
+            , Input.button
+                [ Background.color (rgba255 250 175 0 1)
+                , Border.color (rgba255 0 0 20 1)
+                , Border.width 1
+                , Border.solid
+                , Border.rounded 10
+                , padding 12
+                , alignRight
+                , Font.semiBold
+                , Font.size 16
+                ]
+                { onPress = Just GetAnotherWord, label = text "New Word [0]" }
+            ]
+        , row
+            [ Background.color (rgba255 0 0 0 1)
+            , Font.family
+                [ Font.typeface "LCD14"
+                , Font.monospace
+                ]
+            , Font.color (rgba255 110 200 120 1)
+            , Font.size 32
+            , Font.semiBold
+            , padding 24
+            , height (px 120)
+            , width fill
+            ]
+            [ el
+                [ centerX
+                , centerY
+                ]
+                (text (outputText model))
+            ]
+        , column
+            [ Background.color (rgba255 20 153 223 1)
+            , Font.family
+                [ Font.typeface "LiberationMonoRegular"
+                , Font.monospace
+                ]
+            , Font.size 16
+            , width fill
+            , padding 20
+            , spacing 10
+            ]
+            [ row
+                [ spacingXY 10 0
+                , centerY
+                , centerX
+                ]
+              <|
+                alphabetRow 65 77
+            , row
+                [ spacingXY 10 0
+                , centerY
+                , centerX
+                ]
+              <|
+                alphabetRow 78 90
+            , row
+                [ paddingXY 0 10
+                , spacing 18
+                , centerY
+                , centerX
+                , Font.semiBold
+                ]
+                [ Input.button
+                    [ Background.color (rgba255 250 175 0 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , padding 12
+                    ]
+                    { onPress = Just EraseLetter, label = text "Erase Letter [↤]" }
+                , Input.button
+                    [ Background.color (rgba255 250 175 0 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , padding 12
+                    ]
+                    { onPress = Just ResetWord, label = text "Reset Output [5]" }
+                , Input.button
+                    [ Background.color (rgba255 250 175 0 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , padding 12
+                    ]
+                    { onPress = Just Speak, label = text "Speak [8]" }
+                , Input.button
+                    [ Background.color (rgba255 250 175 0 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , padding 12
+                    ]
+                    { onPress = Just Spell, label = text "Spell [9]" }
+                , Input.button
+                    [ Background.color (rgba255 250 175 0 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , padding 12
+                    ]
+                    { onPress = Just SubmitWord, label = text "Submit [↵]" }
+                , Input.button
+                    [ Background.color (rgba255 250 175 0 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , padding 12
+                    ]
+                    { onPress = Just ResetWord, label = text "Retry [6]" }
+                ]
+            ]
+        , row
+            [ paddingXY 0 10
+            , spacing 12
+            , alignRight
+            , padding 20
+            , Font.family
+                [ Font.typeface "LiberationMonoRegular"
+                , Font.monospace
+                ]
+            , Font.size 16
+            , Font.semiBold
+            ]
+            [ el [] (text model.title)
+            , Input.button
+                [ Background.color (rgba255 250 175 0 1)
+                , Border.color (rgba255 0 0 20 1)
+                , Border.width 1
+                , Border.solid
+                , Border.rounded 10
+                , padding 12
+                ]
+                { onPress = Just (SetSound On), label = text "Sound On [2]" }
+            , Input.button
+                [ Background.color (rgba255 250 175 0 1)
+                , Border.color (rgba255 0 0 20 1)
+                , Border.width 1
+                , Border.solid
+                , Border.rounded 10
+                , padding 12
+                ]
+                { onPress = Just (SetSound Off), label = text "Sound Off [3]" }
             ]
         ]
 
@@ -172,7 +339,17 @@ alphabetRow start end =
     List.range start end
         |> List.map
             (\asciiCode ->
-                Input.button []
+                Input.button
+                    [ Background.color (rgba255 253 116 6 1)
+                    , Font.size 24
+                    , Font.bold
+                    , padding 24
+                    , spaceEvenly
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
                     , label = text (codeToString asciiCode)
                     }
