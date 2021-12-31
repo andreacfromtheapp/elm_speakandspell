@@ -74,15 +74,13 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ## UI/UX
 
-- [ ] vanilla CSS? CSS framework? elm-css? elm-ui? [or|plus] SVG?!?
-- [ ] should I care for PostCSS (and its plugins)?
+- [ ] loosely look like Speak & Spell (make it look & feel like a toy)
+  - [ ] keys (vowels, consonants, commands) to look different
+  - [ ] use random emojis in lieu of the Elm logo?
 - [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [ ] responsive design
   - [ ] mobile first
   - [ ] no onscreen keyboard on mobile
-- [ ] loosely look like Speak & Spell (make it look & feel like a toy)
-  - [ ] keys (vowels, consonants, commands) to look different
-  - [ ] use random emojis in lieu of the Elm logo?
 - [ ] user feedback
   - [x] feedback for keypresses
     - [x] written feedback
