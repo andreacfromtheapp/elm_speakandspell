@@ -153,7 +153,7 @@ outputText : Model -> String
 outputText model =
     case model.output of
         Init ->
-            "Start typing to match the word above"
+            "START TYPING TO MATCH THE WORD ABOVE"
 
         Holder ->
             -- this is an alternative to 'output = Init'
