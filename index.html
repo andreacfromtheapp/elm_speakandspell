@@ -1,48 +1,56 @@
 <!DOCTYPE html>
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Speak & Spell</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speak & Spell</title>
 
-  <!-- Compiled Elm code -->
-  <script type="text/javascript" src="elm.js"></script>
+    <!-- Compiled Elm code -->
+    <script type="text/javascript" src="elm.js"></script>
+
+    <!-- Fonts -->
+    <link
+        rel="stylesheet"
+        media="screen"
+        href="https://fontlibrary.org/face/lcd"
+        type="text/css"
+    />
 </head>
 
 <body>
-  <body>
-    <main></main>
-    <script>
-      // Start the Elm application.
-      let app = Elm.Main.init({
-        node: document.querySelector("main"),
-      });
+    <body>
+        <main></main>
+        <script>
+            // Start the Elm application.
+            let app = Elm.Main.init({
+                node: document.querySelector("main"),
+            });
 
-      // Instantiate Speech Synth API
-      let synth = window.speechSynthesis;
-      let utter = new SpeechSynthesisUtterance();
+            // Instantiate Speech Synth API
+            let synth = window.speechSynthesis;
+            let utter = new SpeechSynthesisUtterance();
 
-      // Pause/Resume Speech Synth API (SetSound On | Off)
-      app.ports.sound.subscribe(function (message) {
-        synth.cancel();
-        if (message == true) {
-          synth.resume();
-        } else {
-          synth.pause();
-        }
-      });
+            // Pause/Resume Speech Synth API (SetSound On | Off)
+            app.ports.sound.subscribe(function (message) {
+                synth.cancel();
+                if (message == true) {
+                    synth.resume();
+                } else {
+                    synth.pause();
+                }
+            });
 
-      // We receive the whole word here and speak it
-      app.ports.speak.subscribe(function (message) {
-        utter.text = message;
-        synth.speak(utter);
-      });
+            // We receive the whole word here and speak it
+            app.ports.speak.subscribe(function (message) {
+                utter.text = message;
+                synth.speak(utter);
+            });
 
-      // We receive the split word here and spell it
-      app.ports.spell.subscribe(function (message) {
-        utter.text = message;
-        synth.speak(utter);
-      });
-    </script>
-  </body>
+            // We receive the split word here and spell it
+            app.ports.spell.subscribe(function (message) {
+                utter.text = message;
+                synth.speak(utter);
+            });
+        </script>
+    </body>
 </body>
