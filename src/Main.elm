@@ -104,7 +104,7 @@ initialModel =
 
 view : Model -> Html Msg
 view model =
-    layout [ Element.explain Debug.todo ] <|
+    layout [] <|
         case model.status of
             Loading ->
                 viewLoading
