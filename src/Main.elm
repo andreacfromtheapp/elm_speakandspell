@@ -373,13 +373,13 @@ submitWord model =
 checkResult : Model -> String
 checkResult model =
     if String.isEmpty model.guessWord then
-        "Nope! An empty string is never the answer..."
+        "AN EMPTY STRING IS NEVER THE ANSWER..."
 
     else if model.guessWord == model.checkWord then
-        "Congratulations! " ++ model.guessWord ++ " is correct!"
+        "CONGRATULATIONS! " ++ model.guessWord ++ " IS CORRECT!"
 
     else
-        
+        "OH NO... " ++ model.guessWord ++ " ISN'T RIGHT..."
 
 
 setSound : Sound -> Cmd Msg
