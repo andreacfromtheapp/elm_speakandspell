@@ -2,8 +2,14 @@ port module Main exposing (main)
 
 import Browser
 import Browser.Events exposing (onKeyDown)
-import Html exposing (..)
-import Html.Events exposing (onClick)
+import Element exposing (..)
+import Element.Background as Background
+import Element.Border as Border
+import Element.Events exposing (onClick)
+import Element.Font as Font
+import Element.Input as Input
+import Element.Region as Region
+import Html exposing (Html)
 import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
@@ -72,7 +78,7 @@ type alias Model =
     , guessWord : String
     , checkWord : String
     , result : String
-    , help : List (Html Msg)
+    , help : List (Element Msg)
     }
 
 
@@ -91,7 +97,7 @@ initialModel =
     , guessWord = ""
     , checkWord = ""
     , result = ""
-    , help = []
+    , help = [ none ]
     }
 
 
@@ -101,7 +107,7 @@ initialModel =
 
 view : Model -> Html Msg
 view model =
-    div [] <|
+    layout [ Element.explain Debug.todo ] <|
         case model.status of
             Loading ->
                 viewLoading
@@ -110,63 +116,50 @@ view model =
                 viewLoaded word model
 
             Errored errorMessage ->
-                [ text ("Error: " ++ errorMessage) ]
+                el [] (text errorMessage)
 
 
-viewLoading : List (Html Msg)
+viewLoading : Element Msg
 viewLoading =
-    [ blockquote []
-        [ p []
-            [ text """
+    paragraph [ centerX, centerY ]
+        [ text """
                 Methods are never the answer in Elm;
                 over here it's all vanilla functions, all the time.
                 """
-            ]
-        , footer []
-            [ text "— "
-            , cite []
-                [ text """excerpt from "Elm in Action", by Richard Feldman"""
-                ]
-            ]
+        , text """-- excerpt from "Elm in Action", by Richard Feldman"""
         ]
-    ]
 
 
-viewLoaded : NewWord -> Model -> List (Html Msg)
+viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
-    [ div []
-        [ h1 [] [ text model.title ]
-        , button [ onClick ToggleHelpText ] [ text "Toggle Help" ]
-        , button [ onClick (SetSound On) ] [ text "Sound On" ]
-        , button [ onClick (SetSound Off) ] [ text "Sound Off" ]
-        , div [] <| model.help
+    column [ centerX, centerY ]
+        [ el [ Region.heading 1, paddingXY 0 10 ] (text model.title)
+        , row [ paddingXY 0 10, spacing 12 ]
+            [ Input.button [] { onPress = Just ToggleHelpText, label = text "Toggle Help" }
+            , Input.button [] { onPress = Just (SetSound On), label = text "Sound On" }
+            , Input.button [] { onPress = Just (SetSound Off), label = text "Sound Off" }
+            ]
+        , column [ paddingXY 0 10 ] <| model.help
+        , column [ paddingXY 0 10 ]
+            [ el [] (text ("Your word is: " ++ String.toUpper newWord.word))
+            , el [] (text ("Definition: " ++ newWord.definition))
+            , el [] (text ("Pronunciation: " ++ newWord.pronunciation))
+            ]
+        , row [] <| alphabetRow 65 77
+        , row [] <| alphabetRow 78 90
+        , row [ paddingXY 0 10 ] [ el [] (text (outputText model)) ]
+        , row [ paddingXY 0 10, spacing 12 ]
+            [ Input.button [] { onPress = Just EraseLetter, label = text "Erase Letter" }
+            , Input.button [] { onPress = Just ResetWord, label = text "Reset Output" }
+            ]
+        , row [ paddingXY 0 10, spacing 12 ]
+            [ Input.button [] { onPress = Just GetAnotherWord, label = text "New Word" }
+            , Input.button [] { onPress = Just Speak, label = text "Speak It" }
+            , Input.button [] { onPress = Just Spell, label = text "Spell It" }
+            , Input.button [] { onPress = Just SubmitWord, label = text "Submit It" }
+            , Input.button [] { onPress = Just ResetWord, label = text "Retry" }
+            ]
         ]
-    , div []
-        [ hr [] []
-        , p [] [ text ("Your word is: " ++ String.toUpper newWord.word) ]
-        , p [] [ text ("Definition: " ++ newWord.definition) ]
-        , p [] [ text ("Pronunciation: " ++ newWord.pronunciation) ]
-        ]
-    , div []
-        [ hr [] []
-        , div [] <| alphabetRow 65 77
-        , div [] <| alphabetRow 78 90
-        ]
-    , div []
-        [ hr [] []
-        , p [] [ text <| outputText model ]
-        , button [ onClick EraseLetter ] [ text "Erase Letter" ]
-        , button [ onClick ResetWord ] [ text "Reset Output" ]
-        ]
-    , div []
-        [ hr [] []
-        , button [ onClick GetAnotherWord ] [ text "New Word" ]
-        , button [ onClick Speak ] [ text "Speak It" ]
-        , button [ onClick Spell ] [ text "Spell It" ]
-        , button [ onClick SubmitWord ] [ text "Submit It" ]
-        , button [ onClick ResetWord ] [ text "Retry" ]
-        ]
-    ]
 
 
 outputText : Model -> String
@@ -187,14 +180,15 @@ outputText model =
             model.result
 
 
-alphabetRow : Int -> Int -> List (Html Msg)
+alphabetRow : Int -> Int -> List (Element Msg)
 alphabetRow start end =
     List.range start end
         |> List.map
             (\asciiCode ->
-                button
-                    [ onClick (KeyClicked (codeToString asciiCode)) ]
-                    [ text (codeToString asciiCode) ]
+                Input.button []
+                    { onPress = Just (KeyClicked (codeToString asciiCode))
+                    , label = text (codeToString asciiCode)
+                    }
             )
 
 
@@ -203,40 +197,42 @@ codeToString asciiCode =
     String.fromChar (Char.fromCode asciiCode)
 
 
-helpToggle : List (Html Msg) -> List (Html Msg)
+helpToggle : List (Element Msg) -> List (Element Msg)
 helpToggle helpText =
-    if List.isEmpty helpText then
+    if helpText == [ none ] then
         helpHtml
 
     else
-        []
+        [ none ]
 
 
-helpHtml : List (Html Msg)
+helpHtml : List (Element Msg)
 helpHtml =
-    [ p []
-        [ text """
-                   This is a limited reproduction of the original game.
-                    Match the word on the screen, and use the commands. That's it.
-                   """
+    [ textColumn []
+        [ paragraph [ paddingXY 0 10 ]
+            [ text """
+            This is a limited reproduction of the original game.
+            Match the word on the screen, and use the commands. That's it.
+            """
+            ]
+        , paragraph [ paddingXY 0 10 ]
+            [ text """
+            You can use your mouse to press the onscreen buttons.
+            You can type on your keyboard, and use the mapped keys:
+            """
+            ]
         ]
-    , p []
-        [ text """
-                    You can use your mouse to press the onscreen buttons.
-                    You can type on your keyboard, and use the mapped keys:
-                    """
-        ]
-    , ul []
-        [ li [] [ text "1 --> Help" ]
-        , li [] [ text "2 --> Sound On" ]
-        , li [] [ text "3 --> Sound Off" ]
-        , li [] [ text "5 --> Reset Ouput" ]
-        , li [] [ text "6 --> Retry" ]
-        , li [] [ text "8 --> Speak It" ]
-        , li [] [ text "9 --> Spell It" ]
-        , li [] [ text "0 --> New Word" ]
-        , li [] [ text "Backspace --> Erase Letter" ]
-        , li [] [ text "Enter --> Submit It" ]
+    , textColumn [ paddingXY 0 10, spacing 8 ]
+        [ paragraph [] [ text "1 --> Help" ]
+        , paragraph [] [ text "2 --> Sound On" ]
+        , paragraph [] [ text "3 --> Sound Off" ]
+        , paragraph [] [ text "5 --> Reset Ouput" ]
+        , paragraph [] [ text "6 --> Retry" ]
+        , paragraph [] [ text "8 --> Speak It" ]
+        , paragraph [] [ text "9 --> Spell It" ]
+        , paragraph [] [ text "0 --> New Word" ]
+        , paragraph [] [ text "Backspace --> Erase Letter" ]
+        , paragraph [] [ text "Enter --> Submit It" ]
         ]
     ]
 
@@ -260,12 +256,12 @@ update msg model =
                     )
 
                 [] ->
-                    ( { model | status = Errored "No words found :(" }
+                    ( { model | status = Errored "Error: No words found :(" }
                     , Cmd.none
                     )
 
         GetNewWord (Err err) ->
-            ( { model | status = Errored (Debug.toString err) }
+            ( { model | status = Errored ("Error: " ++ Debug.toString err) }
             , Cmd.none
             )
 
