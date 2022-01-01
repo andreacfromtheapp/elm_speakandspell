@@ -72,8 +72,6 @@ type alias Model =
     , output : Output
     , sound : Sound
     , newWord : NewWord
-    , title : String
-    , brand : String
     , placeholder : String
     , guessWord : String
     , checkWord : String
@@ -91,8 +89,6 @@ initialModel =
         , definition = ""
         , pronunciation = ""
         }
-    , title = "Speak & Spell"
-    , brand = "Elm Instruments"
     , placeholder = ""
     , guessWord = ""
     , checkWord = ""
@@ -133,32 +129,44 @@ viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
         [ Background.color (rgba255 251 50 0 1)
-        , Border.roundEach { bottomLeft = 80, bottomRight = 80, topLeft = 40, topRight = 40 }
+        , Border.roundEach
+            { bottomLeft = 80
+            , bottomRight = 80
+            , topLeft = 40
+            , topRight = 40
+            }
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.bold
         , centerX
         , centerY
         ]
         [ row
             [ width fill
             , height (px 220)
-
-            -- , paddingXY 60 40
             , padding 40
-            , Font.family
-                [ Font.typeface "LiberationMonoRegular"
-                , Font.monospace
-                ]
             ]
             [ column
                 [ Background.color (rgba255 20 153 223 1)
+                , Border.color (rgba255 0 0 0 1)
+                , Border.widthEach
+                    { bottom = 1
+                    , left = 1
+                    , right = 0
+                    , top = 1
+                    }
+                , Border.solid
+                , Border.roundEach
+                    { bottomLeft = 30
+                    , bottomRight = 0
+                    , topLeft = 30
+                    , topRight = 0
+                    }
+                , Font.size 20
                 , Font.color (rgb255 255 255 255)
                 , Font.medium
-                , Font.size 20
-
-                -- , Border.color (rgba255 254 56 9 1)
-                , Border.color (rgba255 0 0 0 1)
-                , Border.widthEach { bottom = 1, left = 1, right = 0, top = 1 }
-                , Border.solid
-                , Border.roundEach { bottomLeft = 30, bottomRight = 0, topLeft = 30, topRight = 0 }
                 , padding 20
                 , spacing 8
                 , width fill
@@ -171,19 +179,29 @@ viewLoaded newWord model =
             , Input.button
                 [ Background.color (rgba255 250 175 0 1)
                 , Border.color (rgba255 0 0 0 1)
-
-                -- , Border.color (rgba255 254 56 9 1)
-                , Border.widthEach { bottom = 1, left = 1, right = 1, top = 1 }
+                , Border.widthEach
+                    { bottom = 1
+                    , left = 1
+                    , right = 1
+                    , top = 1
+                    }
                 , Border.solid
-                , Border.roundEach { bottomLeft = 0, bottomRight = 30, topLeft = 0, topRight = 30 }
-                , Font.semiBold
+                , Border.roundEach
+                    { bottomLeft = 0
+                    , bottomRight = 30
+                    , topLeft = 0
+                    , topRight = 30
+                    }
                 , Font.size 16
                 , padding 12
                 , height fill
                 ]
                 { onPress = Just GetAnotherWord, label = text "NEW WORD [0]" }
             ]
-        , column [ width fill, Background.color (rgba255 0 0 0 1) ]
+        , column
+            [ width fill
+            , Background.color (rgba255 0 0 0 1)
+            ]
             [ row
                 [ Font.family
                     [ Font.typeface "LCD14"
@@ -191,7 +209,6 @@ viewLoaded newWord model =
                     ]
                 , Font.color (rgba255 110 200 120 0.8)
                 , Font.size 32
-                , Font.semiBold
                 , padding 20
                 , height (px 160)
                 , width fill
@@ -199,56 +216,78 @@ viewLoaded newWord model =
                 [ el
                     [ centerX
                     , centerY
-                    , paddingEach { bottom = 0, left = 0, right = 0, top = 20 }
+                    , paddingEach
+                        { bottom = 0
+                        , left = 0
+                        , right = 0
+                        , top = 20
+                        }
                     ]
                     (text (outputText model))
                 ]
             , paragraph []
                 [ newTabLink
-                    [ Font.family
-                        [ Font.typeface "LiberationMonoRegular"
-                        , Font.monospace
-                        ]
-                    , Font.color (rgba255 120 113 89 1)
+                    [ Font.color (rgba255 120 113 89 1)
                     , Font.size 20
                     , width fill
                     , alignRight
-                    , paddingEach { bottom = 20, left = 0, right = 50, top = 0 }
+                    , paddingEach
+                        { bottom = 20
+                        , left = 0
+                        , right = 50
+                        , top = 0
+                        }
                     ]
                     { url = "https://elm-lang.org/"
-                    , label = text model.brand
+                    , label = text "Elm Instruments"
                     }
                 ]
             ]
         , column
             [ width fill
-            , paddingEach { bottom = 120, left = 40, right = 40, top = 60 }
+            , paddingEach
+                { bottom = 120
+                , left = 40
+                , right = 40
+                , top = 60
+                }
             ]
             [ column
                 [ Background.color (rgba255 255 215 6 1)
-                , Border.roundEach { bottomLeft = 60, bottomRight = 60, topLeft = 20, topRight = 20 }
+                , Border.roundEach
+                    { bottomLeft = 60
+                    , bottomRight = 60
+                    , topLeft = 20
+                    , topRight = 20
+                    }
                 , spacing 20
                 , width fill
-                , paddingEach { bottom = 80, left = 20, right = 20, top = 20 }
+                , paddingEach
+                    { bottom = 80
+                    , left = 20
+                    , right = 20
+                    , top = 20
+                    }
                 ]
                 [ column
                     [ Background.color (rgba255 251 50 0 1)
                     , Border.rounded 20
                     , spacing 20
                     , width fill
-                    , paddingEach { bottom = 20, left = 20, right = 20, top = 40 }
+                    , paddingEach
+                        { bottom = 20
+                        , left = 20
+                        , right = 20
+                        , top = 40
+                        }
                     ]
                     [ column
                         [ Background.color (rgba255 20 153 223 1)
-                        , Font.family
-                            [ Font.typeface "LiberationMonoRegular"
-                            , Font.monospace
-                            ]
-                        , Font.size 16
                         , Border.color (rgba255 0 0 20 1)
                         , Border.width 1
                         , Border.solid
                         , Border.rounded 10
+                        , Font.size 16
                         , width fill
                         , padding 20
                         , spacing 10
@@ -271,7 +310,6 @@ viewLoaded newWord model =
                             [ spacingXY 14 0
                             , centerY
                             , centerX
-                            , Font.semiBold
                             ]
                             [ Input.button
                                 [ Background.color (rgba255 250 175 0 1)
@@ -331,35 +369,64 @@ viewLoaded newWord model =
                         ]
                     ]
                 , row
-                    [ Font.family
-                        [ Font.typeface "LiberationMonoRegular"
-                        , Font.monospace
-                        ]
-                    , Font.size 16
-                    , Font.semiBold
-                    , width fill
-                    , spacing 12
-                    , paddingEach { bottom = 0, left = 0, right = 0, top = 40 }
+                    [ width fill
+                    , paddingEach
+                        { bottom = 0
+                        , left = 0
+                        , right = 0
+                        , top = 42
+                        }
                     ]
-                    [ el [ Font.size 32, width fill ] (text model.title)
-                    , Input.button
-                        [ Background.color (rgba255 255 73 6 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , padding 12
+                    [ paragraph
+                        [ Font.family
+                            [ Font.typeface "LiberationSerifRegular"
+                            , Font.serif
+                            ]
+                        , Font.size 64
+                        , Font.extraBold
+                        , spacing 10
                         ]
-                        { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
-                    , Input.button
-                        [ Background.color (rgba255 255 73 6 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , padding 12
+                        [ el
+                            [ Font.color (rgb255 255 73 6)
+                            , alignLeft
+                            ]
+                            (text "Speak")
+                        , el
+                            [ Font.color (rgb255 255 234 240)
+                            , Font.glow (rgb255 45 166 239) 1
+                            , alignLeft
+                            ]
+                            (text "&")
+                        , el
+                            [ Font.color (rgb255 45 166 239)
+                            , alignLeft
+                            ]
+                            (text "Spell")
                         ]
-                        { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
+                    , paragraph
+                        [ Font.size 16
+                        ]
+                        [ Input.button
+                            [ Background.color (rgba255 255 73 6 1)
+                            , Border.color (rgba255 0 0 20 1)
+                            , Border.width 1
+                            , Border.solid
+                            , Border.rounded 10
+                            , padding 12
+                            , alignRight
+                            ]
+                            { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
+                        , Input.button
+                            [ Background.color (rgba255 255 73 6 1)
+                            , Border.color (rgba255 0 0 20 1)
+                            , Border.width 1
+                            , Border.solid
+                            , Border.rounded 10
+                            , padding 12
+                            , alignRight
+                            ]
+                            { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
+                        ]
                     ]
                 ]
             ]
@@ -391,12 +458,11 @@ alphabetRow start end =
             (\asciiCode ->
                 Input.button
                     [ Background.color (rgba255 253 116 6 1)
-                    , Font.size 20
-                    , Font.bold
                     , Border.color (rgba255 0 0 20 1)
                     , Border.width 1
                     , Border.solid
                     , Border.rounded 10
+                    , Font.size 20
                     , padding 20
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
