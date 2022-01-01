@@ -415,7 +415,7 @@ viewLoaded newWord model =
                             , padding 12
                             , alignRight
                             ]
-                            { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
+                            { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
                         , Input.button
                             [ Background.color (rgba255 255 73 6 1)
                             , Border.color (rgba255 0 0 20 1)
@@ -425,7 +425,7 @@ viewLoaded newWord model =
                             , padding 12
                             , alignRight
                             ]
-                            { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
+                            { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
                         ]
                     ]
                 ]
