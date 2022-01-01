@@ -74,29 +74,28 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ## UI/UX
 
-- [ ] loosely look like Speak & Spell (make it look & feel like a toy)
-  - [ ] keys (vowels, consonants, commands) to look different
-  - [ ] use random emojis in lieu of the Elm logo?
-- [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
+- [x] loosely look like Speak & Spell (make it look & feel like a toy)
+  - [x] keys (alphabet, commands) to look different
 - [ ] responsive design
-  - [ ] mobile first
-  - [ ] no onscreen keyboard on mobile
+- [ ] no onscreen keyboard on mobile
+- [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [ ] user feedback
   - [x] feedback for keypresses
     - [x] written feedback
     - [x] auditory feedback with SpeechSynthesis
-    - [ ] visual feedback (CSS animations?)
+    - [ ] visual feedback (change color)
+    - [ ] is key stuck?
   - [x] feedback upon checking the spelling
     - [x] written feedback
     - [x] auditory feedback
-    - [ ] visual feedback (CSS animations?)
-- [ ] screen
-  - [ ] retro-looking/low-fi/8bit
-  - [ ] expandable "side loading screen" for the description?
-  - [ ] expandable "bottom loading screen" for the help section
-    - [x] help toggle in Elm (temporary. exercise more than anything)
-  - [ ] fixed "field" for the user output
-  - [ ] separate help and commands section
+- [x] screen
+  - [x] retro-looking/low-fi/8bit
+  - [x] fixed "field" for the user output
+  - [x] Elm Instruments
+- [ ] ~~expandable "side loading screen" for the description?~~
+- [ ] ~~expandable "bottom loading screen" for the help section~~
+  - [x] ~~help toggle in Elm (temporary. exercise more than anything)~~
+  - [ ] ~~separate help and commands section~~
 
 ## Improvements
 
