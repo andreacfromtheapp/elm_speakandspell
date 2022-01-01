@@ -73,6 +73,7 @@ type alias Model =
     , sound : Sound
     , newWord : NewWord
     , title : String
+    , brand : String
     , placeholder : String
     , guessWord : String
     , checkWord : String
@@ -91,6 +92,7 @@ initialModel =
         , pronunciation = ""
         }
     , title = "Speak & Spell"
+    , brand = "Elm Instruments"
     , placeholder = ""
     , guessWord = ""
     , checkWord = ""
@@ -131,13 +133,16 @@ viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
         [ Background.color (rgba255 251 50 0 1)
+        , Border.roundEach { bottomLeft = 80, bottomRight = 80, topLeft = 40, topRight = 40 }
         , centerX
         , centerY
-        , Border.rounded 24
         ]
         [ row
             [ width fill
-            , padding 20
+            , height (px 220)
+
+            -- , paddingXY 60 40
+            , padding 40
             , Font.family
                 [ Font.typeface "LiberationMonoRegular"
                 , Font.monospace
@@ -148,178 +153,214 @@ viewLoaded newWord model =
                 , Font.color (rgb255 255 255 255)
                 , Font.medium
                 , Font.size 20
-                , Border.color (rgba255 0 0 20 1)
+
+                -- , Border.color (rgba255 254 56 9 1)
+                , Border.color (rgba255 0 0 0 1)
                 , Border.widthEach { bottom = 1, left = 1, right = 0, top = 1 }
                 , Border.solid
-                , Border.roundEach { bottomLeft = 10, bottomRight = 0, topLeft = 10, topRight = 0 }
+                , Border.roundEach { bottomLeft = 30, bottomRight = 0, topLeft = 30, topRight = 0 }
                 , padding 20
                 , spacing 8
                 , width fill
+                , height fill
                 ]
-                [ el [] (text ("Your word is: " ++ String.toUpper newWord.word))
-                , el [] (text ("Definition: " ++ newWord.definition))
-                , el [] (text ("Pronunciation: " ++ newWord.pronunciation))
+                [ el [ centerY ] (text ("Your word is: " ++ String.toUpper newWord.word))
+                , el [ centerY ] (text ("Definition: " ++ newWord.definition))
+                , el [ centerY ] (text ("Pronunciation: " ++ newWord.pronunciation))
                 ]
             , Input.button
                 [ Background.color (rgba255 250 175 0 1)
-                , Border.color (rgba255 0 0 20 1)
-                , Border.width 1
+                , Border.color (rgba255 0 0 0 1)
+
+                -- , Border.color (rgba255 254 56 9 1)
+                , Border.widthEach { bottom = 1, left = 1, right = 1, top = 1 }
                 , Border.solid
-                , Border.roundEach { bottomLeft = 0, bottomRight = 10, topLeft = 0, topRight = 10 }
+                , Border.roundEach { bottomLeft = 0, bottomRight = 30, topLeft = 0, topRight = 30 }
                 , Font.semiBold
                 , Font.size 16
                 , padding 12
-                , alignRight
                 , height fill
                 ]
-                { onPress = Just GetAnotherWord, label = text "New Word [0]" }
+                { onPress = Just GetAnotherWord, label = text "NEW WORD [0]" }
             ]
-        , row
-            [ Background.color (rgba255 0 0 0 1)
-            , Font.family
-                [ Font.typeface "LCD14"
-                , Font.monospace
+        , column [ width fill, Background.color (rgba255 0 0 0 1) ]
+            [ row
+                [ Font.family
+                    [ Font.typeface "LCD14"
+                    , Font.monospace
+                    ]
+                , Font.color (rgba255 110 200 120 0.8)
+                , Font.size 32
+                , Font.semiBold
+                , padding 20
+                , height (px 160)
+                , width fill
                 ]
-            , Font.color (rgba255 110 200 120 1)
-            , Font.size 32
-            , Font.semiBold
-            , padding 24
-            , height (px 180)
-            , width fill
-            ]
-            [ el
-                [ centerX
-                , centerY
+                [ el
+                    [ centerX
+                    , centerY
+                    , paddingEach { bottom = 0, left = 0, right = 0, top = 20 }
+                    ]
+                    (text (outputText model))
                 ]
-                (text (outputText model))
+            , paragraph []
+                [ newTabLink
+                    [ Font.family
+                        [ Font.typeface "LiberationMonoRegular"
+                        , Font.monospace
+                        ]
+                    , Font.color (rgba255 120 113 89 1)
+                    , Font.size 20
+                    , width fill
+                    , alignRight
+                    , paddingEach { bottom = 20, left = 0, right = 50, top = 0 }
+                    ]
+                    { url = "https://elm-lang.org/"
+                    , label = text model.brand
+                    }
+                ]
             ]
         , column
-            [ padding 20
-            , spacing 20
-            , width fill
+            [ width fill
+            , paddingEach { bottom = 120, left = 40, right = 40, top = 60 }
             ]
             [ column
-                [ Background.color (rgba255 20 153 223 1)
-                , Font.family
-                    [ Font.typeface "LiberationMonoRegular"
-                    , Font.monospace
-                    ]
-                , Font.size 16
-                , Border.color (rgba255 0 0 20 1)
-                , Border.width 1
-                , Border.solid
-                , Border.rounded 10
+                [ Background.color (rgba255 255 215 6 1)
+                , Border.roundEach { bottomLeft = 60, bottomRight = 60, topLeft = 20, topRight = 20 }
+                , spacing 20
                 , width fill
-                , padding 10
-                , spacing 10
+                , paddingEach { bottom = 80, left = 20, right = 20, top = 20 }
                 ]
-                [ row
-                    [ spacingXY 10 0
-                    , centerY
-                    , centerX
-                    ]
-                  <|
-                    alphabetRow 65 77
-                , row
-                    [ spacingXY 10 0
-                    , centerY
-                    , centerX
-                    ]
-                  <|
-                    alphabetRow 78 90
-                , row
-                    [ paddingXY 0 10
-                    , spacing 18
-                    , centerY
-                    , centerX
+                [ column
+                    [ Background.color (rgba255 251 50 0 1)
+                    , Border.rounded 20
+                    , spacing 20
                     , width fill
+                    , paddingEach { bottom = 20, left = 20, right = 20, top = 40 }
+                    ]
+                    [ column
+                        [ Background.color (rgba255 20 153 223 1)
+                        , Font.family
+                            [ Font.typeface "LiberationMonoRegular"
+                            , Font.monospace
+                            ]
+                        , Font.size 16
+                        , Border.color (rgba255 0 0 20 1)
+                        , Border.width 1
+                        , Border.solid
+                        , Border.rounded 10
+                        , width fill
+                        , padding 20
+                        , spacing 10
+                        ]
+                        [ row
+                            [ spacingXY 10 0
+                            , centerY
+                            , centerX
+                            ]
+                          <|
+                            alphabetRow 65 77
+                        , row
+                            [ spacingXY 10 0
+                            , centerY
+                            , centerX
+                            ]
+                          <|
+                            alphabetRow 78 90
+                        , row
+                            [ spacingXY 14 0
+                            , centerY
+                            , centerX
+                            , Font.semiBold
+                            ]
+                            [ Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just EraseLetter, label = text "ERASE LETTER [↤]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just ResetWord, label = text "RESET [5]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just Speak, label = text "SPEAK [8]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just Spell, label = text "SPELL [9]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just SubmitWord, label = text "SUBMIT [↵]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just ResetWord, label = text "RETRY [6]" }
+                            ]
+                        ]
+                    ]
+                , row
+                    [ Font.family
+                        [ Font.typeface "LiberationMonoRegular"
+                        , Font.monospace
+                        ]
+                    , Font.size 16
                     , Font.semiBold
+                    , width fill
+                    , spacing 12
+                    , paddingEach { bottom = 0, left = 0, right = 0, top = 40 }
                     ]
-                    [ Input.button
-                        [ Background.color (rgba255 250 175 0 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , padding 12
-                        ]
-                        { onPress = Just EraseLetter, label = text "Erase Letter [↤]" }
+                    [ el [ Font.size 32, width fill ] (text model.title)
                     , Input.button
-                        [ Background.color (rgba255 250 175 0 1)
+                        [ Background.color (rgba255 255 73 6 1)
                         , Border.color (rgba255 0 0 20 1)
                         , Border.width 1
                         , Border.solid
                         , Border.rounded 10
                         , padding 12
                         ]
-                        { onPress = Just ResetWord, label = text "Reset Output [5]" }
+                        { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
                     , Input.button
-                        [ Background.color (rgba255 250 175 0 1)
+                        [ Background.color (rgba255 255 73 6 1)
                         , Border.color (rgba255 0 0 20 1)
                         , Border.width 1
                         , Border.solid
                         , Border.rounded 10
                         , padding 12
                         ]
-                        { onPress = Just Speak, label = text "Speak [8]" }
-                    , Input.button
-                        [ Background.color (rgba255 250 175 0 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , padding 12
-                        ]
-                        { onPress = Just Spell, label = text "Spell [9]" }
-                    , Input.button
-                        [ Background.color (rgba255 250 175 0 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , padding 12
-                        ]
-                        { onPress = Just SubmitWord, label = text "Submit [↵]" }
-                    , Input.button
-                        [ Background.color (rgba255 250 175 0 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , padding 12
-                        ]
-                        { onPress = Just ResetWord, label = text "Retry [6]" }
+                        { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
                     ]
-                ]
-            , row
-                [ spacing 12
-                , Font.family
-                    [ Font.typeface "LiberationMonoRegular"
-                    , Font.monospace
-                    ]
-                , Font.size 16
-                , Font.semiBold
-                , width fill
-                ]
-                [ el [ Font.size 32, width fill ] (text model.title)
-                , Input.button
-                    [ Background.color (rgba255 250 175 0 1)
-                    , Border.color (rgba255 0 0 20 1)
-                    , Border.width 1
-                    , Border.solid
-                    , Border.rounded 10
-                    , padding 12
-                    ]
-                    { onPress = Just (SetSound On), label = text "Sound On [2]" }
-                , Input.button
-                    [ Background.color (rgba255 250 175 0 1)
-                    , Border.color (rgba255 0 0 20 1)
-                    , Border.width 1
-                    , Border.solid
-                    , Border.rounded 10
-                    , padding 12
-                    ]
-                    { onPress = Just (SetSound Off), label = text "Sound Off [3]" }
                 ]
             ]
         ]
@@ -350,14 +391,13 @@ alphabetRow start end =
             (\asciiCode ->
                 Input.button
                     [ Background.color (rgba255 253 116 6 1)
-                    , Font.size 18
+                    , Font.size 20
                     , Font.bold
-                    , padding 24
-                    , spaceEvenly
                     , Border.color (rgba255 0 0 20 1)
                     , Border.width 1
                     , Border.solid
                     , Border.rounded 10
+                    , padding 20
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
                     , label = text (codeToString asciiCode)
