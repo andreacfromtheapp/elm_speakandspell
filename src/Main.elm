@@ -443,7 +443,7 @@ update msg model =
 
         KeyClicked string ->
             ( appendToGuessWord model string
-            , speak string
+            , speak (String.toLower string)
             )
 
         GetAnotherWord ->
@@ -554,7 +554,7 @@ kbdEventToCommand event model =
 
                   else
                     appendToGuessWord model (kbdEventToString event)
-                , speak (kbdEventToString event)
+                , speak (String.toLower (kbdEventToString event))
                 )
 
 
