@@ -2,8 +2,14 @@ port module Main exposing (main)
 
 import Browser
 import Browser.Events exposing (onKeyDown)
-import Html exposing (..)
-import Html.Events exposing (onClick)
+import Element exposing (..)
+import Element.Background as Background
+import Element.Border as Border
+import Element.Events exposing (onClick)
+import Element.Font as Font
+import Element.Input as Input
+import Element.Region as Region
+import Html exposing (Html)
 import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
@@ -33,7 +39,6 @@ type Msg
     | SubmitWord
     | Speak
     | Spell
-    | ToggleHelpText
     | SetSound Sound
 
 
@@ -67,12 +72,10 @@ type alias Model =
     , output : Output
     , sound : Sound
     , newWord : NewWord
-    , title : String
     , placeholder : String
     , guessWord : String
     , checkWord : String
     , result : String
-    , help : List (Html Msg)
     }
 
 
@@ -86,12 +89,10 @@ initialModel =
         , definition = ""
         , pronunciation = ""
         }
-    , title = "Speak & Spell"
     , placeholder = ""
     , guessWord = ""
     , checkWord = ""
     , result = ""
-    , help = []
     }
 
 
@@ -101,7 +102,7 @@ initialModel =
 
 view : Model -> Html Msg
 view model =
-    div [] <|
+    layout [] <|
         case model.status of
             Loading ->
                 viewLoading
@@ -110,70 +111,333 @@ view model =
                 viewLoaded word model
 
             Errored errorMessage ->
-                [ text ("Error: " ++ errorMessage) ]
+                el [] (text errorMessage)
 
 
-viewLoading : List (Html Msg)
+viewLoading : Element Msg
 viewLoading =
-    [ blockquote []
-        [ p []
-            [ text """
+    paragraph [ centerX, centerY ]
+        [ text """
                 Methods are never the answer in Elm;
                 over here it's all vanilla functions, all the time.
                 """
+        , text """-- excerpt from "Elm in Action", by Richard Feldman"""
+        ]
+
+
+viewLoaded : NewWord -> Model -> Element Msg
+viewLoaded newWord model =
+    column
+        [ Background.color (rgba255 251 50 0 1)
+        , Border.roundEach
+            { bottomLeft = 80
+            , bottomRight = 80
+            , topLeft = 40
+            , topRight = 40
+            }
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
             ]
-        , footer []
-            [ text "— "
-            , cite []
-                [ text """excerpt from "Elm in Action", by Richard Feldman"""
+        , Font.bold
+        , centerX
+        , centerY
+        ]
+        [ row
+            [ width fill
+            , height (px 220)
+            , padding 40
+            ]
+            [ column
+                [ Background.color (rgba255 20 153 223 1)
+                , Border.color (rgba255 0 0 0 1)
+                , Border.widthEach
+                    { bottom = 1
+                    , left = 1
+                    , right = 0
+                    , top = 1
+                    }
+                , Border.solid
+                , Border.roundEach
+                    { bottomLeft = 30
+                    , bottomRight = 0
+                    , topLeft = 30
+                    , topRight = 0
+                    }
+                , Font.size 20
+                , Font.color (rgb255 255 255 255)
+                , Font.medium
+                , padding 20
+                , spacing 8
+                , width fill
+                , height fill
+                ]
+                [ el [ centerY ] (text ("Your word is: " ++ String.toUpper newWord.word))
+                , el [ centerY ] (text ("Definition: " ++ newWord.definition))
+                , el [ centerY ] (text ("Pronunciation: " ++ newWord.pronunciation))
+                ]
+            , Input.button
+                [ Background.color (rgba255 250 175 0 1)
+                , Border.color (rgba255 0 0 0 1)
+                , Border.widthEach
+                    { bottom = 1
+                    , left = 1
+                    , right = 1
+                    , top = 1
+                    }
+                , Border.solid
+                , Border.roundEach
+                    { bottomLeft = 0
+                    , bottomRight = 30
+                    , topLeft = 0
+                    , topRight = 30
+                    }
+                , Font.size 16
+                , padding 12
+                , height fill
+                ]
+                { onPress = Just GetAnotherWord, label = text "NEW WORD [0]" }
+            ]
+        , column
+            [ width fill
+            , Background.color (rgba255 0 0 0 1)
+            ]
+            [ row
+                [ Font.family
+                    [ Font.typeface "LCD14"
+                    , Font.monospace
+                    ]
+                , Font.color (rgba255 110 200 120 0.8)
+                , Font.size 32
+                , padding 20
+                , height (px 160)
+                , width fill
+                ]
+                [ el
+                    [ centerX
+                    , centerY
+                    , paddingEach
+                        { bottom = 0
+                        , left = 0
+                        , right = 0
+                        , top = 20
+                        }
+                    ]
+                    (text (outputText model))
+                ]
+            , paragraph []
+                [ newTabLink
+                    [ Font.color (rgba255 120 113 89 1)
+                    , Font.size 20
+                    , width fill
+                    , alignRight
+                    , paddingEach
+                        { bottom = 20
+                        , left = 0
+                        , right = 50
+                        , top = 0
+                        }
+                    ]
+                    { url = "https://elm-lang.org/"
+                    , label = text "Elm Instruments"
+                    }
+                ]
+            ]
+        , column
+            [ width fill
+            , paddingEach
+                { bottom = 120
+                , left = 40
+                , right = 40
+                , top = 60
+                }
+            ]
+            [ column
+                [ Background.color (rgba255 255 215 6 1)
+                , Border.roundEach
+                    { bottomLeft = 60
+                    , bottomRight = 60
+                    , topLeft = 20
+                    , topRight = 20
+                    }
+                , spacing 20
+                , width fill
+                , paddingEach
+                    { bottom = 80
+                    , left = 20
+                    , right = 20
+                    , top = 20
+                    }
+                ]
+                [ column
+                    [ Background.color (rgba255 251 50 0 1)
+                    , Border.rounded 20
+                    , spacing 20
+                    , width fill
+                    , paddingEach
+                        { bottom = 20
+                        , left = 20
+                        , right = 20
+                        , top = 40
+                        }
+                    ]
+                    [ column
+                        [ Background.color (rgba255 20 153 223 1)
+                        , Border.color (rgba255 0 0 20 1)
+                        , Border.width 1
+                        , Border.solid
+                        , Border.rounded 10
+                        , Font.size 16
+                        , width fill
+                        , padding 20
+                        , spacing 10
+                        ]
+                        [ row
+                            [ spacingXY 10 0
+                            , centerY
+                            , centerX
+                            ]
+                          <|
+                            alphabetRow 65 77
+                        , row
+                            [ spacingXY 10 0
+                            , centerY
+                            , centerX
+                            ]
+                          <|
+                            alphabetRow 78 90
+                        , row
+                            [ spacingXY 14 0
+                            , centerY
+                            , centerX
+                            ]
+                            [ Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just EraseLetter, label = text "ERASE LETTER [↤]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just ResetWord, label = text "RESET [5]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just Speak, label = text "SPEAK [8]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just Spell, label = text "SPELL [9]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just SubmitWord, label = text "SUBMIT [↵]" }
+                            , Input.button
+                                [ Background.color (rgba255 250 175 0 1)
+                                , Border.color (rgba255 0 0 20 1)
+                                , Border.width 1
+                                , Border.solid
+                                , Border.rounded 10
+                                , padding 12
+                                ]
+                                { onPress = Just ResetWord, label = text "RETRY [6]" }
+                            ]
+                        ]
+                    ]
+                , row
+                    [ width fill
+                    , paddingEach
+                        { bottom = 0
+                        , left = 0
+                        , right = 0
+                        , top = 42
+                        }
+                    ]
+                    [ paragraph
+                        [ Font.family
+                            [ Font.typeface "LiberationSerifRegular"
+                            , Font.serif
+                            ]
+                        , Font.size 64
+                        , Font.extraBold
+                        , spacing 10
+                        ]
+                        [ el
+                            [ Font.color (rgb255 255 73 6)
+                            , alignLeft
+                            ]
+                            (text "Speak")
+                        , el
+                            [ Font.color (rgb255 255 234 240)
+                            , Font.glow (rgb255 45 166 239) 1
+                            , alignLeft
+                            ]
+                            (text "&")
+                        , el
+                            [ Font.color (rgb255 45 166 239)
+                            , alignLeft
+                            ]
+                            (text "Spell")
+                        ]
+                    , paragraph
+                        [ Font.size 16
+                        ]
+                        [ Input.button
+                            [ Background.color (rgba255 255 73 6 1)
+                            , Border.color (rgba255 0 0 20 1)
+                            , Border.width 1
+                            , Border.solid
+                            , Border.rounded 10
+                            , padding 12
+                            , alignRight
+                            ]
+                            { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
+                        , Input.button
+                            [ Background.color (rgba255 255 73 6 1)
+                            , Border.color (rgba255 0 0 20 1)
+                            , Border.width 1
+                            , Border.solid
+                            , Border.rounded 10
+                            , padding 12
+                            , alignRight
+                            ]
+                            { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
+                        ]
+                    ]
                 ]
             ]
         ]
-    ]
-
-
-viewLoaded : NewWord -> Model -> List (Html Msg)
-viewLoaded newWord model =
-    [ div []
-        [ h1 [] [ text model.title ]
-        , button [ onClick ToggleHelpText ] [ text "Toggle Help" ]
-        , button [ onClick (SetSound On) ] [ text "Sound On" ]
-        , button [ onClick (SetSound Off) ] [ text "Sound Off" ]
-        , div [] <| model.help
-        ]
-    , div []
-        [ hr [] []
-        , p [] [ text ("Your word is: " ++ String.toUpper newWord.word) ]
-        , p [] [ text ("Definition: " ++ newWord.definition) ]
-        , p [] [ text ("Pronunciation: " ++ newWord.pronunciation) ]
-        ]
-    , div []
-        [ hr [] []
-        , div [] <| alphabetRow 65 77
-        , div [] <| alphabetRow 78 90
-        ]
-    , div []
-        [ hr [] []
-        , p [] [ text <| outputText model ]
-        , button [ onClick EraseLetter ] [ text "Erase Letter" ]
-        , button [ onClick ResetWord ] [ text "Reset Output" ]
-        ]
-    , div []
-        [ hr [] []
-        , button [ onClick GetAnotherWord ] [ text "New Word" ]
-        , button [ onClick Speak ] [ text "Speak It" ]
-        , button [ onClick Spell ] [ text "Spell It" ]
-        , button [ onClick SubmitWord ] [ text "Submit It" ]
-        , button [ onClick ResetWord ] [ text "Retry" ]
-        ]
-    ]
 
 
 outputText : Model -> String
 outputText model =
     case model.output of
         Init ->
-            "Start typing to match the word above"
+            "START TYPING TO MATCH THE WORD ABOVE"
 
         Holder ->
             -- this is an alternative to 'output = Init'
@@ -187,58 +451,29 @@ outputText model =
             model.result
 
 
-alphabetRow : Int -> Int -> List (Html Msg)
+alphabetRow : Int -> Int -> List (Element Msg)
 alphabetRow start end =
     List.range start end
         |> List.map
             (\asciiCode ->
-                button
-                    [ onClick (KeyClicked (codeToString asciiCode)) ]
-                    [ text (codeToString asciiCode) ]
+                Input.button
+                    [ Background.color (rgba255 253 116 6 1)
+                    , Border.color (rgba255 0 0 20 1)
+                    , Border.width 1
+                    , Border.solid
+                    , Border.rounded 10
+                    , Font.size 20
+                    , padding 20
+                    ]
+                    { onPress = Just (KeyClicked (codeToString asciiCode))
+                    , label = text (codeToString asciiCode)
+                    }
             )
 
 
 codeToString : Int -> String
 codeToString asciiCode =
     String.fromChar (Char.fromCode asciiCode)
-
-
-helpToggle : List (Html Msg) -> List (Html Msg)
-helpToggle helpText =
-    if List.isEmpty helpText then
-        helpHtml
-
-    else
-        []
-
-
-helpHtml : List (Html Msg)
-helpHtml =
-    [ p []
-        [ text """
-                   This is a limited reproduction of the original game.
-                    Match the word on the screen, and use the commands. That's it.
-                   """
-        ]
-    , p []
-        [ text """
-                    You can use your mouse to press the onscreen buttons.
-                    You can type on your keyboard, and use the mapped keys:
-                    """
-        ]
-    , ul []
-        [ li [] [ text "1 --> Help" ]
-        , li [] [ text "2 --> Sound On" ]
-        , li [] [ text "3 --> Sound Off" ]
-        , li [] [ text "5 --> Reset Ouput" ]
-        , li [] [ text "6 --> Retry" ]
-        , li [] [ text "8 --> Speak It" ]
-        , li [] [ text "9 --> Spell It" ]
-        , li [] [ text "0 --> New Word" ]
-        , li [] [ text "Backspace --> Erase Letter" ]
-        , li [] [ text "Enter --> Submit It" ]
-        ]
-    ]
 
 
 
@@ -260,12 +495,12 @@ update msg model =
                     )
 
                 [] ->
-                    ( { model | status = Errored "No words found :(" }
+                    ( { model | status = Errored "Error: No words found :(" }
                     , Cmd.none
                     )
 
         GetNewWord (Err err) ->
-            ( { model | status = Errored (Debug.toString err) }
+            ( { model | status = Errored ("Error: " ++ Debug.toString err) }
             , Cmd.none
             )
 
@@ -274,7 +509,7 @@ update msg model =
 
         KeyClicked string ->
             ( appendToGuessWord model string
-            , speak string
+            , speak (String.toLower string)
             )
 
         GetAnotherWord ->
@@ -299,11 +534,6 @@ update msg model =
         SubmitWord ->
             ( submitWord model
             , speak (checkResult model)
-            )
-
-        ToggleHelpText ->
-            ( toggleHelpText model
-            , Cmd.none
             )
 
         SetSound param ->
@@ -335,11 +565,6 @@ kbdEventToCommand event model =
 
     else
         case Debug.toString event.keyCode of
-            "One" ->
-                ( toggleHelpText model
-                , Cmd.none
-                )
-
             "Two" ->
                 ( model
                 , setSound On
@@ -395,7 +620,7 @@ kbdEventToCommand event model =
 
                   else
                     appendToGuessWord model (kbdEventToString event)
-                , speak (kbdEventToString event)
+                , speak (String.toLower (kbdEventToString event))
                 )
 
 
@@ -440,18 +665,13 @@ submitWord model =
 checkResult : Model -> String
 checkResult model =
     if String.isEmpty model.guessWord then
-        "Nope! An empty string is never the answer..."
+        "AN EMPTY STRING IS NEVER THE ANSWER..."
 
     else if model.guessWord == model.checkWord then
-        "Congratulations! " ++ model.guessWord ++ " is correct!"
+        "CONGRATULATIONS! " ++ model.guessWord ++ " IS CORRECT!"
 
     else
-        "Oh no... " ++ model.guessWord ++ " isn't right..."
-
-
-toggleHelpText : Model -> Model
-toggleHelpText model =
-    { model | help = helpToggle model.help }
+        "OH NO... " ++ model.guessWord ++ " ISN'T RIGHT..."
 
 
 setSound : Sound -> Cmd Msg
