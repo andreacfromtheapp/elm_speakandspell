@@ -5,10 +5,8 @@ import Browser.Events exposing (onKeyDown)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
-import Element.Events exposing (onClick)
 import Element.Font as Font
 import Element.Input as Input
-import Element.Region as Region
 import Html exposing (Html)
 import Http
 import Json.Decode as Decode exposing (Decoder)
