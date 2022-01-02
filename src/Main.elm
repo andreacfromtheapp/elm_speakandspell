@@ -311,60 +311,12 @@ viewLoaded newWord model =
                             , centerY
                             , centerX
                             ]
-                            [ Input.button
-                                [ Background.color (rgba255 250 175 0 1)
-                                , Border.color (rgba255 0 0 20 1)
-                                , Border.width 1
-                                , Border.solid
-                                , Border.rounded 10
-                                , padding 12
-                                ]
-                                { onPress = Just EraseLetter, label = text "ERASE LETTER [↤]" }
-                            , Input.button
-                                [ Background.color (rgba255 250 175 0 1)
-                                , Border.color (rgba255 0 0 20 1)
-                                , Border.width 1
-                                , Border.solid
-                                , Border.rounded 10
-                                , padding 12
-                                ]
-                                { onPress = Just ResetWord, label = text "RESET [5]" }
-                            , Input.button
-                                [ Background.color (rgba255 250 175 0 1)
-                                , Border.color (rgba255 0 0 20 1)
-                                , Border.width 1
-                                , Border.solid
-                                , Border.rounded 10
-                                , padding 12
-                                ]
-                                { onPress = Just Speak, label = text "SPEAK [8]" }
-                            , Input.button
-                                [ Background.color (rgba255 250 175 0 1)
-                                , Border.color (rgba255 0 0 20 1)
-                                , Border.width 1
-                                , Border.solid
-                                , Border.rounded 10
-                                , padding 12
-                                ]
-                                { onPress = Just Spell, label = text "SPELL [9]" }
-                            , Input.button
-                                [ Background.color (rgba255 250 175 0 1)
-                                , Border.color (rgba255 0 0 20 1)
-                                , Border.width 1
-                                , Border.solid
-                                , Border.rounded 10
-                                , padding 12
-                                ]
-                                { onPress = Just SubmitWord, label = text "SUBMIT [↵]" }
-                            , Input.button
-                                [ Background.color (rgba255 250 175 0 1)
-                                , Border.color (rgba255 0 0 20 1)
-                                , Border.width 1
-                                , Border.solid
-                                , Border.rounded 10
-                                , padding 12
-                                ]
-                                { onPress = Just ResetWord, label = text "RETRY [6]" }
+                            [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
+                            , yellowCommandBtn ResetWord "RESET [5]"
+                            , yellowCommandBtn Speak "SPEAK [8]"
+                            , yellowCommandBtn Spell "SPELL [8]"
+                            , yellowCommandBtn SubmitWord "SUBMIT [↵]"
+                            , yellowCommandBtn ResetWord "RETRY [6]"
                             ]
                         ]
                     ]
@@ -405,31 +357,38 @@ viewLoaded newWord model =
                     , paragraph
                         [ Font.size 16
                         ]
-                        [ Input.button
-                            [ Background.color (rgba255 45 166 239 1)
-                            , Border.color (rgba255 0 0 20 1)
-                            , Border.width 1
-                            , Border.solid
-                            , Border.rounded 10
-                            , padding 12
-                            , alignRight
-                            ]
-                            { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
-                        , Input.button
-                            [ Background.color (rgba255 45 166 239 1)
-                            , Border.color (rgba255 0 0 20 1)
-                            , Border.width 1
-                            , Border.solid
-                            , Border.rounded 10
-                            , padding 12
-                            , alignRight
-                            ]
-                            { onPress = Just (SetSound On), label = text "SOUND ON [2]" }
+                        [ blueCommandBtn (SetSound Off) "SOUND OFF [2]"
+                        , blueCommandBtn (SetSound On) "SOUND ON [2]"
                         ]
                     ]
                 ]
             ]
         ]
+
+
+yellowCommandBtn pressAction labelText =
+    Input.button
+        [ Background.color (rgba255 250 175 0 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , padding 12
+        ]
+        { onPress = Just pressAction, label = text labelText }
+
+
+blueCommandBtn pressAction labelText =
+    Input.button
+        [ Background.color (rgba255 45 166 239 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , padding 12
+        , alignRight
+        ]
+        { onPress = Just pressAction, label = text labelText }
 
 
 outputText : Model -> String
