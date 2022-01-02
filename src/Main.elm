@@ -386,6 +386,7 @@ viewLoaded newWord model =
         ]
 
 
+yellowCommandBtn : Msg -> String -> Element Msg
 yellowCommandBtn pressAction labelText =
     Input.button
         [ Background.color (rgba255 250 175 0 1)
@@ -406,6 +407,7 @@ yellowCommandBtn pressAction labelText =
         { onPress = Just pressAction, label = text labelText }
 
 
+blueCommandBtn : Msg -> String -> Element Msg
 blueCommandBtn pressAction labelText =
     Input.button
         [ Background.color (rgba255 45 166 239 1)
