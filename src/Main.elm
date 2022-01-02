@@ -145,11 +145,12 @@ viewLoaded newWord model =
         , centerY
         ]
         [ row
-            -- new word "top screen"
+            -- top orange
             [ width fill
             , padding 40
             ]
             [ column
+                -- new word "top screen"
                 [ Background.color (rgba255 20 153 223 1)
                 , Border.color (rgba255 0 0 0 1)
                 , Border.widthEach
