@@ -235,13 +235,6 @@ animatedLetter animation element =
         element
 
 
-animatedDotRotate : Element msg -> Element msg
-animatedDotRotate element =
-    animatedEl hoverAnimationRotate
-        []
-        element
-
-
 hoverAnimationRotate : Animation
 hoverAnimationRotate =
     Animation.steps
