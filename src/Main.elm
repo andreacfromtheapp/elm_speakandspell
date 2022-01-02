@@ -117,13 +117,132 @@ view model =
 
 viewLoading : Element Msg
 viewLoading =
-    paragraph [ centerX, centerY ]
-        [ text """
-                Methods are never the answer in Elm;
-                over here it's all vanilla functions, all the time.
-                """
-        , text """-- excerpt from "Elm in Action", by Richard Feldman"""
+    column
+        -- outer orange
+        [ centerX
+        , centerY
+        , Background.color (rgba255 251 50 0 1)
+        , Border.roundEach
+            { bottomLeft = 80
+            , bottomRight = 80
+            , topLeft = 0
+            , topRight = 0
+            }
+        , paddingEach
+            { bottom = 180
+            , left = 20
+            , right = 20
+            , top = 40
+            }
         ]
+        [ column
+            -- yellow shell
+            [ Background.color (rgba255 255 215 6 1)
+            , Border.roundEach
+                { bottomLeft = 60
+                , bottomRight = 60
+                , topLeft = 20
+                , topRight = 20
+                }
+            , width fill
+            , paddingEach
+                { bottom = 80
+                , left = 20
+                , right = 20
+                , top = 20
+                }
+            ]
+            [ column
+                -- blue around keyboard
+                [ Background.color (rgba255 20 153 223 1)
+                , Border.color (rgba255 0 0 20 1)
+                , Border.width 1
+                , Border.solid
+                , Border.rounded 10
+                , Font.size 16
+                , width fill
+                , paddingEach
+                    { bottom = 80
+                    , left = 20
+                    , right = 20
+                    , top = 40
+                    }
+                ]
+                [ row
+                    [ width fill
+                    , spacing 10
+                    ]
+                    [ loadingButton "L"
+                    , loadingButton "O"
+                    , loadingButton "A"
+                    , loadingButton "D"
+                    , loadingButton "I"
+                    , loadingButton "N"
+                    , loadingButton "G"
+                    , loadingButton "."
+                    , loadingButton "."
+                    , loadingButton "."
+                    ]
+                ]
+            , row
+                [ width fill
+                , paddingEach
+                    { bottom = 0
+                    , left = 0
+                    , right = 0
+                    , top = 42
+                    }
+                ]
+                [ paragraph
+                    -- "logo"
+                    [ Font.family
+                        [ Font.typeface "LiberationSerifRegular"
+                        , Font.serif
+                        ]
+                    , Font.size 64
+                    , Font.extraBold
+                    ]
+                    [ el
+                        [ Font.color (rgb255 255 73 6)
+                        , alignLeft
+                        ]
+                        (text "Speak")
+                    , el
+                        [ Font.color (rgb255 255 234 240)
+                        , Font.glow (rgb255 45 166 239) 1
+                        , alignLeft
+                        ]
+                        (text "&")
+                    , el
+                        [ Font.color (rgb255 45 166 239)
+                        , alignLeft
+                        ]
+                        (text "Spell")
+                    ]
+                ]
+            ]
+        ]
+
+
+loadingButton : String -> Element Msg
+loadingButton labelText =
+    Input.button
+        [ Background.color (rgba255 250 175 0 1)
+        , Border.color (rgba255 253 116 6 1)
+        , Border.width 8
+        , Border.solid
+        , Border.rounded 12
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.size 42
+        , Font.extraBold
+        , padding 20
+        ]
+        { onPress = Just NoOp
+        , label = text labelText
+        }
 
 
 viewLoaded : NewWord -> Model -> Element Msg
