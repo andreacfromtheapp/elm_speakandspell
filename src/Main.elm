@@ -179,7 +179,7 @@ viewLoaded newWord model =
                 , el [ centerY ] (text ("Pronunciation: " ++ newWord.pronunciation))
                 ]
             , Input.button
-                [ Background.color (rgba255 250 175 0 1)
+                [ Background.color (rgba255 20 153 223 1)
                 , Border.color (rgba255 0 0 0 1)
                 , Border.widthEach
                     { bottom = 1
@@ -194,9 +194,18 @@ viewLoaded newWord model =
                     , topLeft = 0
                     , topRight = 30
                     }
+                , Font.color (rgb255 255 255 255)
                 , Font.size 16
                 , padding 12
                 , height fill
+                , mouseOver
+                    [ Background.color (rgba255 200 153 223 1)
+                    , Font.color (rgb255 255 250 239)
+                    ]
+                , focused
+                    [ Background.color (rgba255 200 153 223 1)
+                    , Font.color (rgb255 255 250 239)
+                    ]
                 ]
                 { onPress = Just GetAnotherWord, label = text "NEW WORD [0]" }
             ]
@@ -385,6 +394,14 @@ yellowCommandBtn pressAction labelText =
         , Border.solid
         , Border.rounded 10
         , padding 12
+        , mouseOver
+            [ Background.color (rgba255 201 68 16 1)
+            , Font.color (rgb255 255 250 239)
+            ]
+        , focused
+            [ Background.color (rgba255 201 68 16 1)
+            , Font.color (rgb255 255 250 239)
+            ]
         ]
         { onPress = Just pressAction, label = text labelText }
 
@@ -398,6 +415,14 @@ blueCommandBtn pressAction labelText =
         , Border.rounded 10
         , padding 12
         , alignRight
+        , mouseOver
+            [ Background.color (rgba255 201 68 16 1)
+            , Font.color (rgb255 255 250 239)
+            ]
+        , focused
+            [ Background.color (rgba255 201 68 16 1)
+            , Font.color (rgb255 255 250 239)
+            ]
         ]
         { onPress = Just pressAction, label = text labelText }
 
@@ -433,6 +458,14 @@ alphabetRow start end =
                     , Border.rounded 10
                     , Font.size 20
                     , padding 20
+                    , mouseOver
+                        [ Background.color (rgba255 201 68 16 1)
+                        , Font.color (rgb255 255 250 239)
+                        ]
+                    , focused
+                        [ Background.color (rgba255 201 68 16 1)
+                        , Font.color (rgb255 255 250 239)
+                        ]
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
                     , label = text (codeToString asciiCode)

@@ -79,12 +79,12 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [ ] responsive design
 - [ ] no onscreen keyboard on mobile
 - [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
-- [ ] user feedback
+- [x] user feedback
   - [x] feedback for keypresses
     - [x] written feedback
     - [x] auditory feedback with SpeechSynthesis
-    - [ ] visual feedback (change color)
-    - [ ] is key stuck?
+    - [x] visual feedback (change color)
+    - [x] is key stuck?
   - [x] feedback upon checking the spelling
     - [x] written feedback
     - [x] auditory feedback
@@ -96,6 +96,9 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [ ] ~~expandable "bottom loading screen" for the help section~~
   - [x] ~~help toggle in Elm (temporary. exercise more than anything)~~
   - [ ] ~~separate help and commands section~~
+- [ ] create a custom loading page
+  - [ ] spell LOADING with Speak & Spell styled keys
+  - [ ] animate the LOADING words on screen
 
 ## Improvements
 
@@ -104,12 +107,6 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [ ] create error pages for different status and messages
 - [ ] custom (parsed) message depending on the error nature
 - [ ] custom CSS to resemble the UI (e.g: spell ERROR with Speak & Spell styled keys)
-
-### loading page
-
-- [ ] create a custom loading page
-  - [ ] use CSS to spell LOADING with Speak & Spell styled keys
-  - [ ] animated the LOADING words on screen
 
 ### others
 
