@@ -147,7 +147,6 @@ viewLoaded newWord model =
         [ row
             -- new word "top screen"
             [ width fill
-            , height (px 220)
             , padding 40
             ]
             [ column
@@ -169,7 +168,7 @@ viewLoaded newWord model =
                 , Font.size 20
                 , Font.color (rgb255 255 255 255)
                 , Font.medium
-                , padding 20
+                , padding 28
                 , spacing 8
                 , width fill
                 , height fill
@@ -212,8 +211,7 @@ viewLoaded newWord model =
                     ]
                 , Font.color (rgba255 110 200 120 0.8)
                 , Font.size 32
-                , padding 20
-                , height (px 160)
+                , padding 55
                 , width fill
                 ]
                 [ el
@@ -296,7 +294,7 @@ viewLoaded newWord model =
                         , Border.rounded 10
                         , Font.size 16
                         , width fill
-                        , padding 20
+                        , padding 22
                         , spacing 10
                         ]
                         [ row
