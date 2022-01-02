@@ -74,11 +74,8 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ## UI/UX
 
-- [x] loosely look like Speak & Spell (make it look & feel like a toy)
+- [x] look like Speak & Spell (make it look & feel like a toy)
   - [x] keys (alphabet, commands) to look different
-- [ ] responsive design
-- [ ] no onscreen keyboard on mobile
-- [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [x] user feedback
   - [x] feedback for keypresses
     - [x] written feedback
@@ -92,13 +89,18 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] retro-looking/low-fi/8bit
   - [x] fixed "field" for the user output
   - [x] Elm Instruments
+  - [x] add logo besides "brand"
+- [x] create a custom loading page
+  - [x] use elm logo :)
+  - [x] spell LOADING with Speak & Spell styled keys
+  - [x] animate the LOADING words on screen
+- [ ] make elm-ui design responsive
+- [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [ ] ~~expandable "side loading screen" for the description?~~
 - [ ] ~~expandable "bottom loading screen" for the help section~~
   - [x] ~~help toggle in Elm (temporary. exercise more than anything)~~
   - [ ] ~~separate help and commands section~~
-- [ ] create a custom loading page
-  - [ ] spell LOADING with Speak & Spell styled keys
-  - [ ] animate the LOADING words on screen
+- [ ] ~~no onscreen keyboard on mobile~~
 
 ## Improvements
 
