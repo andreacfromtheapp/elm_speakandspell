@@ -115,7 +115,7 @@ view model =
                 viewLoaded word model
 
             Errored errorMessage ->
-                el [] (text errorMessage)
+                el [] (Element.text errorMessage)
 
 
 viewLoading : Element Msg
@@ -147,7 +147,7 @@ viewLoading =
                 , topLeft = 20
                 , topRight = 20
                 }
-            , width fill
+            , Element.width Element.fill
             , paddingEach
                 { bottom = 80
                 , left = 20
@@ -163,17 +163,17 @@ viewLoading =
                 , Border.solid
                 , Border.rounded 10
                 , Font.size 16
-                , width fill
+                , Element.width Element.fill
                 , paddingEach
-                    { bottom = 80
+                    { bottom = 60
                     , left = 20
                     , right = 20
-                    , top = 40
+                    , top = 60
                     }
                 ]
                 [ row
-                    [ width fill
-                    , spacing 10
+                    [ Element.width Element.fill
+                    , Element.spacing 10
                     ]
                     [ animatedLetter hoverAnimationUp (loadingButton "L")
                     , animatedLetter hoverAnimationDown (loadingButton "O")
@@ -188,7 +188,7 @@ viewLoading =
                     ]
                 ]
             , row
-                [ width fill
+                [ Element.width Element.fill
                 , paddingEach
                     { bottom = 0
                     , left = 0
@@ -209,18 +209,18 @@ viewLoading =
                         [ Font.color (rgb255 255 73 6)
                         , alignLeft
                         ]
-                        (text "Speak")
+                        (Element.text "Speak")
                     , el
                         [ Font.color (rgb255 255 234 240)
                         , Font.glow (rgb255 45 166 239) 1
                         , alignLeft
                         ]
-                        (text "&")
+                        (Element.text "&")
                     , el
                         [ Font.color (rgb255 45 166 239)
                         , alignLeft
                         ]
-                        (text "Spell")
+                        (Element.text "Spell")
                     ]
                 , Element.html elmLogoBlue
                 ]
@@ -301,12 +301,12 @@ loadingButton labelText =
             [ Font.typeface "LiberationMonoRegular"
             , Font.monospace
             ]
-        , Font.size 42
+        , Font.size 36
         , Font.extraBold
-        , padding 20
+        , padding 18
         ]
         { onPress = Just NoOp
-        , label = text labelText
+        , label = Element.text labelText
         }
 
 
@@ -331,7 +331,7 @@ viewLoaded newWord model =
         ]
         [ row
             -- top orange
-            [ width fill
+            [ Element.width Element.fill
             , padding 40
             , Font.color (rgb255 255 255 255)
             ]
@@ -355,13 +355,13 @@ viewLoaded newWord model =
                 , Font.size 20
                 , Font.medium
                 , padding 50
-                , spacing 8
-                , width fill
-                , height fill
+                , Element.spacing 8
+                , Element.width Element.fill
+                , Element.height Element.fill
                 ]
-                [ el [ centerY ] (text ("Your word is: " ++ String.toUpper newWord.word))
-                , el [ centerY ] (text ("Definition: " ++ newWord.definition))
-                , el [ centerY ] (text ("Pronunciation: " ++ newWord.pronunciation))
+                [ el [ centerY ] (Element.text ("Your word is: " ++ String.toUpper newWord.word))
+                , el [ centerY ] (Element.text ("Definition: " ++ newWord.definition))
+                , el [ centerY ] (Element.text ("Pronunciation: " ++ newWord.pronunciation))
                 ]
             , Input.button
                 [ Background.color (rgba255 20 153 223 1)
@@ -381,7 +381,7 @@ viewLoaded newWord model =
                     }
                 , Font.size 16
                 , padding 12
-                , height fill
+                , Element.height Element.fill
                 , mouseOver
                     [ Background.color (rgba255 200 153 223 1)
                     , Font.color (rgb255 255 250 239)
@@ -391,11 +391,11 @@ viewLoaded newWord model =
                     , Font.color (rgb255 255 250 239)
                     ]
                 ]
-                { onPress = Just GetAnotherWord, label = text "NEW WORD [0]" }
+                { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
             ]
         , column
             -- output screen
-            [ width fill
+            [ Element.width Element.fill
             , Background.color (rgba255 0 0 0 1)
             ]
             [ row
@@ -406,7 +406,7 @@ viewLoaded newWord model =
                 , Font.color (rgba255 110 200 120 0.8)
                 , Font.size 32
                 , padding 55
-                , width fill
+                , Element.width Element.fill
                 ]
                 [ el
                     [ centerX
@@ -418,13 +418,13 @@ viewLoaded newWord model =
                         , top = 20
                         }
                     ]
-                    (text (outputText model))
+                    (Element.text (outputText model))
                 ]
-            , paragraph []
+            , paragraph [ Element.spacing 6 ]
                 [ newTabLink
                     [ Font.color (rgba255 120 113 89 1)
                     , Font.size 20
-                    , width fill
+                    , Element.width Element.fill
                     , alignRight
                     , paddingEach
                         { bottom = 20
@@ -434,7 +434,7 @@ viewLoaded newWord model =
                         }
                     ]
                     { url = "https://elm-lang.org/"
-                    , label = text "Elm Instruments"
+                    , label = Element.text "Elm Instruments"
                     }
                 , row [ Element.alignRight ]
                     [ Element.html elmLogoGrayish ]
@@ -442,7 +442,7 @@ viewLoaded newWord model =
             ]
         , column
             -- bottom orange
-            [ width fill
+            [ Element.width Element.fill
             , paddingEach
                 { bottom = 120
                 , left = 40
@@ -459,8 +459,8 @@ viewLoaded newWord model =
                     , topLeft = 20
                     , topRight = 20
                     }
-                , spacing 20
-                , width fill
+                , Element.spacing 20
+                , Element.width Element.fill
                 , paddingEach
                     { bottom = 80
                     , left = 20
@@ -472,8 +472,8 @@ viewLoaded newWord model =
                     -- orange around keyboard
                     [ Background.color (rgba255 251 50 0 1)
                     , Border.rounded 20
-                    , spacing 20
-                    , width fill
+                    , Element.spacing 20
+                    , Element.width Element.fill
                     , paddingEach
                         { bottom = 20
                         , left = 20
@@ -489,13 +489,13 @@ viewLoaded newWord model =
                         , Border.solid
                         , Border.rounded 10
                         , Font.size 16
-                        , width fill
+                        , Element.width Element.fill
                         , padding 22
-                        , spacing 10
+                        , Element.spacing 10
                         ]
                         [ row
                             -- keyboard top
-                            [ spacingXY 10 0
+                            [ Element.spacingXY 10 0
                             , centerY
                             , centerX
                             ]
@@ -503,7 +503,7 @@ viewLoaded newWord model =
                             alphabetRow 65 77
                         , row
                             -- keyboard bottom
-                            [ spacingXY 10 0
+                            [ Element.spacingXY 10 0
                             , centerY
                             , centerX
                             ]
@@ -511,7 +511,7 @@ viewLoaded newWord model =
                             alphabetRow 78 90
                         , row
                             -- keyboard commands
-                            [ spacingXY 14 0
+                            [ Element.spacingXY 14 0
                             , centerY
                             , centerX
                             ]
@@ -525,7 +525,7 @@ viewLoaded newWord model =
                         ]
                     ]
                 , row
-                    [ width fill
+                    [ Element.width Element.fill
                     , paddingEach
                         { bottom = 0
                         , left = 0
@@ -546,18 +546,18 @@ viewLoaded newWord model =
                             [ Font.color (rgb255 255 73 6)
                             , alignLeft
                             ]
-                            (text "Speak")
+                            (Element.text "Speak")
                         , el
                             [ Font.color (rgb255 255 234 240)
                             , Font.glow (rgb255 45 166 239) 1
                             , alignLeft
                             ]
-                            (text "&")
+                            (Element.text "&")
                         , el
                             [ Font.color (rgb255 45 166 239)
                             , alignLeft
                             ]
-                            (text "Spell")
+                            (Element.text "Spell")
                         ]
                     , paragraph
                         -- sound controls
@@ -590,7 +590,7 @@ yellowCommandBtn pressAction labelText =
             , Font.color (rgb255 255 250 239)
             ]
         ]
-        { onPress = Just pressAction, label = text labelText }
+        { onPress = Just pressAction, label = Element.text labelText }
 
 
 blueCommandBtn : Msg -> String -> Element Msg
@@ -612,7 +612,7 @@ blueCommandBtn pressAction labelText =
             , Font.color (rgb255 255 250 239)
             ]
         ]
-        { onPress = Just pressAction, label = text labelText }
+        { onPress = Just pressAction, label = Element.text labelText }
 
 
 outputText : Model -> String
@@ -656,7 +656,7 @@ alphabetRow start end =
                         ]
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
-                    , label = text (codeToString asciiCode)
+                    , label = Element.text (codeToString asciiCode)
                     }
             )
 
