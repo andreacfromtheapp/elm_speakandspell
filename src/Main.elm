@@ -332,7 +332,7 @@ viewLoaded newWord model =
                             [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
                             , yellowCommandBtn ResetWord "RESET [5]"
                             , yellowCommandBtn Speak "SPEAK [8]"
-                            , yellowCommandBtn Spell "SPELL [8]"
+                            , yellowCommandBtn Spell "SPELL [9]"
                             , yellowCommandBtn SubmitWord "SUBMIT [↵]"
                             , yellowCommandBtn ResetWord "RETRY [6]"
                             ]
