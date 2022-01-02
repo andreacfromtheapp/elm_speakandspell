@@ -12,6 +12,9 @@ import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
+import Simple.Animation as Animation exposing (Animation)
+import Simple.Animation.Animated as Animated
+import Simple.Animation.Property as P
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 
@@ -172,16 +175,16 @@ viewLoading =
                     [ width fill
                     , spacing 10
                     ]
-                    [ loadingButton "L"
-                    , loadingButton "O"
-                    , loadingButton "A"
-                    , loadingButton "D"
-                    , loadingButton "I"
-                    , loadingButton "N"
-                    , loadingButton "G"
-                    , loadingButton "."
-                    , loadingButton "."
-                    , loadingButton "."
+                    [ animatedLetter hoverAnimationUp (loadingButton "L")
+                    , animatedLetter hoverAnimationDown (loadingButton "O")
+                    , animatedLetter hoverAnimationUp (loadingButton "A")
+                    , animatedLetter hoverAnimationDown (loadingButton "D")
+                    , animatedLetter hoverAnimationUp (loadingButton "I")
+                    , animatedLetter hoverAnimationDown (loadingButton "N")
+                    , animatedLetter hoverAnimationUp (loadingButton "G")
+                    , animatedLetter hoverAnimationRotate (loadingButton ".")
+                    , animatedLetter hoverAnimationRotate (loadingButton ".")
+                    , animatedLetter hoverAnimationRotate (loadingButton ".")
                     ]
                 ]
             , row
@@ -223,6 +226,67 @@ viewLoading =
                 ]
             ]
         ]
+
+
+animatedLetter : Animation -> Element msg -> Element msg
+animatedLetter animation element =
+    animatedEl animation
+        []
+        element
+
+
+animatedDotRotate : Element msg -> Element msg
+animatedDotRotate element =
+    animatedEl hoverAnimationRotate
+        []
+        element
+
+
+hoverAnimationRotate : Animation
+hoverAnimationRotate =
+    Animation.steps
+        { startAt = [ P.rotate 0, P.y 0 ]
+        , options = [ Animation.loop, Animation.easeInBack ]
+        }
+        [ Animation.step 400 [ P.rotate 10, P.y 8 ]
+        , Animation.step 640 [ P.rotate 90, P.y 0 ]
+        ]
+
+
+hoverAnimationUp : Animation
+hoverAnimationUp =
+    Animation.steps
+        { startAt = [ P.y 0 ]
+        , options = [ Animation.loop, Animation.easeInBack ]
+        }
+        [ Animation.step 400 [ P.y 8 ]
+        , Animation.step 640 [ P.y 0 ]
+        ]
+
+
+hoverAnimationDown : Animation
+hoverAnimationDown =
+    Animation.steps
+        { startAt = [ P.y 8 ]
+        , options = [ Animation.loop, Animation.reverse, Animation.easeOutBack ]
+        }
+        [ Animation.step 640 [ P.y 0 ]
+        , Animation.step 400 [ P.y 8 ]
+        ]
+
+
+animatedEl : Animation -> List (Element.Attribute msg) -> Element msg -> Element msg
+animatedEl =
+    -- Element.row or Element.column can be used here too
+    animatedUi Element.el
+
+
+animatedUi =
+    Animated.ui
+        { behindContent = Element.behindContent
+        , htmlAttribute = Element.htmlAttribute
+        , html = Element.html
+        }
 
 
 loadingButton : String -> Element Msg
