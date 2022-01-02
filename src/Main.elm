@@ -149,6 +149,7 @@ viewLoaded newWord model =
             -- top orange
             [ width fill
             , padding 40
+            , Font.color (rgb255 255 255 255)
             ]
             [ column
                 -- new word "top screen"
@@ -168,9 +169,8 @@ viewLoaded newWord model =
                     , topRight = 0
                     }
                 , Font.size 20
-                , Font.color (rgb255 255 255 255)
                 , Font.medium
-                , padding 28
+                , padding 50
                 , spacing 8
                 , width fill
                 , height fill
@@ -195,7 +195,6 @@ viewLoaded newWord model =
                     , topLeft = 0
                     , topRight = 30
                     }
-                , Font.color (rgb255 255 255 255)
                 , Font.size 16
                 , padding 12
                 , height fill
