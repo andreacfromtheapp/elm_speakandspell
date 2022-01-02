@@ -12,6 +12,8 @@ import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
+import Svg exposing (..)
+import Svg.Attributes exposing (..)
 
 
 
@@ -217,6 +219,7 @@ viewLoading =
                         ]
                         (text "Spell")
                     ]
+                , Element.html elmLogoBlue
                 ]
             ]
         ]
@@ -369,6 +372,8 @@ viewLoaded newWord model =
                     { url = "https://elm-lang.org/"
                     , label = text "Elm Instruments"
                     }
+                , row [ Element.alignRight ]
+                    [ Element.html elmLogoGrayish ]
                 ]
             ]
         , column
@@ -930,3 +935,102 @@ port spell : List String -> Cmd msg
 
 
 port sound : Bool -> Cmd msg
+
+
+
+-- SVG LOGOs
+
+
+elmLogoBlue =
+    svg
+        [ id "SvgjsSvg1001"
+        , Svg.Attributes.width "100"
+        , Svg.Attributes.height "100"
+        , version "1.1"
+        ]
+        [ defs
+            [ id "SvgjsDefs1002"
+            ]
+            []
+        , g
+            [ id "SvgjsG1008"
+            , transform "matrix(1,0,0,1,0,0)"
+            ]
+            [ svg
+                [ enableBackground "new 0 0 323.141 322.95"
+                , viewBox "0 0 323.141 322.95"
+                , Svg.Attributes.width "100"
+                , Svg.Attributes.height "100"
+                ]
+                [ polygon
+                    [ Svg.Attributes.fill "#2da6ef"
+                    , points "161.649 152.782 231.514 82.916 91.783 82.916"
+                    , class "colorF0AD00 svgShape"
+                    ]
+                    []
+                , polygon
+                    [ Svg.Attributes.fill "#2da6ef"
+                    , points "8.867 0 79.241 70.375 232.213 70.375 161.838 0"
+                    , class "color7FD13B svgShape"
+                    ]
+                    []
+                , rect
+                    [ Svg.Attributes.width "107.676"
+                    , Svg.Attributes.height "108.167"
+                    , x "192.99"
+                    , y "107.392"
+                    , Svg.Attributes.fill "#2da6ef"
+                    , transform "rotate(45.001 246.83 161.471)"
+                    , class "color7FD13B svgShape"
+                    ]
+                    []
+                , polygon [ Svg.Attributes.fill "#2da6ef", points "323.298 143.724 323.298 0 179.573 0", class "color60B5CC svgShape" ] []
+                , polygon [ Svg.Attributes.fill "#2da6ef", points "152.781 161.649 0 8.868 0 314.432", class "color5A6378 svgShape" ] []
+                , polygon [ Svg.Attributes.fill "#2da6ef", points "255.522 246.655 323.298 314.432 323.298 178.879", class "colorF0AD00 svgShape" ] []
+                , polygon [ Svg.Attributes.fill "#2da6ef", points "161.649 170.517 8.869 323.298 314.43 323.298", class "color60B5CC svgShape" ] []
+                ]
+            ]
+        ]
+
+
+elmLogoGrayish =
+    svg
+        [ id "SvgjsSvg1001"
+        , Svg.Attributes.width "14"
+        , Svg.Attributes.height "14"
+        , version "1.1"
+        ]
+        [ defs
+            [ id "SvgjsDefs1002"
+            ]
+            []
+        , g
+            [ id "SvgjsG1008"
+            , transform "matrix(1,0,0,1,0,0)"
+            ]
+            [ svg
+                [ Svg.Attributes.width "14"
+                , Svg.Attributes.height "14"
+                ]
+                [ svg
+                    [ Svg.Attributes.width "14"
+                    , Svg.Attributes.height "14"
+                    , enableBackground "new 0 0 323.141 322.95"
+                    , viewBox "0 0 323.141 322.95"
+                    ]
+                    [ polygon
+                        [ Svg.Attributes.fill "#787159"
+                        , points "161.649 152.782 231.514 82.916 91.783 82.916"
+                        , class "colorF0AD00 svgShape color2da6ef"
+                        ]
+                        []
+                    , polygon [ Svg.Attributes.fill "#787159", points "8.867 0 79.241 70.375 232.213 70.375 161.838 0", class "color7FD13B svgShape color2da6ef" ] []
+                    , rect [ Svg.Attributes.width "107.676", Svg.Attributes.height "108.167", x "192.99", y "107.392", Svg.Attributes.fill "#787159", class "color7FD13B svgShape color2da6ef", transform "rotate(45.001 246.83 161.471)" ] []
+                    , polygon [ Svg.Attributes.fill "#787159", points "323.298 143.724 323.298 0 179.573 0", class "color60B5CC svgShape color2da6ef" ] []
+                    , polygon [ Svg.Attributes.fill "#787159", points "152.781 161.649 0 8.868 0 314.432", class "color5A6378 svgShape color2da6ef" ] []
+                    , polygon [ Svg.Attributes.fill "#787159", points "255.522 246.655 323.298 314.432 323.298 178.879", class "colorF0AD00 svgShape color2da6ef" ] []
+                    , polygon [ Svg.Attributes.fill "#787159", points "161.649 170.517 8.869 323.298 314.43 323.298", class "color60B5CC svgShape color2da6ef" ] []
+                    ]
+                ]
+            ]
+        ]
