@@ -40,6 +40,7 @@ type Msg
     | Speak
     | Spell
     | SetSound Sound
+    | NoOp
 
 
 type Status
@@ -553,6 +554,11 @@ update msg model =
         Spell ->
             ( wordToScreen model
             , spell (splitToSpell (wordToSpeak model))
+            )
+
+        NoOp ->
+            ( model
+            , Cmd.none
             )
 
 
