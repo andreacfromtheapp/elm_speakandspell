@@ -128,6 +128,7 @@ viewLoading =
 viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
+        -- outer shell
         [ Background.color (rgba255 251 50 0 1)
         , Border.roundEach
             { bottomLeft = 80
@@ -144,6 +145,7 @@ viewLoaded newWord model =
         , centerY
         ]
         [ row
+            -- new word "top screen"
             [ width fill
             , height (px 220)
             , padding 40
@@ -199,6 +201,7 @@ viewLoaded newWord model =
                 { onPress = Just GetAnotherWord, label = text "NEW WORD [0]" }
             ]
         , column
+            -- output screen
             [ width fill
             , Background.color (rgba255 0 0 0 1)
             ]
@@ -244,6 +247,7 @@ viewLoaded newWord model =
                 ]
             ]
         , column
+            -- bottom orange
             [ width fill
             , paddingEach
                 { bottom = 120
@@ -253,6 +257,7 @@ viewLoaded newWord model =
                 }
             ]
             [ column
+                -- yellow shell
                 [ Background.color (rgba255 255 215 6 1)
                 , Border.roundEach
                     { bottomLeft = 60
@@ -270,6 +275,7 @@ viewLoaded newWord model =
                     }
                 ]
                 [ column
+                    -- orange around keyboard
                     [ Background.color (rgba255 251 50 0 1)
                     , Border.rounded 20
                     , spacing 20
@@ -282,6 +288,7 @@ viewLoaded newWord model =
                         }
                     ]
                     [ column
+                        -- blue around keyboard
                         [ Background.color (rgba255 20 153 223 1)
                         , Border.color (rgba255 0 0 20 1)
                         , Border.width 1
@@ -293,6 +300,7 @@ viewLoaded newWord model =
                         , spacing 10
                         ]
                         [ row
+                            -- keyboard top
                             [ spacingXY 10 0
                             , centerY
                             , centerX
@@ -300,6 +308,7 @@ viewLoaded newWord model =
                           <|
                             alphabetRow 65 77
                         , row
+                            -- keyboard bottom
                             [ spacingXY 10 0
                             , centerY
                             , centerX
@@ -307,6 +316,7 @@ viewLoaded newWord model =
                           <|
                             alphabetRow 78 90
                         , row
+                            -- keyboard commands
                             [ spacingXY 14 0
                             , centerY
                             , centerX
@@ -330,6 +340,7 @@ viewLoaded newWord model =
                         }
                     ]
                     [ paragraph
+                        -- "logo"
                         [ Font.family
                             [ Font.typeface "LiberationSerifRegular"
                             , Font.serif
@@ -355,6 +366,7 @@ viewLoaded newWord model =
                             (text "Spell")
                         ]
                     , paragraph
+                        -- sound controls
                         [ Font.size 16
                         ]
                         [ blueCommandBtn (SetSound Off) "SOUND OFF [2]"
