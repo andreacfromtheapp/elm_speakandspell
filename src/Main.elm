@@ -384,7 +384,6 @@ viewLoaded newWord model =
                             ]
                         , Font.size 64
                         , Font.extraBold
-                        , spacing 10
                         ]
                         [ el
                             [ Font.color (rgb255 255 73 6)
@@ -407,7 +406,7 @@ viewLoaded newWord model =
                         [ Font.size 16
                         ]
                         [ Input.button
-                            [ Background.color (rgba255 255 73 6 1)
+                            [ Background.color (rgba255 45 166 239 1)
                             , Border.color (rgba255 0 0 20 1)
                             , Border.width 1
                             , Border.solid
@@ -417,7 +416,7 @@ viewLoaded newWord model =
                             ]
                             { onPress = Just (SetSound Off), label = text "SOUND OFF [3]" }
                         , Input.button
-                            [ Background.color (rgba255 255 73 6 1)
+                            [ Background.color (rgba255 45 166 239 1)
                             , Border.color (rgba255 0 0 20 1)
                             , Border.width 1
                             , Border.solid
