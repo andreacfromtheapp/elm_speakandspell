@@ -1045,6 +1045,7 @@ port sound : Bool -> Cmd msg
 -- SVG LOGOs
 
 
+elmLogoBlue : Html msg
 elmLogoBlue =
     svg
         [ id "SvgjsSvg1001"
@@ -1097,6 +1098,7 @@ elmLogoBlue =
         ]
 
 
+elmLogoGrayish : Html msg
 elmLogoGrayish =
     svg
         [ id "SvgjsSvg1001"
