@@ -274,6 +274,16 @@ animatedEl =
     animatedUi Element.el
 
 
+animatedUi :
+    (List
+        (Element.Attribute msg)
+     -> children
+     -> Element msg
+    )
+    -> Animation
+    -> List (Element.Attribute msg)
+    -> children
+    -> Element msg
 animatedUi =
     Animated.ui
         { behindContent = Element.behindContent
