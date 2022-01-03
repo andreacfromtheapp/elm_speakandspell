@@ -94,6 +94,7 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] use elm logo :)
   - [x] spell LOADING with Speak & Spell styled keys
   - [x] animate the LOADING words on screen
+- [x] create an error page to wrap errors in something nicer than blank
 - [ ] make elm-ui design responsive
 - [ ] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [ ] ~~expandable "side loading screen" for the description?~~
@@ -103,14 +104,6 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [ ] ~~no onscreen keyboard on mobile~~
 
 ## Improvements
-
-### deal with Errors
-
-- [ ] create error pages for different status and messages
-- [ ] custom (parsed) message depending on the error nature
-- [ ] custom CSS to resemble the UI (e.g: spell ERROR with Speak & Spell styled keys)
-
-### others
 
 - [ ] ~~should I use a Maybe KeyboardEvent?~~
 - [ ] ~~refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?~~

@@ -115,7 +115,7 @@ view model =
                 viewLoaded word model
 
             Errored errorMessage ->
-                el [] (Element.text errorMessage)
+                viewErrored errorMessage
 
 
 viewLoading : Element Msg
@@ -321,6 +321,33 @@ loadingButton labelText =
         { onPress = Just NoOp
         , label = Element.text labelText
         }
+
+
+viewErrored : String -> Element Msg
+viewErrored errorMessage =
+    column
+        [ Background.color (rgba255 250 10 40 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.medium
+        , Font.color (rgb255 255 255 255)
+        , Font.size 20
+        , paddingEach
+            { bottom = 60
+            , left = 20
+            , right = 20
+            , top = 60
+            }
+        , centerX
+        , centerY
+        ]
+        [ el [] (Element.text ("Error: " ++ errorMessage)) ]
 
 
 viewLoaded : NewWord -> Model -> Element Msg
@@ -698,12 +725,12 @@ update msg model =
                     )
 
                 [] ->
-                    ( { model | status = Errored "Error: No words found :(" }
+                    ( { model | status = Errored "No words found :(" }
                     , Cmd.none
                     )
 
         GetNewWord (Err err) ->
-            ( { model | status = Errored ("Error: " ++ Debug.toString err) }
+            ( { model | status = Errored (Debug.toString err) }
             , Cmd.none
             )
 
