@@ -603,7 +603,7 @@ viewLoaded newWord model =
                         -- sound controls
                         [ Font.size 16
                         ]
-                        [ blueCommandBtn (SetSound Off) "SOUND OFF [2]"
+                        [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
                         , blueCommandBtn (SetSound On) "SOUND ON [2]"
                         ]
                     ]
