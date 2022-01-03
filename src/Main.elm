@@ -210,7 +210,7 @@ viewLoading =
                     , Font.extraBold
                     ]
                     [ el
-                        [ Font.color (rgb255 209 24 6)
+                        [ Font.color (rgba255 209 24 6 0.84)
                         , alignLeft
                         ]
                         (Element.text "Speak")
@@ -221,7 +221,7 @@ viewLoading =
                         ]
                         (Element.text "&")
                     , el
-                        [ Font.color (rgb255 45 90 232)
+                        [ Font.color (rgba255 45 90 232 0.84)
                         , alignLeft
                         ]
                         (Element.text "Spell")
@@ -635,7 +635,7 @@ viewLoaded newWord model =
                         , Font.extraBold
                         ]
                         [ el
-                            [ Font.color (rgb255 209 24 6)
+                            [ Font.color (rgba255 209 24 6 0.84)
                             , alignLeft
                             ]
                             (Element.text "Speak")
@@ -646,7 +646,7 @@ viewLoaded newWord model =
                             ]
                             (Element.text "&")
                         , el
-                            [ Font.color (rgb255 45 90 232)
+                            [ Font.color (rgba255 45 90 232 0.84)
                             , alignLeft
                             ]
                             (Element.text "Spell")
