@@ -420,7 +420,7 @@ viewLoaded newWord model =
                     , topRight = 30
                     }
                 , Font.size 16
-                , padding 12
+                , padding 20
                 , Element.height Element.fill
                 , mouseOver
                     [ Background.color (rgba255 200 153 223 1)
