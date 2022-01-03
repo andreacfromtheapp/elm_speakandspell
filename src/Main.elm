@@ -238,11 +238,11 @@ animatedLetter animation element =
 hoverAnimationRotate : Animation
 hoverAnimationRotate =
     Animation.steps
-        { startAt = [ P.rotate 0, P.y 0 ]
+        { startAt = [ P.rotate 0 ]
         , options = [ Animation.loop, Animation.easeInBack ]
         }
-        [ Animation.step 400 [ P.rotate 10, P.y 8 ]
-        , Animation.step 640 [ P.rotate 90, P.y 0 ]
+        [ Animation.step 400 [ P.rotate 10 ]
+        , Animation.step 640 [ P.rotate 90 ]
         ]
 
 
