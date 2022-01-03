@@ -50,7 +50,7 @@ type Msg
 type Status
     = Loading
     | Loaded NewWord
-    | Errored String
+    | Errored Http.Error
 
 
 type Output
@@ -327,7 +327,32 @@ loadingButton labelText =
         }
 
 
-viewErrored : String -> Element Msg
+errorToString : Http.Error -> String
+errorToString error =
+    case error of
+        Http.BadUrl url ->
+            "The URL " ++ url ++ " is invalid"
+
+        Http.Timeout ->
+            "Unable to reach the server, try again later"
+
+        Http.NetworkError ->
+            "Unable to reach the server, check your network connection"
+
+        Http.BadStatus 500 ->
+            "The server had a problem, try again later"
+
+        Http.BadStatus 400 ->
+            "Verify your information and try again"
+
+        Http.BadStatus _ ->
+            "Unknown error"
+
+        Http.BadBody errorMessage ->
+            errorMessage
+
+
+viewErrored : Http.Error -> Element Msg
 viewErrored errorMessage =
     column
         [ Region.description "Error Page"
@@ -340,9 +365,9 @@ viewErrored errorMessage =
             [ Font.typeface "LiberationMonoRegular"
             , Font.monospace
             ]
-        , Font.medium
         , Font.color (rgb255 255 255 255)
-        , Font.size 20
+        , Font.size 24
+        , Font.bold
         , paddingEach
             { bottom = 60
             , left = 20
@@ -352,7 +377,7 @@ viewErrored errorMessage =
         , centerX
         , centerY
         ]
-        [ el [ Region.description "Error Message" ] (Element.text ("Error: " ++ errorMessage)) ]
+        [ el [ Region.description "Error Message" ] (Element.text ("Error: " ++ errorToString errorMessage)) ]
 
 
 viewLoaded : NewWord -> Model -> Element Msg
@@ -756,12 +781,12 @@ update msg model =
                     )
 
                 [] ->
-                    ( { model | status = Errored "No words found :(" }
+                    ( { model | status = Errored (Http.BadBody "No words found :(") }
                     , Cmd.none
                     )
 
         GetNewWord (Err err) ->
-            ( { model | status = Errored (Debug.toString err) }
+            ( { model | status = Errored err }
             , Cmd.none
             )
 

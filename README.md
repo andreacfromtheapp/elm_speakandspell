@@ -94,7 +94,9 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
   - [x] use elm logo :)
   - [x] spell LOADING with Speak & Spell styled keys
   - [x] animate the LOADING words on screen
-- [x] create an error page to wrap errors in something nicer than blank
+- [x] create custom error page
+  - [x] implement function to handle http.error
+  - [x] and return custom (parsed) error messages
 - [ ] make elm-ui design responsive
 - [x] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [x] SEO optimization
