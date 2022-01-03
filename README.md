@@ -126,6 +126,6 @@ Provided that a *polyglot API* (or separate different languages APIs) exist, the
 Once complete, deploy a static website:
 
 - [ ] implement [GitHub Actions](https://github.com/features/actions)
-  - [ ] use one of the [existing Elm Actions](https://github.com/marketplace?type=actions&query=elm+?)?
+  - [ ] use one of the [existing Elm Actions](https://github.com/marketplace?type=actions&query=elm)?
   - [ ] create my own?
 - [ ] deploy to [GitHub Pages](https://docs.github.com/en/pages)
