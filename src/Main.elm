@@ -201,7 +201,7 @@ viewLoading =
                 ]
                 [ paragraph
                     -- "logo"
-                    [ Region.description "Loading name and logo"
+                    [ Region.description "Loading name and Elm logo"
                     , Font.family
                         [ Font.typeface "LiberationSerifRegular"
                         , Font.serif
@@ -481,7 +481,7 @@ viewLoaded newWord model =
                     (Element.text (outputText model))
                 ]
             , paragraph
-                [ Region.description "Elm Shoutout Text"
+                [ Region.description "Elm branding"
                 , Element.spacing 6
                 ]
                 [ newTabLink
