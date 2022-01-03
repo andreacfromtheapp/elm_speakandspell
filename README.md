@@ -97,6 +97,7 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 - [x] create an error page to wrap errors in something nicer than blank
 - [ ] make elm-ui design responsive
 - [x] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
+- [x] SEO optimization
 - [ ] ~~expandable "side loading screen" for the description?~~
 - [ ] ~~expandable "bottom loading screen" for the help section~~
   - [x] ~~help toggle in Elm (temporary. exercise more than anything)~~
