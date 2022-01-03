@@ -7,6 +7,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Element.Region as Region
 import Html exposing (Html)
 import Http
 import Json.Decode as Decode exposing (Decoder)
@@ -106,7 +107,7 @@ initialModel =
 
 view : Model -> Html Msg
 view model =
-    layout [] <|
+    layout [ Region.mainContent ] <|
         case model.status of
             Loading ->
                 viewLoading
@@ -122,7 +123,8 @@ viewLoading : Element Msg
 viewLoading =
     column
         -- outer orange
-        [ centerX
+        [ Region.description "Loading Screen"
+        , centerX
         , centerY
         , Background.color (rgba255 251 50 0 1)
         , Border.roundEach
@@ -172,7 +174,8 @@ viewLoading =
                     }
                 ]
                 [ row
-                    [ Element.width Element.fill
+                    [ Region.description "Loading animation"
+                    , Element.width Element.fill
                     , Element.spacing 10
                     ]
                     [ animatedLetter hoverAnimationUp (loadingButton "L")
@@ -198,7 +201,8 @@ viewLoading =
                 ]
                 [ paragraph
                     -- "logo"
-                    [ Font.family
+                    [ Region.description "Loading name and logo"
+                    , Font.family
                         [ Font.typeface "LiberationSerifRegular"
                         , Font.serif
                         ]
@@ -326,7 +330,8 @@ loadingButton labelText =
 viewErrored : String -> Element Msg
 viewErrored errorMessage =
     column
-        [ Background.color (rgba255 250 10 40 1)
+        [ Region.description "Error Page"
+        , Background.color (rgba255 250 10 40 1)
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
@@ -347,14 +352,15 @@ viewErrored errorMessage =
         , centerX
         , centerY
         ]
-        [ el [] (Element.text ("Error: " ++ errorMessage)) ]
+        [ el [ Region.description "Error Message" ] (Element.text ("Error: " ++ errorMessage)) ]
 
 
 viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
         -- outer shell
-        [ Background.color (rgba255 251 50 0 1)
+        [ Region.description "Loaded App"
+        , Background.color (rgba255 251 50 0 1)
         , Border.roundEach
             { bottomLeft = 80
             , bottomRight = 80
@@ -377,7 +383,8 @@ viewLoaded newWord model =
             ]
             [ column
                 -- new word "top screen"
-                [ Background.color (rgba255 20 153 223 1)
+                [ Region.description "New Word Screen"
+                , Background.color (rgba255 20 153 223 1)
                 , Border.color (rgba255 0 0 0 1)
                 , Border.widthEach
                     { bottom = 1
@@ -393,18 +400,31 @@ viewLoaded newWord model =
                     , topRight = 0
                     }
                 , Font.size 20
-                , Font.medium
-                , padding 50
+                , Font.bold
                 , Element.spacing 8
                 , Element.width Element.fill
                 , Element.height Element.fill
+                , padding 50
                 ]
-                [ el [ centerY ] (Element.text ("Your word is: " ++ String.toUpper newWord.word))
-                , el [ centerY ] (Element.text ("Definition: " ++ newWord.definition))
-                , el [ centerY ] (Element.text ("Pronunciation: " ++ newWord.pronunciation))
+                [ el
+                    [ Region.description "New Word Word"
+                    , centerY
+                    ]
+                    (Element.text ("Your word is: " ++ String.toUpper newWord.word))
+                , el
+                    [ Region.description "New Word Definition"
+                    , centerY
+                    ]
+                    (Element.text ("Definition: " ++ newWord.definition))
+                , el
+                    [ Region.description "New Word Pronunciation"
+                    , centerY
+                    ]
+                    (Element.text ("Pronunciation: " ++ newWord.pronunciation))
                 ]
             , Input.button
-                [ Background.color (rgba255 20 153 223 1)
+                [ Region.description "Command NEW WORD [0]"
+                , Background.color (rgba255 20 153 223 1)
                 , Border.color (rgba255 0 0 0 1)
                 , Border.widthEach
                     { bottom = 1
@@ -419,23 +439,23 @@ viewLoaded newWord model =
                     , topLeft = 0
                     , topRight = 30
                     }
-                , Font.size 16
-                , padding 20
                 , Element.height Element.fill
+                , padding 18
                 , mouseOver
                     [ Background.color (rgba255 200 153 223 1)
-                    , Font.color (rgb255 255 250 239)
+                    , Font.color (rgb255 255 255 255)
                     ]
                 , focused
                     [ Background.color (rgba255 200 153 223 1)
-                    , Font.color (rgb255 255 250 239)
+                    , Font.color (rgb255 255 255 255)
                     ]
                 ]
                 { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
             ]
         , column
             -- output screen
-            [ Element.width Element.fill
+            [ Region.description "Output Screen"
+            , Element.width Element.fill
             , Background.color (rgba255 0 0 0 1)
             ]
             [ row
@@ -460,7 +480,10 @@ viewLoaded newWord model =
                     ]
                     (Element.text (outputText model))
                 ]
-            , paragraph [ Element.spacing 6 ]
+            , paragraph
+                [ Region.description "Elm Shoutout Text"
+                , Element.spacing 6
+                ]
                 [ newTabLink
                     [ Font.color (rgba255 120 113 89 1)
                     , Font.size 20
@@ -535,7 +558,8 @@ viewLoaded newWord model =
                         ]
                         [ row
                             -- keyboard top
-                            [ Element.spacingXY 10 0
+                            [ Region.description "Top Keyboard Row from A to M"
+                            , Element.spacingXY 10 0
                             , centerY
                             , centerX
                             ]
@@ -543,7 +567,8 @@ viewLoaded newWord model =
                             alphabetRow 65 77
                         , row
                             -- keyboard bottom
-                            [ Element.spacingXY 10 0
+                            [ Region.description "Bottom Keyboard Row from N to Z"
+                            , Element.spacingXY 10 0
                             , centerY
                             , centerX
                             ]
@@ -551,7 +576,8 @@ viewLoaded newWord model =
                             alphabetRow 78 90
                         , row
                             -- keyboard commands
-                            [ Element.spacingXY 14 0
+                            [ Region.description "Keyboard Commands"
+                            , Element.spacingXY 14 0
                             , centerY
                             , centerX
                             ]
@@ -575,7 +601,8 @@ viewLoaded newWord model =
                     ]
                     [ paragraph
                         -- "logo"
-                        [ Font.family
+                        [ Region.description "App name and logo"
+                        , Font.family
                             [ Font.typeface "LiberationSerifRegular"
                             , Font.serif
                             ]
@@ -601,7 +628,8 @@ viewLoaded newWord model =
                         ]
                     , paragraph
                         -- sound controls
-                        [ Font.size 16
+                        [ Region.description "Bottom Commands"
+                        , Font.size 16
                         ]
                         [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
                         , blueCommandBtn (SetSound On) "SOUND ON [2]"
@@ -615,7 +643,8 @@ viewLoaded newWord model =
 yellowCommandBtn : Msg -> String -> Element Msg
 yellowCommandBtn pressAction labelText =
     Input.button
-        [ Background.color (rgba255 250 175 0 1)
+        [ Region.description ("Command " ++ labelText)
+        , Background.color (rgba255 250 175 0 1)
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
@@ -623,11 +652,11 @@ yellowCommandBtn pressAction labelText =
         , padding 12
         , mouseOver
             [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 250 239)
+            , Font.color (rgb255 255 255 255)
             ]
         , focused
             [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 250 239)
+            , Font.color (rgb255 255 255 255)
             ]
         ]
         { onPress = Just pressAction, label = Element.text labelText }
@@ -636,7 +665,8 @@ yellowCommandBtn pressAction labelText =
 blueCommandBtn : Msg -> String -> Element Msg
 blueCommandBtn pressAction labelText =
     Input.button
-        [ Background.color (rgba255 45 166 239 1)
+        [ Region.description ("Command " ++ labelText)
+        , Background.color (rgba255 45 166 239 1)
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
@@ -645,11 +675,11 @@ blueCommandBtn pressAction labelText =
         , alignRight
         , mouseOver
             [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 250 239)
+            , Font.color (rgb255 255 255 255)
             ]
         , focused
             [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 250 239)
+            , Font.color (rgb255 255 255 255)
             ]
         ]
         { onPress = Just pressAction, label = Element.text labelText }
@@ -679,7 +709,8 @@ alphabetRow start end =
         |> List.map
             (\asciiCode ->
                 Input.button
-                    [ Background.color (rgba255 253 116 6 1)
+                    [ Region.description ("Keyboard Key " ++ codeToString asciiCode)
+                    , Background.color (rgba255 253 116 6 1)
                     , Border.color (rgba255 0 0 20 1)
                     , Border.width 1
                     , Border.solid
@@ -688,11 +719,11 @@ alphabetRow start end =
                     , padding 20
                     , mouseOver
                         [ Background.color (rgba255 201 68 16 1)
-                        , Font.color (rgb255 255 250 239)
+                        , Font.color (rgb255 255 255 255)
                         ]
                     , focused
                         [ Background.color (rgba255 201 68 16 1)
-                        , Font.color (rgb255 255 250 239)
+                        , Font.color (rgb255 255 255 255)
                         ]
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
