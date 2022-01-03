@@ -855,43 +855,43 @@ kbdEventToCommand event model =
         ( model, Cmd.none )
 
     else
-        case Debug.toString event.keyCode of
-            "Two" ->
+        case event.key of
+            Just "2" ->
                 ( model
                 , setSound On
                 )
 
-            "Three" ->
+            Just "3" ->
                 ( model
                 , setSound Off
                 )
 
-            "Five" ->
+            Just "5" ->
                 ( resetWord model
                 , Cmd.none
                 )
 
-            "Six" ->
+            Just "6" ->
                 ( resetWord model
                 , Cmd.none
                 )
 
-            "Eight" ->
+            Just "8" ->
                 ( wordToScreen model
                 , speak (wordToSpeak model)
                 )
 
-            "Nine" ->
+            Just "9" ->
                 ( wordToScreen model
                 , spell (splitToSpell (wordToSpeak model))
                 )
 
-            "Zero" ->
+            Just "0" ->
                 ( resetWord model
                 , initialCmd
                 )
 
-            "Backspace" ->
+            Just "Backspace" ->
                 ( if isGuessEmtpy (eraseLetter model) then
                     resetWord model
 
@@ -900,7 +900,7 @@ kbdEventToCommand event model =
                 , Cmd.none
                 )
 
-            "Enter" ->
+            Just "Enter" ->
                 ( submitWord model
                 , speak (checkResult model)
                 )
@@ -996,34 +996,20 @@ wordToSpeak model =
 
 kbdEventToString : KeyboardEvent -> String
 kbdEventToString event =
-    Debug.toString event.keyCode
-        |> isCharAlpha
-        |> isSingleChar
+    case event.key of
+        Just key ->
+            if
+                String.all Char.isAlpha key
+                    && String.length key
+                    == 1
+            then
+                String.toUpper key
 
+            else
+                ""
 
-isCharAlpha : String -> List Char
-isCharAlpha string =
-    String.toList string
-        |> List.map
-            (\letter ->
-                if Char.isAlpha letter then
-                    Char.toUpper letter
-
-                else
-                    ' '
-            )
-
-
-isSingleChar : List Char -> String
-isSingleChar charList =
-    String.fromList charList
-        |> (\char ->
-                if String.length char == 1 then
-                    char
-
-                else
-                    ""
-           )
+        Nothing ->
+            ""
 
 
 unwrapNewWordList : List NewWord -> NewWord
