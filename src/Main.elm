@@ -208,7 +208,7 @@ viewLoading =
                         , Font.serif
                         ]
                     , Font.size 64
-                    , Font.extraBold
+                    , Font.heavy
                     ]
                     [ el
                         [ Font.color (rgba255 209 24 6 0.84)
@@ -629,7 +629,7 @@ viewLoaded newWord model =
                             , Font.serif
                             ]
                         , Font.size 64
-                        , Font.extraBold
+                        , Font.heavy
                         ]
                         [ el
                             [ Font.color (rgba255 209 24 6 0.84)
