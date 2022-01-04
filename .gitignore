@@ -1,8 +1,11 @@
+# node
+node_modules
 # don't know what bin is
 bin
 # elm-package generated files
 elm-stuff
 # elm-repl generated files
 repl-temp-*
+# elm compiled code
 elm.js
 elm.min.js
