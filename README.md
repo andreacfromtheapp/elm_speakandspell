@@ -108,11 +108,18 @@ Don't want to [install Elm](https://guide.elm-lang.org/install/)? Paste [Main.el
 
 ## Improvements
 
-- [ ] ~~should I use a Maybe KeyboardEvent?~~
-- [ ] ~~refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?~~
-  - [ ] ~~would this be too convoluted? Elm likes clarity over complexity~~
+- [ ] [Elm optmization](https://guide.elm-lang.org/optimization/):
+  - [x] remove debug.string + refactor those fn
+  - [x] use lazy
+  - [ ] assets size
+  - [ ] use fonts locally?
 
 ## Maybe
+
+- [ ] make it so that KeyPressed triggers visual feedback on keyboard keys
+  - [ ] should I use a Maybe KeyboardEvent?
+  - [ ] refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?
+    - [ ] would this be too convoluted? Elm likes clarity over complexity
 
 Provided that a *polyglot API* (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
 
