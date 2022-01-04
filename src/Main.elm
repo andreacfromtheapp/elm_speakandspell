@@ -454,12 +454,7 @@ viewLoaded newWord model =
                 [ Region.description "Command NEW WORD [0]"
                 , Background.color (rgba255 20 153 223 1)
                 , Border.color (rgba255 0 0 0 1)
-                , Border.widthEach
-                    { bottom = 1
-                    , left = 1
-                    , right = 1
-                    , top = 1
-                    }
+                , Border.width 1
                 , Border.solid
                 , Border.roundEach
                     { bottomLeft = 0
