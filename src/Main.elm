@@ -426,7 +426,6 @@ viewLoaded newWord model =
                     , topRight = 0
                     }
                 , Font.size 20
-                , Font.medium
                 , Element.spacing 8
                 , Element.width Element.fill
                 , Element.height Element.fill
@@ -461,8 +460,6 @@ viewLoaded newWord model =
                     , topRight = 30
                     }
                 , Element.height Element.fill
-                , Font.size 18
-                , Font.medium
                 , padding 18
                 , mouseOver
                     [ Background.color (rgba255 200 153 223 1)
