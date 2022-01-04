@@ -663,16 +663,17 @@ viewLoaded newWord model =
         ]
 
 
-yellowCommandBtn : Msg -> String -> Element Msg
-yellowCommandBtn pressAction labelText =
+commandBtn : Color -> Element.Attribute msg -> msg -> String -> Element msg
+commandBtn bgColor align pressAction labelText =
     Input.button
         [ Region.description ("Command " ++ labelText)
-        , Background.color (rgba255 250 175 0 1)
+        , Background.color bgColor
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
         , Border.rounded 10
         , padding 12
+        , align
         , mouseOver
             [ Background.color (rgba255 201 68 16 1)
             , Font.color (rgb255 255 255 255)
@@ -683,29 +684,16 @@ yellowCommandBtn pressAction labelText =
             ]
         ]
         { onPress = Just pressAction, label = ElLazy.lazy Element.text labelText }
+
+
+yellowCommandBtn : Msg -> String -> Element Msg
+yellowCommandBtn pressAction labelText =
+    commandBtn (rgba255 250 175 0 1) alignLeft pressAction labelText
 
 
 blueCommandBtn : Msg -> String -> Element Msg
 blueCommandBtn pressAction labelText =
-    Input.button
-        [ Region.description ("Command " ++ labelText)
-        , Background.color (rgba255 45 166 239 1)
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 10
-        , padding 12
-        , alignRight
-        , mouseOver
-            [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 255 255)
-            ]
-        , focused
-            [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 255 255)
-            ]
-        ]
-        { onPress = Just pressAction, label = ElLazy.lazy Element.text labelText }
+    commandBtn (rgba255 45 166 239 1) alignRight pressAction labelText
 
 
 outputText : Model -> String
