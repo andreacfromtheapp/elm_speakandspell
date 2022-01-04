@@ -478,7 +478,7 @@ viewLoaded newWord model =
                     , Font.color (rgb255 255 255 255)
                     ]
                 ]
-                { onPress = Just GetAnotherWord, label = ElLazy.lazy Element.text "NEW WORD [0]" }
+                { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
             ]
         , column
             -- output screen
