@@ -7,6 +7,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Element.Lazy as ElLazy
 import Element.Region as Region
 import Html exposing (Html)
 import Http
@@ -178,16 +179,16 @@ viewLoading =
                     , Element.width Element.fill
                     , Element.spacing 10
                     ]
-                    [ animatedLetter hoverAnimationUp (loadingButton "L")
-                    , animatedLetter hoverAnimationDown (loadingButton "O")
-                    , animatedLetter hoverAnimationUp (loadingButton "A")
-                    , animatedLetter hoverAnimationDown (loadingButton "D")
-                    , animatedLetter hoverAnimationUp (loadingButton "I")
-                    , animatedLetter hoverAnimationDown (loadingButton "N")
-                    , animatedLetter hoverAnimationUp (loadingButton "G")
-                    , animatedLetter hoverAnimationRotate (loadingButton ".")
-                    , animatedLetter hoverAnimationRotate (loadingButton ".")
-                    , animatedLetter hoverAnimationRotate (loadingButton ".")
+                    [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
+                    , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "O")
+                    , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "A")
+                    , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "D")
+                    , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "I")
+                    , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "N")
+                    , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "G")
+                    , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+                    , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+                    , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
                     ]
                 ]
             , row
@@ -213,20 +214,20 @@ viewLoading =
                         [ Font.color (rgba255 209 24 6 0.84)
                         , alignLeft
                         ]
-                        (Element.text "Speak")
+                        (ElLazy.lazy Element.text "Speak")
                     , el
                         [ Font.color (rgb255 255 234 240)
                         , Font.glow (rgb255 45 166 239) 1
                         , alignLeft
                         ]
-                        (Element.text "&")
+                        (ElLazy.lazy Element.text "&")
                     , el
                         [ Font.color (rgba255 45 90 232 0.84)
                         , alignLeft
                         ]
-                        (Element.text "Spell")
+                        (ElLazy.lazy Element.text "Spell")
                     ]
-                , Element.html elmLogoBlue
+                , ElLazy.lazy Element.html elmLogoBlue
                 ]
             ]
         ]
@@ -377,7 +378,9 @@ viewErrored errorMessage =
         , centerX
         , centerY
         ]
-        [ el [ Region.description "Error Message" ] (Element.text ("Error: " ++ errorToString errorMessage)) ]
+        [ el [ Region.description "Error Message" ]
+            (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+        ]
 
 
 viewLoaded : NewWord -> Model -> Element Msg
@@ -435,17 +438,17 @@ viewLoaded newWord model =
                     [ Region.description "New Word Word"
                     , centerY
                     ]
-                    (Element.text ("Your word is: " ++ String.toUpper newWord.word))
+                    (ElLazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
                 , el
                     [ Region.description "New Word Definition"
                     , centerY
                     ]
-                    (Element.text ("Definition: " ++ newWord.definition))
+                    (ElLazy.lazy Element.text ("Definition: " ++ newWord.definition))
                 , el
                     [ Region.description "New Word Pronunciation"
                     , centerY
                     ]
-                    (Element.text ("Pronunciation: " ++ newWord.pronunciation))
+                    (ElLazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
                 ]
             , Input.button
                 [ Region.description "Command NEW WORD [0]"
@@ -475,7 +478,7 @@ viewLoaded newWord model =
                     , Font.color (rgb255 255 255 255)
                     ]
                 ]
-                { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
+                { onPress = Just GetAnotherWord, label = ElLazy.lazy Element.text "NEW WORD [0]" }
             ]
         , column
             -- output screen
@@ -503,7 +506,7 @@ viewLoaded newWord model =
                         , top = 20
                         }
                     ]
-                    (Element.text (outputText model))
+                    (ElLazy.lazy Element.text (outputText model))
                 ]
             , paragraph
                 [ Region.description "Elm branding"
@@ -522,10 +525,10 @@ viewLoaded newWord model =
                         }
                     ]
                     { url = "https://elm-lang.org/"
-                    , label = Element.text "Elm Instruments"
+                    , label = ElLazy.lazy Element.text "Elm Instruments"
                     }
                 , row [ Element.alignRight ]
-                    [ Element.html elmLogoGrayish ]
+                    [ ElLazy.lazy Element.html elmLogoGrayish ]
                 ]
             ]
         , column
@@ -638,18 +641,18 @@ viewLoaded newWord model =
                             [ Font.color (rgba255 209 24 6 0.84)
                             , alignLeft
                             ]
-                            (Element.text "Speak")
+                            (ElLazy.lazy Element.text "Speak")
                         , el
                             [ Font.color (rgb255 255 234 240)
                             , Font.glow (rgb255 45 166 239) 1
                             , alignLeft
                             ]
-                            (Element.text "&")
+                            (ElLazy.lazy Element.text "&")
                         , el
                             [ Font.color (rgba255 45 90 232 0.84)
                             , alignLeft
                             ]
-                            (Element.text "Spell")
+                            (ElLazy.lazy Element.text "Spell")
                         ]
                     , paragraph
                         -- sound controls
@@ -684,7 +687,7 @@ yellowCommandBtn pressAction labelText =
             , Font.color (rgb255 255 255 255)
             ]
         ]
-        { onPress = Just pressAction, label = Element.text labelText }
+        { onPress = Just pressAction, label = ElLazy.lazy Element.text labelText }
 
 
 blueCommandBtn : Msg -> String -> Element Msg
@@ -707,7 +710,7 @@ blueCommandBtn pressAction labelText =
             , Font.color (rgb255 255 255 255)
             ]
         ]
-        { onPress = Just pressAction, label = Element.text labelText }
+        { onPress = Just pressAction, label = ElLazy.lazy Element.text labelText }
 
 
 outputText : Model -> String
@@ -752,7 +755,7 @@ alphabetRow start end =
                         ]
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
-                    , label = Element.text (codeToString asciiCode)
+                    , label = ElLazy.lazy Element.text (codeToString asciiCode)
                     }
             )
 
