@@ -165,7 +165,6 @@ viewLoading =
                 , Border.width 1
                 , Border.solid
                 , Border.rounded 10
-                , Font.size 16
                 , Element.width Element.fill
                 , paddingEach
                     { bottom = 60
@@ -427,7 +426,7 @@ viewLoaded newWord model =
                     , topRight = 0
                     }
                 , Font.size 20
-                , Font.bold
+                , Font.medium
                 , Element.spacing 8
                 , Element.width Element.fill
                 , Element.height Element.fill
@@ -462,6 +461,8 @@ viewLoaded newWord model =
                     , topRight = 30
                     }
                 , Element.height Element.fill
+                , Font.size 18
+                , Font.medium
                 , padding 18
                 , mouseOver
                     [ Background.color (rgba255 200 153 223 1)
@@ -573,9 +574,7 @@ viewLoaded newWord model =
                         , Border.width 1
                         , Border.solid
                         , Border.rounded 10
-                        , Font.size 16
                         , Element.width Element.fill
-                        , padding 22
                         , Element.spacing 10
                         , paddingEach
                             { bottom = 28
@@ -657,7 +656,6 @@ viewLoaded newWord model =
                     , paragraph
                         -- sound controls
                         [ Region.description "Bottom Commands"
-                        , Font.size 16
                         ]
                         [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
                         , blueCommandBtn (SetSound On) "SOUND ON [2]"
@@ -677,6 +675,7 @@ commandBtn bgColor align pressAction labelText =
         , Border.width 1
         , Border.solid
         , Border.rounded 10
+        , Font.size 16
         , padding 12
         , align
         , mouseOver
