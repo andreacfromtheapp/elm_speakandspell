@@ -4,9 +4,11 @@ This is my very first attempt at an [Elm](https://elm-lang.org/) app. I'm doing 
 
 I picked Speak & Spell because it's a good mix of UI/UX and it makes for a great starting point to learn and practice. It will never be more than a simple "*first project*" exercise. Being a *toy project* (no pun intended), it won't have too many features. I'll make it good enough to learn, and move on to resume my Elm learning path.
 
-~~The code certainly stinks, and I’m aware that it needs more love and that there is room for improvement. That's the point of this exercise: study, internalize, apply, learn some more, improve skills and code, rinse and repeat.~~
-
 This is a limited reproduction of the original game: 1) match the word on the screen, and 2) use the commands. It won't have Mystery Word or other play modes from the original Speak & Spell. The point of this exercise is to: study, internalize, apply, learn some more, improve skills and code, rinse and repeat. Not to be an 1:1 clone.
+
+## Credits
+
+The favicon is made by [Gregor Cresnar](https://thenounproject.com/icon/speak-1616157/), used under the [Creative Commons CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) license.
 
 ## Try it
 
