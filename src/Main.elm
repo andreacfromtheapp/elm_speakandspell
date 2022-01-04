@@ -204,7 +204,7 @@ viewLoading =
                     -- "logo"
                     [ Region.description "Loading name and Elm logo"
                     , Font.family
-                        [ Font.typeface "LiberationSerifRegular"
+                        [ Font.typeface "LiberationSerifBold"
                         , Font.serif
                         ]
                     , Font.size 64
@@ -316,7 +316,7 @@ loadingButton labelText =
         , Border.solid
         , Border.rounded 12
         , Font.family
-            [ Font.typeface "LiberationMonoRegular"
+            [ Font.typeface "LiberationMonoBold"
             , Font.monospace
             ]
         , Font.size 36
@@ -368,7 +368,6 @@ viewErrored errorMessage =
             ]
         , Font.color (rgb255 255 255 255)
         , Font.size 24
-        , Font.bold
         , paddingEach
             { bottom = 60
             , left = 20
@@ -626,7 +625,7 @@ viewLoaded newWord model =
                         -- "logo"
                         [ Region.description "App name and logo"
                         , Font.family
-                            [ Font.typeface "LiberationSerifRegular"
+                            [ Font.typeface "LiberationSerifBold"
                             , Font.serif
                             ]
                         , Font.size 64
