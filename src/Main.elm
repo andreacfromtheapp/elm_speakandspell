@@ -577,6 +577,12 @@ viewLoaded newWord model =
                         , Element.width Element.fill
                         , padding 22
                         , Element.spacing 10
+                        , paddingEach
+                            { bottom = 28
+                            , left = 24
+                            , right = 24
+                            , top = 28
+                            }
                         ]
                         [ row
                             -- keyboard top
