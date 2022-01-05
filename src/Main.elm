@@ -227,7 +227,7 @@ viewLoading =
         ]
 
 
-viewErrored : Http.Error -> Element Msg
+viewErrored : Http.Error -> Element msg
 viewErrored errorMessage =
     column
         [ Region.description "Error Screen"
@@ -600,7 +600,11 @@ hoverAnimationDown =
         ]
 
 
-animatedEl : Animation -> List (Element.Attribute msg) -> Element msg -> Element msg
+animatedEl :
+    Animation
+    -> List (Element.Attribute msg)
+    -> Element msg
+    -> Element msg
 animatedEl =
     -- Element.row or Element.column can be used here too
     animatedUi Element.el
@@ -670,7 +674,12 @@ errorToString error =
             errorMessage
 
 
-commandBtn : Color -> Element.Attribute msg -> msg -> String -> Element msg
+commandBtn :
+    Color
+    -> Element.Attribute msg
+    -> msg
+    -> String
+    -> Element msg
 commandBtn bgColor align pressAction labelText =
     Input.button
         [ Region.description ("Command " ++ labelText)
