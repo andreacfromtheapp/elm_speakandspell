@@ -22,16 +22,17 @@ import Svg.Attributes exposing (..)
 
 
 
--- https://github.com/mcnaveen/Random-Words-API
+-- CONSTANTS
 
 
 randomWordApiUrl : String
 randomWordApiUrl =
+    -- api source = https://github.com/mcnaveen/Random-Words-API
     "https://random-words-api.vercel.app/word"
 
 
 
--- MODEL
+-- MESSAGES
 
 
 type Msg
@@ -46,10 +47,13 @@ type Msg
     | EraseLetter
     | ResetWord
     | SubmitWord
+    | SetSound Sound
     | Speak
     | Spell
-    | SetSound Sound
-    | NoOp
+
+
+
+-- TYPES
 
 
 type Status
@@ -75,6 +79,10 @@ type alias NewWord =
     , definition : String
     , pronunciation : String
     }
+
+
+
+-- MODEL
 
 
 type alias Model =
@@ -248,155 +256,6 @@ viewLoading =
         ]
 
 
-animatedLetter : Animation -> Element msg -> Element msg
-animatedLetter animation element =
-    animatedEl animation
-        []
-        element
-
-
-hoverAnimationRotate : Animation
-hoverAnimationRotate =
-    Animation.steps
-        { startAt = [ P.rotate 0 ]
-        , options =
-            [ Animation.loop
-            , Animation.easeInBack
-            ]
-        }
-        [ Animation.step 400 [ P.rotate 10 ]
-        , Animation.step 640 [ P.rotate 90 ]
-        ]
-
-
-hoverAnimationUp : Animation
-hoverAnimationUp =
-    Animation.steps
-        { startAt = [ P.y 0 ]
-        , options =
-            [ Animation.loop
-            , Animation.easeInBack
-            ]
-        }
-        [ Animation.step 400 [ P.y 8 ]
-        , Animation.step 640 [ P.y 0 ]
-        ]
-
-
-hoverAnimationDown : Animation
-hoverAnimationDown =
-    Animation.steps
-        { startAt = [ P.y 8 ]
-        , options =
-            [ Animation.loop
-            , Animation.reverse
-            , Animation.easeOutBack
-            ]
-        }
-        [ Animation.step 640 [ P.y 0 ]
-        , Animation.step 400 [ P.y 8 ]
-        ]
-
-
-animatedEl : Animation -> List (Element.Attribute msg) -> Element msg -> Element msg
-animatedEl =
-    -- Element.row or Element.column can be used here too
-    animatedUi Element.el
-
-
-animatedUi :
-    (List
-        (Element.Attribute msg)
-     -> children
-     -> Element msg
-    )
-    -> Animation
-    -> List (Element.Attribute msg)
-    -> children
-    -> Element msg
-animatedUi =
-    Animated.ui
-        { behindContent = Element.behindContent
-        , htmlAttribute = Element.htmlAttribute
-        , html = Element.html
-        }
-
-
-loadingButton : String -> Element Msg
-loadingButton labelText =
-    Input.button
-        [ Background.color (rgba255 250 175 0 1)
-        , Border.color (rgba255 253 116 6 1)
-        , Border.width 8
-        , Border.solid
-        , Border.rounded 12
-        , Font.family
-            [ Font.typeface "LiberationMonoBold"
-            , Font.monospace
-            ]
-        , Font.size 36
-        , Font.extraBold
-        , padding 18
-        ]
-        { onPress = Just NoOp
-        , label = Element.text labelText
-        }
-
-
-errorToString : Http.Error -> String
-errorToString error =
-    case error of
-        Http.BadUrl url ->
-            "The URL " ++ url ++ " is invalid"
-
-        Http.Timeout ->
-            "Unable to reach the server, try again later"
-
-        Http.NetworkError ->
-            "Unable to reach the server, check your network connection"
-
-        Http.BadStatus 500 ->
-            "The server had a problem, try again later"
-
-        Http.BadStatus 400 ->
-            "Verify your information and try again"
-
-        Http.BadStatus _ ->
-            "Unknown error"
-
-        Http.BadBody errorMessage ->
-            errorMessage
-
-
-viewErrored : Http.Error -> Element Msg
-viewErrored errorMessage =
-    column
-        [ Region.description "Error Page"
-        , Background.color (rgba255 250 10 40 1)
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 10
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
-            ]
-        , Font.color (rgb255 255 255 255)
-        , Font.size 24
-        , paddingEach
-            { bottom = 60
-            , left = 20
-            , right = 20
-            , top = 60
-            }
-        , centerX
-        , centerY
-        ]
-        [ el [ Region.description "Error Message" ]
-            (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
-        ]
-
-
 viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
@@ -518,20 +377,25 @@ viewLoaded newWord model =
                 ]
             , paragraph
                 [ Region.description "Elm branding"
+                , Element.width Element.fill
                 , Element.spacing 6
+                , Font.color (rgba255 120 113 89 1)
+                , Font.size 20
+                , paddingEach
+                    { bottom = 20
+                    , left = 50
+                    , right = 50
+                    , top = 0
+                    }
                 ]
-                [ newTabLink
-                    [ Font.color (rgba255 120 113 89 1)
-                    , Font.size 20
-                    , Element.width Element.fill
-                    , alignRight
-                    , paddingEach
-                        { bottom = 20
-                        , left = 0
-                        , right = 50
-                        , top = 0
-                        }
-                    ]
+                [ el
+                    []
+                    (ElLazy.lazy Element.text ("W=" ++ String.fromInt model.dimWidth))
+                , el
+                    []
+                    (ElLazy.lazy Element.text (" H=" ++ String.fromInt model.dimHeight))
+                , newTabLink
+                    [ alignRight ]
                     { url = "https://elm-lang.org/"
                     , label = ElLazy.lazy Element.text "Elm Instruments"
                     }
@@ -677,6 +541,159 @@ viewLoaded newWord model =
                 ]
             ]
         ]
+
+
+viewErrored : Http.Error -> Element Msg
+viewErrored errorMessage =
+    column
+        [ Region.description "Error Page"
+        , Background.color (rgba255 250 10 40 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.color (rgb255 255 255 255)
+        , Font.size 24
+        , paddingEach
+            { bottom = 60
+            , left = 20
+            , right = 20
+            , top = 60
+            }
+        , centerX
+        , centerY
+        ]
+        [ el [ Region.description "Error Message" ]
+            (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+        ]
+
+
+
+-- VIEW HELPERS
+
+
+animatedLetter : Animation -> Element msg -> Element msg
+animatedLetter animation element =
+    animatedEl animation
+        []
+        element
+
+
+hoverAnimationRotate : Animation
+hoverAnimationRotate =
+    Animation.steps
+        { startAt = [ P.rotate 0 ]
+        , options =
+            [ Animation.loop
+            , Animation.easeInBack
+            ]
+        }
+        [ Animation.step 400 [ P.rotate 10 ]
+        , Animation.step 640 [ P.rotate 90 ]
+        ]
+
+
+hoverAnimationUp : Animation
+hoverAnimationUp =
+    Animation.steps
+        { startAt = [ P.y 0 ]
+        , options =
+            [ Animation.loop
+            , Animation.easeInBack
+            ]
+        }
+        [ Animation.step 400 [ P.y 8 ]
+        , Animation.step 640 [ P.y 0 ]
+        ]
+
+
+hoverAnimationDown : Animation
+hoverAnimationDown =
+    Animation.steps
+        { startAt = [ P.y 8 ]
+        , options =
+            [ Animation.loop
+            , Animation.reverse
+            , Animation.easeOutBack
+            ]
+        }
+        [ Animation.step 640 [ P.y 0 ]
+        , Animation.step 400 [ P.y 8 ]
+        ]
+
+
+animatedEl : Animation -> List (Element.Attribute msg) -> Element msg -> Element msg
+animatedEl =
+    -- Element.row or Element.column can be used here too
+    animatedUi Element.el
+
+
+animatedUi :
+    (List
+        (Element.Attribute msg)
+     -> children
+     -> Element msg
+    )
+    -> Animation
+    -> List (Element.Attribute msg)
+    -> children
+    -> Element msg
+animatedUi =
+    Animated.ui
+        { behindContent = Element.behindContent
+        , htmlAttribute = Element.htmlAttribute
+        , html = Element.html
+        }
+
+
+loadingButton : String -> Element Msg
+loadingButton labelText =
+    Input.button
+        [ Background.color (rgba255 250 175 0 1)
+        , Border.color (rgba255 253 116 6 1)
+        , Border.width 8
+        , Border.solid
+        , Border.rounded 12
+        , Font.family
+            [ Font.typeface "LiberationMonoBold"
+            , Font.monospace
+            ]
+        , Font.size 36
+        , Font.extraBold
+        , padding 18
+        ]
+        { onPress = Just DoNothing
+        , label = Element.text labelText
+        }
+
+
+errorToString : Http.Error -> String
+errorToString error =
+    case error of
+        Http.BadUrl url ->
+            "The URL " ++ url ++ " is invalid"
+
+        Http.Timeout ->
+            "Unable to reach the server, try again later"
+
+        Http.NetworkError ->
+            "Unable to reach the server, check your network connection"
+
+        Http.BadStatus 500 ->
+            "The server had a problem, try again later"
+
+        Http.BadStatus 400 ->
+            "Verify your information and try again"
+
+        Http.BadStatus _ ->
+            "Unknown error"
+
+        Http.BadBody errorMessage ->
+            errorMessage
 
 
 commandBtn : Color -> Element.Attribute msg -> msg -> String -> Element msg
@@ -860,10 +877,9 @@ update msg model =
             , spell (splitToSpell (wordToSpeak model))
             )
 
-        NoOp ->
-            ( model
-            , Cmd.none
-            )
+
+
+-- UPDATE HELPERS
 
 
 kbdEventToCommand : KeyboardEvent -> Model -> ( Model, Cmd Msg )
@@ -1081,6 +1097,10 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
+
+
+
+-- COMMANDS
 
 
 getNewWordCmd : Cmd Msg
