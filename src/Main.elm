@@ -354,13 +354,7 @@ viewLoaded newWord model =
                     , top = 0
                     }
                 ]
-                [ row [ Element.spacing 6, Font.bold ]
-                    [ el []
-                        (ElLazy.lazy Element.text ("W=" ++ String.fromInt model.dimWidth))
-                    , el []
-                        (ElLazy.lazy Element.text ("H=" ++ String.fromInt model.dimHeight))
-                    ]
-                , newTabLink
+                [ newTabLink
                     [ alignRight ]
                     { url = "https://elm-lang.org/"
                     , label = ElLazy.lazy Element.text "Elm Instruments"
