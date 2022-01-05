@@ -8,9 +8,9 @@ This is a limited reproduction of the original game: 1) match the word on the sc
 
 ## Credits & Copyright
 
-[Speak & Spell](https://en.wikipedia.org/wiki/Speak_%26_Spell_(toy)) is Trade Mark and Copyright of Texas Instruments.
+[Speak & Spell](https://en.wikipedia.org/wiki/Speak_%26_Spell_(toy))™ is © of Texas Instruments Inc.
 
-The favicon is by [Gregor Cresnar](https://thenounproject.com/icon/speak-1616157/), licensed under the [Creative Commons CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+The favicon is © [Gregor Cresnar](https://thenounproject.com/icon/speak-1616157/) and licensed under the [Creative Commons CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 
 ## Try it
 
