@@ -374,7 +374,8 @@ viewLoaded newWord model =
                 , Element.width Element.fill
                 ]
                 [ el
-                    [ centerX
+                    [ Region.description "Output Text"
+                    , centerX
                     , centerY
                     , paddingEach
                         { bottom = 0
