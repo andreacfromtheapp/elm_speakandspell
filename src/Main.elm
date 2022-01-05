@@ -101,6 +101,17 @@ type alias Model =
 
 
 
+-- FLAGS
+
+
+type alias Flags =
+    { win_width : Int
+    , win_height : Int
+    , browser_ua : String
+    }
+
+
+
 -- INIT
 
 
@@ -1055,17 +1066,6 @@ setCheckWord wordsList =
 setPlaceHolder : NewWord -> String
 setPlaceHolder wordsList =
     String.repeat (String.length wordsList.word) "_ "
-
-
-
--- FLAGS
-
-
-type alias Flags =
-    { win_width : Int
-    , win_height : Int
-    , browser_ua : String
-    }
 
 
 
