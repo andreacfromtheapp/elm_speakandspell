@@ -233,26 +233,7 @@ viewLoading =
                     , Font.size 64
                     , Font.heavy
                     ]
-                    [ el
-                        [ Font.color (rgba255 209 24 6 0.84)
-                        , alignLeft
-                        ]
-                        (ElLazy.lazy Element.text "Speak")
-                    , el
-                        [ Font.color (rgb255 255 234 240)
-                        , Font.glow (rgb255 45 166 239) 1
-                        , alignLeft
-                        ]
-                        (ElLazy.lazy Element.text "&")
-                    , el
-                        [ Font.color (rgba255 45 90 232 0.84)
-                        , alignLeft
-                        ]
-                        (ElLazy.lazy Element.text "Spell")
-                    ]
-                , ElLazy.lazy Element.html elmLogoBlue
-                ]
-            ]
+                [ speakAndSpellName ]
         ]
 
 
@@ -513,23 +494,7 @@ viewLoaded newWord model =
                         , Font.size 64
                         , Font.heavy
                         ]
-                        [ el
-                            [ Font.color (rgba255 209 24 6 0.84)
-                            , alignLeft
-                            ]
-                            (ElLazy.lazy Element.text "Speak")
-                        , el
-                            [ Font.color (rgb255 255 234 240)
-                            , Font.glow (rgb255 45 166 239) 1
-                            , alignLeft
-                            ]
-                            (ElLazy.lazy Element.text "&")
-                        , el
-                            [ Font.color (rgba255 45 90 232 0.84)
-                            , alignLeft
-                            ]
-                            (ElLazy.lazy Element.text "Spell")
-                        ]
+                        [ speakAndSpellName ]
                     , paragraph
                         -- sound controls
                         [ Region.description "Bottom Commands"
@@ -569,11 +534,34 @@ viewErrored errorMessage =
         ]
         [ el [ Region.description "Error Message" ]
             (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+                [ speakAndSpellName ]
         ]
 
 
 
 -- VIEW HELPERS
+
+
+speakAndSpellName : Element msg
+speakAndSpellName =
+    paragraph []
+        [ el
+            [ Font.color (rgba255 209 24 6 0.84)
+            , alignLeft
+            ]
+            (ElLazy.lazy Element.text "Speak")
+        , el
+            [ Font.color (rgb255 255 234 240)
+            , Font.glow (rgb255 45 166 239) 1
+            , alignLeft
+            ]
+            (ElLazy.lazy Element.text "&")
+        , el
+            [ Font.color (rgba255 45 90 232 0.84)
+            , alignLeft
+            ]
+            (ElLazy.lazy Element.text "Spell")
+        ]
 
 
 animatedLetter : Animation -> Element msg -> Element msg
