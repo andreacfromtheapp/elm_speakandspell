@@ -100,6 +100,7 @@ initialModel =
     , checkWord = ""
     , result = ""
     }
+    , getNewWordCmd
 
 
 
@@ -787,7 +788,7 @@ update msg model =
 
         GetAnotherWord ->
             ( resetWord model
-            , initialCmd
+            , getNewWordCmd
             )
 
         EraseLetter ->
@@ -875,7 +876,7 @@ kbdEventToCommand event model =
 
             Just "0" ->
                 ( resetWord model
-                , initialCmd
+                , getNewWordCmd
                 )
 
             Just "Backspace" ->
@@ -1036,8 +1037,8 @@ main =
         }
 
 
-initialCmd : Cmd Msg
-initialCmd =
+getNewWordCmd : Cmd Msg
+getNewWordCmd =
     Http.get
         { url = randomWordApiUrl
         , expect = Http.expectJson GetNewWord (Decode.list newWordDecoder)
