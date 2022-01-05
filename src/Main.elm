@@ -146,44 +146,13 @@ view model =
     layout [ Region.mainContent ] <|
         case model.status of
             Loading ->
-                yellowShell elmBigBlueLogo viewLoading
+                yellowShell namePlusLogo viewLoading
 
             Loaded word ->
                 viewLoaded word model
 
             Errored errorMessage ->
-                yellowShell elmBigBlueLogo (viewErrored errorMessage)
-
-
-
-{- this is a weird behaviour: rC before lC need to ask about it.
-   does it have to do with how currying and composition work?
--}
-
-
-yellowShell : Element msg -> Element msg -> Element msg
-yellowShell rightContent leftContent =
-    column
-        -- yellow shell
-        [ Background.color (rgba255 255 215 6 1)
-        , Border.roundEach
-            { bottomLeft = 60
-            , bottomRight = 60
-            , topLeft = 20
-            , topRight = 20
-            }
-        , paddingEach
-            { bottom = 80
-            , left = 20
-            , right = 20
-            , top = 20
-            }
-        , centerX
-        , centerY
-        ]
-        [ leftContent
-        , rightContent
-        ]
+                yellowShell namePlusLogo (viewErrored errorMessage)
 
 
 viewLoading : Element Msg
@@ -275,126 +244,17 @@ viewLoaded newWord model =
         [ row
             -- top orange
             [ Element.width Element.fill
-            , padding 40
+            , paddingEach
+                { bottom = 50
+                , left = 30
+                , right = 30
+                , top = 40
+                }
             , Font.color (rgb255 255 255 255)
             ]
-            [ column
-                -- new word "top screen"
-                [ Region.description "New Word Screen"
-                , Background.color (rgba255 20 153 223 1)
-                , Border.color (rgba255 0 0 0 1)
-                , Border.widthEach
-                    { bottom = 1
-                    , left = 1
-                    , right = 0
-                    , top = 1
-                    }
-                , Border.solid
-                , Border.roundEach
-                    { bottomLeft = 30
-                    , bottomRight = 0
-                    , topLeft = 30
-                    , topRight = 0
-                    }
-                , Font.size 20
-                , Element.spacing 8
-                , Element.width Element.fill
-                , Element.height Element.fill
-                , padding 50
-                ]
-                [ el
-                    [ Region.description "New Word"
-                    , centerY
-                    ]
-                    (ElLazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
-                , el
-                    [ Region.description "Word Definition"
-                    , centerY
-                    ]
-                    (ElLazy.lazy Element.text ("Definition: " ++ newWord.definition))
-                , el
-                    [ Region.description "Word Pronunciation"
-                    , centerY
-                    ]
-                    (ElLazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
-                ]
-            , Input.button
-                [ Region.description "Command NEW WORD [0]"
-                , Background.color (rgba255 20 153 223 1)
-                , Border.color (rgba255 0 0 0 1)
-                , Border.width 1
-                , Border.solid
-                , Border.roundEach
-                    { bottomLeft = 0
-                    , bottomRight = 30
-                    , topLeft = 0
-                    , topRight = 30
-                    }
-                , Element.height Element.fill
-                , padding 18
-                , mouseOver
-                    [ Background.color (rgba255 200 153 223 1)
-                    , Font.color (rgb255 255 255 255)
-                    ]
-                , focused
-                    [ Background.color (rgba255 200 153 223 1)
-                    , Font.color (rgb255 255 255 255)
-                    ]
-                ]
-                { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
-            ]
-        , column
-            -- output screen
-            [ Region.description "Output Screen"
-            , Element.width Element.fill
-            , Background.color (rgba255 0 0 0 1)
-            ]
-            [ row
-                [ Font.family
-                    [ Font.typeface "LCD14"
-                    , Font.monospace
-                    ]
-                , Font.color (rgba255 110 200 120 0.8)
-                , Font.size 32
-                , padding 55
-                , Element.width Element.fill
-                ]
-                [ el
-                    [ Region.description "Output Text"
-                    , centerX
-                    , centerY
-                    , paddingEach
-                        { bottom = 0
-                        , left = 0
-                        , right = 0
-                        , top = 20
-                        }
-                    ]
-                    (ElLazy.lazy Element.text (outputText model))
-                ]
-            , paragraph
-                [ Region.description "Elm branding"
-                , Element.width Element.fill
-                , Element.spacing 6
-                , Font.color (rgba255 120 113 89 1)
-                , Font.size 20
-                , paddingEach
-                    { bottom = 20
-                    , left = 50
-                    , right = 50
-                    , top = 0
-                    }
-                ]
-                [ newTabLink
-                    [ alignRight ]
-                    { url = "https://elm-lang.org/"
-                    , label = ElLazy.lazy Element.text "Elm Instruments"
-                    }
-                , row
-                    [ Element.alignRight ]
-                    [ ElLazy.lazy Element.html elmLogoGrayish ]
-                ]
-            ]
+          <|
+            newWordScreen newWord
+        , outputScreen model
         , column
             -- bottom orange
             [ Element.width Element.fill
@@ -402,20 +262,70 @@ viewLoaded newWord model =
                 { bottom = 130
                 , left = 30
                 , right = 30
-                , top = 50
+                , top = 40
                 }
             ]
-            [ yellowShell soundControls theKeyboard
+            [ yellowShell namePlusSoundCtrl theKeyboard
             ]
         ]
 
 
 
 -- VIEW HELPERS
+{- this is a weird behaviour: rC before lC need to ask about it.
+   does it have to do with how currying and composition work?
+-}
 
 
-elmBigBlueLogo : Element msg
-elmBigBlueLogo =
+yellowShell : Element msg -> Element msg -> Element msg
+yellowShell rightContent leftContent =
+    column
+        -- yellow shell
+        [ Background.color (rgba255 255 215 6 1)
+        , Border.roundEach
+            { bottomLeft = 60
+            , bottomRight = 60
+            , topLeft = 20
+            , topRight = 20
+            }
+        , paddingEach
+            { bottom = 80
+            , left = 20
+            , right = 20
+            , top = 20
+            }
+        , centerX
+        , centerY
+        ]
+        [ leftContent
+        , rightContent
+        ]
+
+
+speakAndSpellName : Element msg
+speakAndSpellName =
+    paragraph [ Region.description "App Name" ]
+        [ el
+            [ Font.color (rgba255 209 24 6 0.84)
+            , alignLeft
+            ]
+            (ElLazy.lazy Element.text "Speak")
+        , el
+            [ Font.color (rgb255 255 234 240)
+            , Font.glow (rgb255 45 166 239) 1
+            , alignLeft
+            ]
+            (ElLazy.lazy Element.text "&")
+        , el
+            [ Font.color (rgba255 45 90 232 0.84)
+            , alignLeft
+            ]
+            (ElLazy.lazy Element.text "Spell")
+        ]
+
+
+namePlusLogo : Element msg
+namePlusLogo =
     row
         [ Element.width Element.fill
         , paddingEach
@@ -439,6 +349,36 @@ elmBigBlueLogo =
         ]
 
 
+namePlusSoundCtrl : Element Msg
+namePlusSoundCtrl =
+    row
+        [ Element.width Element.fill
+        , paddingEach
+            { bottom = 0
+            , left = 0
+            , right = 0
+            , top = 42
+            }
+        ]
+        [ paragraph
+            [ Font.family
+                [ Font.typeface "LiberationSerifBold"
+                , Font.serif
+                ]
+            , Font.size 64
+            , Font.heavy
+            ]
+            [ speakAndSpellName ]
+        , paragraph
+            -- sound controls
+            [ Region.description "Bottom Commands"
+            ]
+            [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
+            , blueCommandBtn (SetSound On) "SOUND ON [2]"
+            ]
+        ]
+
+
 theKeyboard : Element Msg
 theKeyboard =
     column
@@ -447,14 +387,14 @@ theKeyboard =
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
-        , Border.rounded 10
+        , Border.rounded 20
         , Element.width Element.fill
         , Element.spacing 10
         , paddingEach
-            { bottom = 28
+            { bottom = 50
             , left = 24
             , right = 24
-            , top = 28
+            , top = 60
             }
         ]
         [ row
@@ -492,55 +432,133 @@ theKeyboard =
         ]
 
 
-soundControls : Element Msg
-soundControls =
-    row
-        [ Element.width Element.fill
-        , paddingEach
-            { bottom = 0
-            , left = 0
+newWordScreen : NewWord -> List (Element Msg)
+newWordScreen newWord =
+    [ column
+        -- new word "top screen"
+        [ Region.description "New Word Screen"
+        , Background.color (rgba255 20 153 223 1)
+        , Border.color (rgba255 0 0 0 1)
+        , Border.widthEach
+            { bottom = 1
+            , left = 1
             , right = 0
-            , top = 42
+            , top = 1
+            }
+        , Border.solid
+        , Border.roundEach
+            { bottomLeft = 30
+            , bottomRight = 0
+            , topLeft = 30
+            , topRight = 0
+            }
+        , Font.size 20
+        , Element.spacing 8
+        , Element.width Element.fill
+        , Element.height Element.fill
+        , paddingEach
+            { bottom = 50
+            , left = 30
+            , right = 30
+            , top = 50
             }
         ]
-        [ paragraph
-            [ Font.family
-                [ Font.typeface "LiberationSerifBold"
-                , Font.serif
-                ]
-            , Font.size 64
-            , Font.heavy
+        [ el
+            [ Region.description "New Word"
+            , centerY
             ]
-            [ speakAndSpellName ]
-        , paragraph
-            -- sound controls
-            [ Region.description "Bottom Commands"
+            (ElLazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
+        , el
+            [ Region.description "Word Definition"
+            , centerY
             ]
-            [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
-            , blueCommandBtn (SetSound On) "SOUND ON [2]"
+            (ElLazy.lazy Element.text ("Definition: " ++ newWord.definition))
+        , el
+            [ Region.description "Word Pronunciation"
+            , centerY
+            ]
+            (ElLazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
+        ]
+    , Input.button
+        [ Region.description "Command NEW WORD [0]"
+        , Background.color (rgba255 20 153 223 1)
+        , Border.color (rgba255 0 0 0 1)
+        , Border.width 1
+        , Border.solid
+        , Border.roundEach
+            { bottomLeft = 0
+            , bottomRight = 30
+            , topLeft = 0
+            , topRight = 30
+            }
+        , Element.height Element.fill
+        , padding 18
+        , mouseOver
+            [ Background.color (rgba255 200 153 223 1)
+            , Font.color (rgb255 255 255 255)
+            ]
+        , focused
+            [ Background.color (rgba255 200 153 223 1)
+            , Font.color (rgb255 255 255 255)
             ]
         ]
+        { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
+    ]
 
 
-speakAndSpellName : Element msg
-speakAndSpellName =
-    paragraph [ Region.description "App Name" ]
-        [ el
-            [ Font.color (rgba255 209 24 6 0.84)
-            , alignLeft
+outputScreen : Model -> Element msg
+outputScreen model =
+    column
+        -- output screen
+        [ Region.description "Output Screen"
+        , Element.width Element.fill
+        , Background.color (rgba255 0 0 0 1)
+        ]
+        [ row
+            [ Font.family
+                [ Font.typeface "LCD14"
+                , Font.monospace
+                ]
+            , Font.color (rgba255 110 200 120 0.8)
+            , Font.size 30
+            , padding 55
+            , Element.width Element.fill
             ]
-            (ElLazy.lazy Element.text "Speak")
-        , el
-            [ Font.color (rgb255 255 234 240)
-            , Font.glow (rgb255 45 166 239) 1
-            , alignLeft
+            [ el
+                [ Region.description "Output Text"
+                , centerX
+                , centerY
+                , paddingEach
+                    { bottom = 0
+                    , left = 0
+                    , right = 0
+                    , top = 20
+                    }
+                ]
+                (ElLazy.lazy Element.text (outputText model))
             ]
-            (ElLazy.lazy Element.text "&")
-        , el
-            [ Font.color (rgba255 45 90 232 0.84)
-            , alignLeft
+        , paragraph
+            [ Region.description "Elm branding"
+            , Element.width Element.fill
+            , Element.spacing 6
+            , Font.color (rgba255 120 113 89 1)
+            , Font.size 20
+            , paddingEach
+                { bottom = 20
+                , left = 50
+                , right = 50
+                , top = 0
+                }
             ]
-            (ElLazy.lazy Element.text "Spell")
+            [ newTabLink
+                [ alignRight ]
+                { url = "https://elm-lang.org/"
+                , label = ElLazy.lazy Element.text "Elm Instruments"
+                }
+            , row
+                [ Element.alignRight ]
+                [ ElLazy.lazy Element.html elmLogoGrayish ]
+            ]
         ]
 
 
