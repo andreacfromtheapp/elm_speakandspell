@@ -208,7 +208,7 @@ viewLoading =
             ]
             [ paragraph
                 -- "logo"
-                [ Region.description "Loading name and Elm logo"
+                [ Region.description "App name and Elm logo"
                 , Font.family
                     [ Font.typeface "LiberationSerifBold"
                     , Font.serif
@@ -273,17 +273,17 @@ viewLoaded newWord model =
                 , padding 50
                 ]
                 [ el
-                    [ Region.description "New Word Word"
+                    [ Region.description "New Word"
                     , centerY
                     ]
                     (ElLazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
                 , el
-                    [ Region.description "New Word Definition"
+                    [ Region.description "Word Definition"
                     , centerY
                     ]
                     (ElLazy.lazy Element.text ("Definition: " ++ newWord.definition))
                 , el
-                    [ Region.description "New Word Pronunciation"
+                    [ Region.description "Word Pronunciation"
                     , centerY
                     ]
                     (ElLazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
@@ -359,7 +359,10 @@ viewLoaded newWord model =
                     { url = "https://elm-lang.org/"
                     , label = ElLazy.lazy Element.text "Elm Instruments"
                     }
-                , row [ Element.alignRight ]
+                , row
+                    [ Region.description "Elm logo"
+                    , Element.alignRight
+                    ]
                     [ ElLazy.lazy Element.html elmLogoGrayish ]
                 ]
             ]
@@ -544,7 +547,7 @@ viewErrored errorMessage =
             ]
             [ paragraph
                 -- "logo"
-                [ Region.description "Loading name and Elm logo"
+                [ Region.description "App name and Elm logo"
                 , Font.family
                     [ Font.typeface "LiberationSerifBold"
                     , Font.serif
@@ -564,7 +567,7 @@ viewErrored errorMessage =
 
 speakAndSpellName : Element msg
 speakAndSpellName =
-    paragraph []
+    paragraph [ Region.description "App Name" ]
         [ el
             [ Font.color (rgba255 209 24 6 0.84)
             , alignLeft
