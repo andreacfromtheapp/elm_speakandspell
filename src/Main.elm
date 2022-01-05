@@ -229,7 +229,7 @@ viewLoading =
 
 viewErrored : Http.Error -> Element msg
 viewErrored errorMessage =
-    column
+    wrappedRow
         [ Region.description "Error Screen"
         , Background.color (rgba255 250 10 40 1)
         , Border.color (rgba255 0 0 20 1)
