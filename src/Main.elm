@@ -1032,7 +1032,7 @@ main =
         { init = \_ -> ( initialModel, initialCmd )
         , view = view
         , update = update
-        , subscriptions = onKeyDownSub
+        , subscriptions = subscriptions
         }
 
 
@@ -1052,9 +1052,23 @@ newWordDecoder =
         |> Pipeline.required "pronunciation" Decode.string
 
 
-onKeyDownSub : Model -> Sub Msg
-onKeyDownSub _ =
-    onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Sub.batch [ windowResizeSub, onKeyDownSub ]
+
+
+windowResizeSub : Sub Msg
+windowResizeSub =
+    Browser.Events.onResize OnResize
+
+
+onKeyDownSub : Sub Msg
+onKeyDownSub =
+    Browser.Events.onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
 
 
 
