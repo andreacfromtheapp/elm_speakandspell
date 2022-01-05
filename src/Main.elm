@@ -399,10 +399,10 @@ viewLoaded newWord model =
             -- bottom orange
             [ Element.width Element.fill
             , paddingEach
-                { bottom = 120
-                , left = 40
-                , right = 40
-                , top = 60
+                { bottom = 130
+                , left = 30
+                , right = 30
+                , top = 50
                 }
             ]
             [ yellowShell soundControls theKeyboard
