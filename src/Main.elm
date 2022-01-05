@@ -186,7 +186,6 @@ viewLoadErrShell content =
                 }
             ]
             [ paragraph
-                -- "logo"
                 [ Region.description "App name and Elm logo"
                 , Font.family
                     [ Font.typeface "LiberationSerifBold"
@@ -512,9 +511,7 @@ viewLoaded newWord model =
                         }
                     ]
                     [ paragraph
-                        -- "logo"
-                        [ Region.description "App name and logo"
-                        , Font.family
+                        [ Font.family
                             [ Font.typeface "LiberationSerifBold"
                             , Font.serif
                             ]
