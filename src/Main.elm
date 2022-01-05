@@ -192,7 +192,7 @@ viewLoadErrShell content =
 
 viewLoading : Element Msg
 viewLoading =
-    column
+    row
         -- blue around keyboard
         [ Region.description "Loading Screen"
         , Background.color (rgba255 20 153 223 1)
