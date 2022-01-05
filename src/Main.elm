@@ -391,9 +391,7 @@ viewLoaded newWord model =
                     , label = ElLazy.lazy Element.text "Elm Instruments"
                     }
                 , row
-                    [ Region.description "Elm logo"
-                    , Element.alignRight
-                    ]
+                    [ Element.alignRight ]
                     [ ElLazy.lazy Element.html elmLogoGrayish ]
                 ]
             ]
