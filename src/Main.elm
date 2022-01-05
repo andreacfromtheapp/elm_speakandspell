@@ -135,21 +135,20 @@ view model =
     layout [ Region.mainContent ] <|
         case model.status of
             Loading ->
-                viewLoading
+                viewLoadErrShell viewLoading
 
             Loaded word ->
                 viewLoaded word model
 
             Errored errorMessage ->
-                viewErrored errorMessage
+                viewLoadErrShell (viewErrored errorMessage)
 
 
-viewLoading : Element Msg
-viewLoading =
+viewLoadErrShell : Element msg -> Element msg
+viewLoadErrShell content =
     column
         -- yellow shell
-        [ Region.description "Loading Screen"
-        , Background.color (rgba255 255 215 6 1)
+        [ Background.color (rgba255 255 215 6 1)
         , Border.roundEach
             { bottomLeft = 60
             , bottomRight = 60
@@ -165,38 +164,7 @@ viewLoading =
         , centerX
         , centerY
         ]
-        [ column
-            -- blue around keyboard
-            [ Background.color (rgba255 20 153 223 1)
-            , Border.color (rgba255 0 0 20 1)
-            , Border.width 1
-            , Border.solid
-            , Border.rounded 10
-            , Element.width Element.fill
-            , paddingEach
-                { bottom = 80
-                , left = 20
-                , right = 20
-                , top = 80
-                }
-            ]
-            [ row
-                [ Region.description "Loading animation"
-                , Element.width Element.fill
-                , Element.spacing 10
-                ]
-                [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
-                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "O")
-                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "A")
-                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "D")
-                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "I")
-                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "N")
-                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "G")
-                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-                ]
-            ]
+        [ content
         , row
             [ Element.width Element.fill
             , paddingEach
@@ -219,6 +187,72 @@ viewLoading =
                 [ speakAndSpellName ]
             , ElLazy.lazy Element.html elmLogoBlue
             ]
+        ]
+
+
+viewLoading : Element Msg
+viewLoading =
+    column
+        -- blue around keyboard
+        [ Region.description "Loading Screen"
+        , Background.color (rgba255 20 153 223 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , Element.width Element.fill
+        , paddingEach
+            { bottom = 80
+            , left = 20
+            , right = 20
+            , top = 80
+            }
+        ]
+        [ row
+            [ Region.description "Loading animation"
+            , Element.width Element.fill
+            , Element.spacing 10
+            ]
+            [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
+            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "O")
+            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "A")
+            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "D")
+            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "I")
+            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "N")
+            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "G")
+            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+            ]
+        ]
+
+
+viewErrored : Http.Error -> Element Msg
+viewErrored errorMessage =
+    column
+        [ Region.description "Error Screen"
+        , Background.color (rgba255 250 10 40 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.color (rgb255 255 255 255)
+        , Font.size 24
+        , paddingEach
+            { bottom = 60
+            , left = 20
+            , right = 20
+            , top = 60
+            }
+        , centerX
+        , centerY
+        ]
+        [ el [ Region.description "Error Message" ]
+            (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
         ]
 
 
@@ -486,77 +520,6 @@ viewLoaded newWord model =
                         ]
                     ]
                 ]
-            ]
-        ]
-
-
-viewErrored : Http.Error -> Element Msg
-viewErrored errorMessage =
-    column
-        -- yellow shell
-        [ Region.description "Error Page"
-        , Background.color (rgba255 255 215 6 1)
-        , Border.roundEach
-            { bottomLeft = 60
-            , bottomRight = 60
-            , topLeft = 20
-            , topRight = 20
-            }
-        , paddingEach
-            { bottom = 80
-            , left = 20
-            , right = 20
-            , top = 20
-            }
-        , centerX
-        , centerY
-        ]
-        [ column
-            [ Region.description "Error Screen"
-            , Background.color (rgba255 250 10 40 1)
-            , Border.color (rgba255 0 0 20 1)
-            , Border.width 1
-            , Border.solid
-            , Border.rounded 10
-            , Font.family
-                [ Font.typeface "LiberationMonoRegular"
-                , Font.monospace
-                ]
-            , Font.color (rgb255 255 255 255)
-            , Font.size 24
-            , paddingEach
-                { bottom = 60
-                , left = 20
-                , right = 20
-                , top = 60
-                }
-            , centerX
-            , centerY
-            ]
-            [ el [ Region.description "Error Message" ]
-                (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
-            ]
-        , row
-            [ Element.width Element.fill
-            , paddingEach
-                { bottom = 0
-                , left = 0
-                , right = 0
-                , top = 42
-                }
-            ]
-            [ paragraph
-                -- "logo"
-                [ Region.description "App name and Elm logo"
-                , Font.family
-                    [ Font.typeface "LiberationSerifBold"
-                    , Font.serif
-                    ]
-                , Font.size 64
-                , Font.heavy
-                ]
-                [ speakAndSpellName ]
-            , ElLazy.lazy Element.html elmLogoBlue
             ]
         ]
 
