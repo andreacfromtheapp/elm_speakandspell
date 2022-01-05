@@ -146,17 +146,23 @@ view model =
     layout [ Region.mainContent ] <|
         case model.status of
             Loading ->
-                viewLoadErrShell viewLoading
+                yellowShell elmBigBlueLogo viewLoading
 
             Loaded word ->
                 viewLoaded word model
 
             Errored errorMessage ->
-                viewLoadErrShell (viewErrored errorMessage)
+                yellowShell elmBigBlueLogo (viewErrored errorMessage)
 
 
-viewLoadErrShell : Element msg -> Element msg
-viewLoadErrShell contentToShow =
+
+{- this is a weird behaviour: rC before lC need to ask about it.
+   does it have to do with how currying and composition work?
+-}
+
+
+yellowShell : Element msg -> Element msg -> Element msg
+yellowShell rightContent leftContent =
     column
         -- yellow shell
         [ Background.color (rgba255 255 215 6 1)
@@ -175,28 +181,8 @@ viewLoadErrShell contentToShow =
         , centerX
         , centerY
         ]
-        [ contentToShow
-        , row
-            [ Element.width Element.fill
-            , paddingEach
-                { bottom = 0
-                , left = 0
-                , right = 0
-                , top = 42
-                }
-            ]
-            [ paragraph
-                [ Region.description "App name and Elm logo"
-                , Font.family
-                    [ Font.typeface "LiberationSerifBold"
-                    , Font.serif
-                    ]
-                , Font.size 64
-                , Font.heavy
-                ]
-                [ speakAndSpellName ]
-            , ElLazy.lazy Element.html elmLogoBlue
-            ]
+        [ leftContent
+        , rightContent
         ]
 
 
