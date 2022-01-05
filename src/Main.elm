@@ -147,93 +147,78 @@ view model =
 viewLoading : Element Msg
 viewLoading =
     column
-        -- outer orange
+        -- yellow shell
         [ Region.description "Loading Screen"
-        , centerX
-        , centerY
-        , Background.color (rgba255 251 50 0 1)
+        , Background.color (rgba255 255 215 6 1)
         , Border.roundEach
-            { bottomLeft = 80
-            , bottomRight = 80
-            , topLeft = 0
-            , topRight = 0
+            { bottomLeft = 60
+            , bottomRight = 60
+            , topLeft = 20
+            , topRight = 20
             }
         , paddingEach
-            { bottom = 180
+            { bottom = 80
             , left = 20
             , right = 20
-            , top = 40
+            , top = 20
             }
+        , centerX
+        , centerY
         ]
         [ column
-            -- yellow shell
-            [ Background.color (rgba255 255 215 6 1)
-            , Border.roundEach
-                { bottomLeft = 60
-                , bottomRight = 60
-                , topLeft = 20
-                , topRight = 20
-                }
+            -- blue around keyboard
+            [ Background.color (rgba255 20 153 223 1)
+            , Border.color (rgba255 0 0 20 1)
+            , Border.width 1
+            , Border.solid
+            , Border.rounded 10
             , Element.width Element.fill
             , paddingEach
                 { bottom = 80
                 , left = 20
                 , right = 20
-                , top = 20
+                , top = 80
                 }
             ]
-            [ column
-                -- blue around keyboard
-                [ Background.color (rgba255 20 153 223 1)
-                , Border.color (rgba255 0 0 20 1)
-                , Border.width 1
-                , Border.solid
-                , Border.rounded 10
+            [ row
+                [ Region.description "Loading animation"
                 , Element.width Element.fill
-                , paddingEach
-                    { bottom = 60
-                    , left = 20
-                    , right = 20
-                    , top = 60
-                    }
+                , Element.spacing 10
                 ]
-                [ row
-                    [ Region.description "Loading animation"
-                    , Element.width Element.fill
-                    , Element.spacing 10
-                    ]
-                    [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
-                    , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "O")
-                    , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "A")
-                    , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "D")
-                    , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "I")
-                    , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "N")
-                    , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "G")
-                    , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-                    , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-                    , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-                    ]
+                [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
+                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "O")
+                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "A")
+                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "D")
+                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "I")
+                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "N")
+                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "G")
+                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
                 ]
-            , row
-                [ Element.width Element.fill
-                , paddingEach
-                    { bottom = 0
-                    , left = 0
-                    , right = 0
-                    , top = 42
-                    }
-                ]
-                [ paragraph
-                    -- "logo"
-                    [ Region.description "Loading name and Elm logo"
-                    , Font.family
-                        [ Font.typeface "LiberationSerifBold"
-                        , Font.serif
-                        ]
-                    , Font.size 64
-                    , Font.heavy
+            ]
+        , row
+            [ Element.width Element.fill
+            , paddingEach
+                { bottom = 0
+                , left = 0
+                , right = 0
+                , top = 42
+                }
+            ]
+            [ paragraph
+                -- "logo"
+                [ Region.description "Loading name and Elm logo"
+                , Font.family
+                    [ Font.typeface "LiberationSerifBold"
+                    , Font.serif
                     ]
+                , Font.size 64
+                , Font.heavy
+                ]
                 [ speakAndSpellName ]
+            , ElLazy.lazy Element.html elmLogoBlue
+            ]
         ]
 
 
@@ -511,30 +496,71 @@ viewLoaded newWord model =
 viewErrored : Http.Error -> Element Msg
 viewErrored errorMessage =
     column
+        -- yellow shell
         [ Region.description "Error Page"
-        , Background.color (rgba255 250 10 40 1)
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 10
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
-            ]
-        , Font.color (rgb255 255 255 255)
-        , Font.size 24
+        , Background.color (rgba255 255 215 6 1)
+        , Border.roundEach
+            { bottomLeft = 60
+            , bottomRight = 60
+            , topLeft = 20
+            , topRight = 20
+            }
         , paddingEach
-            { bottom = 60
+            { bottom = 80
             , left = 20
             , right = 20
-            , top = 60
+            , top = 20
             }
         , centerX
         , centerY
         ]
-        [ el [ Region.description "Error Message" ]
-            (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+        [ column
+            [ Region.description "Error Screen"
+            , Background.color (rgba255 250 10 40 1)
+            , Border.color (rgba255 0 0 20 1)
+            , Border.width 1
+            , Border.solid
+            , Border.rounded 10
+            , Font.family
+                [ Font.typeface "LiberationMonoRegular"
+                , Font.monospace
+                ]
+            , Font.color (rgb255 255 255 255)
+            , Font.size 24
+            , paddingEach
+                { bottom = 60
+                , left = 20
+                , right = 20
+                , top = 60
+                }
+            , centerX
+            , centerY
+            ]
+            [ el [ Region.description "Error Message" ]
+                (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+            ]
+        , row
+            [ Element.width Element.fill
+            , paddingEach
+                { bottom = 0
+                , left = 0
+                , right = 0
+                , top = 42
+                }
+            ]
+            [ paragraph
+                -- "logo"
+                [ Region.description "Loading name and Elm logo"
+                , Font.family
+                    [ Font.typeface "LiberationSerifBold"
+                    , Font.serif
+                    ]
+                , Font.size 64
+                , Font.heavy
+                ]
                 [ speakAndSpellName ]
+            , ElLazy.lazy Element.html elmLogoBlue
+            ]
         ]
 
 
@@ -650,9 +676,9 @@ loadingButton labelText =
             [ Font.typeface "LiberationMonoBold"
             , Font.monospace
             ]
-        , Font.size 36
+        , Font.size 32
         , Font.extraBold
-        , padding 18
+        , padding 14
         ]
         { onPress = Just DoNothing
         , label = Element.text labelText
