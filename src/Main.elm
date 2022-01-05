@@ -1,7 +1,7 @@
 port module Main exposing (main)
 
 import Browser
-import Browser.Events exposing (onKeyDown)
+import Browser.Events
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -35,7 +35,11 @@ randomWordApiUrl =
 
 
 type Msg
-    = GetNewWord (Result Http.Error (List NewWord))
+    = OnResize Int Int
+    | ChangeHeight String
+    | ChangeWidth String
+    | DoNothing
+    | GetNewWord (Result Http.Error (List NewWord))
     | KeyPressed KeyboardEvent
     | KeyClicked String
     | GetAnotherWord
@@ -74,7 +78,10 @@ type alias NewWord =
 
 
 type alias Model =
-    { status : Status
+    { dimWidth : Int
+    , dimHeight : Int
+    , browserUA : String
+    , status : Status
     , output : Output
     , sound : Sound
     , newWord : NewWord
@@ -85,22 +92,30 @@ type alias Model =
     }
 
 
-initialModel : Model
-initialModel =
-    { status = Loading
-    , output = Init
-    , sound = On
-    , newWord =
-        { word = "init"
-        , definition = ""
-        , pronunciation = ""
-        }
-    , placeholder = ""
-    , guessWord = ""
-    , checkWord = ""
-    , result = ""
-    }
+
+-- INIT
+
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( { dimWidth = flags.win_width
+      , dimHeight = flags.win_height
+      , browserUA = flags.browser_ua
+      , status = Loading
+      , output = Init
+      , sound = On
+      , newWord =
+            { word = "init"
+            , definition = ""
+            , pronunciation = ""
+            }
+      , placeholder = ""
+      , guessWord = ""
+      , checkWord = ""
+      , result = ""
+      }
     , getNewWordCmd
+    )
 
 
 
@@ -757,6 +772,26 @@ codeToString asciiCode =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        OnResize x y ->
+            ( { model | dimWidth = x, dimHeight = y }
+            , Cmd.none
+            )
+
+        ChangeWidth x ->
+            ( { model | dimWidth = Maybe.withDefault 0 (String.toInt x) }
+            , Cmd.none
+            )
+
+        ChangeHeight y ->
+            ( { model | dimHeight = Maybe.withDefault 0 (String.toInt y) }
+            , Cmd.none
+            )
+
+        DoNothing ->
+            ( model
+            , Cmd.none
+            )
+
         GetNewWord (Ok word) ->
             case word of
                 _ :: _ ->
@@ -1024,13 +1059,24 @@ setPlaceHolder wordsList =
 
 
 
+-- FLAGS
+
+
+type alias Flags =
+    { win_width : Int
+    , win_height : Int
+    , browser_ua : String
+    }
+
+
+
 -- MAIN
 
 
-main : Program () Model Msg
+main : Program Flags Model Msg
 main =
     Browser.element
-        { init = \_ -> ( initialModel, initialCmd )
+        { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
