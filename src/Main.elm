@@ -407,31 +407,10 @@ viewLoaded newWord model =
                 , top = 60
                 }
             ]
-            [ column
-                -- yellow shell
-                [ Background.color (rgba255 255 215 6 1)
-                , Border.roundEach
-                    { bottomLeft = 60
-                    , bottomRight = 60
-                    , topLeft = 20
-                    , topRight = 20
-                    }
-                , Element.spacing 20
-                , Element.width Element.fill
-                , paddingEach
-                    { bottom = 80
-                    , left = 20
-                    , right = 20
-                    , top = 20
-                    }
-                ]
-                [ column
-                    -- orange around keyboard
-                    [ Background.color (rgba255 251 50 0 1)
-                    , Border.rounded 20
-                    , Element.spacing 20
-                    , Element.width Element.fill
-                    , paddingEach
+            [ yellowShell soundControls theKeyboard
+            ]
+        ]
+
                         { bottom = 20
                         , left = 20
                         , right = 20
