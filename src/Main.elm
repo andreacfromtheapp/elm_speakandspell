@@ -156,7 +156,7 @@ view model =
 
 
 viewLoadErrShell : Element msg -> Element msg
-viewLoadErrShell content =
+viewLoadErrShell contentToShow =
     column
         -- yellow shell
         [ Background.color (rgba255 255 215 6 1)
@@ -175,7 +175,7 @@ viewLoadErrShell content =
         , centerX
         , centerY
         ]
-        [ content
+        [ contentToShow
         , row
             [ Element.width Element.fill
             , paddingEach
