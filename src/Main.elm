@@ -411,95 +411,117 @@ viewLoaded newWord model =
             ]
         ]
 
-                        { bottom = 20
-                        , left = 20
-                        , right = 20
-                        , top = 40
-                        }
-                    ]
-                    [ column
-                        -- blue around keyboard
-                        [ Background.color (rgba255 20 153 223 1)
-                        , Border.color (rgba255 0 0 20 1)
-                        , Border.width 1
-                        , Border.solid
-                        , Border.rounded 10
-                        , Element.width Element.fill
-                        , Element.spacing 10
-                        , paddingEach
-                            { bottom = 28
-                            , left = 24
-                            , right = 24
-                            , top = 28
-                            }
-                        ]
-                        [ row
-                            -- keyboard top
-                            [ Region.description "Top Keyboard Row from A to M"
-                            , Element.spacingXY 10 0
-                            , centerY
-                            , centerX
-                            ]
-                          <|
-                            alphabetRow 65 77
-                        , row
-                            -- keyboard bottom
-                            [ Region.description "Bottom Keyboard Row from N to Z"
-                            , Element.spacingXY 10 0
-                            , centerY
-                            , centerX
-                            ]
-                          <|
-                            alphabetRow 78 90
-                        , row
-                            -- keyboard commands
-                            [ Region.description "Keyboard Commands"
-                            , Element.spacingXY 14 0
-                            , centerY
-                            , centerX
-                            ]
-                            [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
-                            , yellowCommandBtn ResetWord "RESET [5]"
-                            , yellowCommandBtn Speak "SPEAK [8]"
-                            , yellowCommandBtn Spell "SPELL [9]"
-                            , yellowCommandBtn SubmitWord "SUBMIT [↵]"
-                            , yellowCommandBtn ResetWord "RETRY [6]"
-                            ]
-                        ]
-                    ]
-                , row
-                    [ Element.width Element.fill
-                    , paddingEach
-                        { bottom = 0
-                        , left = 0
-                        , right = 0
-                        , top = 42
-                        }
-                    ]
-                    [ paragraph
-                        [ Font.family
-                            [ Font.typeface "LiberationSerifBold"
-                            , Font.serif
-                            ]
-                        , Font.size 64
-                        , Font.heavy
-                        ]
-                        [ speakAndSpellName ]
-                    , paragraph
-                        -- sound controls
-                        [ Region.description "Bottom Commands"
-                        ]
-                        [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
-                        , blueCommandBtn (SetSound On) "SOUND ON [2]"
-                        ]
-                    ]
+
+
+-- VIEW HELPERS
+
+
+elmBigBlueLogo : Element msg
+elmBigBlueLogo =
+    row
+        [ Element.width Element.fill
+        , paddingEach
+            { bottom = 0
+            , left = 0
+            , right = 0
+            , top = 42
+            }
+        ]
+        [ paragraph
+            [ Region.description "App name and Elm logo"
+            , Font.family
+                [ Font.typeface "LiberationSerifBold"
+                , Font.serif
                 ]
+            , Font.size 64
+            , Font.heavy
+            ]
+            [ speakAndSpellName ]
+        , ElLazy.lazy Element.html elmLogoBlue
+        ]
+
+
+theKeyboard : Element Msg
+theKeyboard =
+    column
+        -- blue around keyboard
+        [ Background.color (rgba255 20 153 223 1)
+        , Border.color (rgba255 0 0 20 1)
+        , Border.width 1
+        , Border.solid
+        , Border.rounded 10
+        , Element.width Element.fill
+        , Element.spacing 10
+        , paddingEach
+            { bottom = 28
+            , left = 24
+            , right = 24
+            , top = 28
+            }
+        ]
+        [ row
+            -- keyboard top
+            [ Region.description "Top Keyboard Row from A to M"
+            , Element.spacingXY 10 0
+            , centerY
+            , centerX
+            ]
+          <|
+            alphabetRow 65 77
+        , row
+            -- keyboard bottom
+            [ Region.description "Bottom Keyboard Row from N to Z"
+            , Element.spacingXY 10 0
+            , centerY
+            , centerX
+            ]
+          <|
+            alphabetRow 78 90
+        , row
+            -- keyboard commands
+            [ Region.description "Keyboard Commands"
+            , Element.spacingXY 14 0
+            , centerY
+            , centerX
+            ]
+            [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
+            , yellowCommandBtn ResetWord "RESET [5]"
+            , yellowCommandBtn Speak "SPEAK [8]"
+            , yellowCommandBtn Spell "SPELL [9]"
+            , yellowCommandBtn SubmitWord "SUBMIT [↵]"
+            , yellowCommandBtn ResetWord "RETRY [6]"
             ]
         ]
 
 
-
--- VIEW HELPERS
+soundControls : Element Msg
+soundControls =
+    row
+        [ Element.width Element.fill
+        , paddingEach
+            { bottom = 0
+            , left = 0
+            , right = 0
+            , top = 42
+            }
+        ]
+        [ paragraph
+            [ Font.family
+                [ Font.typeface "LiberationSerifBold"
+                , Font.serif
+                ]
+            , Font.size 64
+            , Font.heavy
+            ]
+            [ speakAndSpellName ]
+        , paragraph
+            -- sound controls
+            [ Region.description "Bottom Commands"
+            ]
+            [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
+            , blueCommandBtn (SetSound On) "SOUND ON [2]"
+            ]
+        ]
 
 
 speakAndSpellName : Element msg
