@@ -86,8 +86,8 @@ type alias NewWord =
 
 
 type alias Model =
-    { dimWidth : Int
-    , dimHeight : Int
+    { winWidth : Int
+    , winHeight : Int
     , browserUA : String
     , status : Status
     , output : Output
@@ -117,8 +117,8 @@ type alias Flags =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { dimWidth = flags.win_width
-      , dimHeight = flags.win_height
+    ( { winWidth = flags.win_width
+      , winHeight = flags.win_height
       , browserUA = flags.browser_ua
       , status = Loading
       , output = Init
@@ -158,7 +158,7 @@ view model =
 viewLoading : Element Msg
 viewLoading =
     row
-        -- blue around keyboard
+        -- blue around animation
         [ Region.description "Loading Screen"
         , Background.color (rgba255 20 153 223 1)
         , Border.color (rgba255 0 0 20 1)
@@ -195,6 +195,7 @@ viewLoading =
 viewErrored : Http.Error -> Element msg
 viewErrored errorMessage =
     wrappedRow
+        -- red around error message
         [ Region.description "Error Screen"
         , Background.color (rgba255 250 10 40 1)
         , Border.color (rgba255 0 0 20 1)
@@ -785,17 +786,17 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         OnResize x y ->
-            ( { model | dimWidth = x, dimHeight = y }
+            ( { model | winWidth = x, winHeight = y }
             , Cmd.none
             )
 
         ChangeWidth x ->
-            ( { model | dimWidth = Maybe.withDefault 0 (String.toInt x) }
+            ( { model | winWidth = Maybe.withDefault 0 (String.toInt x) }
             , Cmd.none
             )
 
         ChangeHeight y ->
-            ( { model | dimHeight = Maybe.withDefault 0 (String.toInt y) }
+            ( { model | winHeight = Maybe.withDefault 0 (String.toInt y) }
             , Cmd.none
             )
 
