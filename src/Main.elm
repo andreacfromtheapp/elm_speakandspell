@@ -572,7 +572,7 @@ outputScreen model =
                 , label = ElLazy.lazy Element.text "Elm Instruments"
                 }
             , row
-                [ Element.alignRight ]
+                [ alignRight ]
                 [ ElLazy.lazy Element.html elmLogoGrayish ]
             ]
         ]
