@@ -207,7 +207,7 @@ viewErrored errorMessage =
             , Font.monospace
             ]
         , Font.color (rgb255 255 255 255)
-        , Font.size 24
+        , Font.size (scaled 3)
         , paddingEach
             { bottom = 60
             , left = 20
@@ -272,6 +272,15 @@ viewLoaded newWord model =
 
 
 
+-- RESPONSIVE HELPERS
+
+
+scaled : Int -> Int
+scaled fs =
+    Basics.round (Element.modular 16 1.25 fs)
+
+
+
 -- VIEW HELPERS
 {- this is a weird behaviour: rC before lC need to ask about it.
    does it have to do with how currying and composition work?
@@ -311,7 +320,7 @@ speakAndSpellName =
             [ Font.typeface "LiberationSerifBold"
             , Font.serif
             ]
-        , Font.size 64
+        , Font.size (scaled 7)
         , Font.heavy
         ]
         [ el
@@ -448,7 +457,7 @@ newWordScreen newWord =
             , topLeft = 30
             , topRight = 0
             }
-        , Font.size 20
+        , Font.size (scaled 2)
         , Element.spacing 8
         , Element.width Element.fill
         , Element.height Element.fill
@@ -516,7 +525,7 @@ outputScreen model =
                 , Font.monospace
                 ]
             , Font.color (rgba255 110 200 120 0.8)
-            , Font.size 30
+            , Font.size (scaled 4)
             , padding 55
             , Element.width Element.fill
             ]
@@ -538,7 +547,7 @@ outputScreen model =
             , Element.width Element.fill
             , Element.spacing 6
             , Font.color (rgba255 120 113 89 1)
-            , Font.size 20
+            , Font.size (scaled 2)
             , paddingEach
                 { bottom = 20
                 , left = 50
@@ -648,7 +657,7 @@ loadingButton labelText =
             [ Font.typeface "LiberationMonoBold"
             , Font.monospace
             ]
-        , Font.size 32
+        , Font.size (scaled 4)
         , Font.extraBold
         , padding 14
         ]
@@ -696,7 +705,7 @@ commandBtn bgColor align pressAction labelText =
         , Border.width 1
         , Border.solid
         , Border.rounded 10
-        , Font.size 16
+        , Font.size (scaled 1)
         , padding 12
         , align
         , mouseOver
@@ -751,7 +760,7 @@ alphabetRow start end =
                     , Border.width 1
                     , Border.solid
                     , Border.rounded 10
-                    , Font.size 20
+                    , Font.size (scaled 2)
                     , padding 20
                     , mouseOver
                         [ Background.color (rgba255 201 68 16 1)
