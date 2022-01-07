@@ -1229,8 +1229,8 @@ elmLogoGrayish : Html msg
 elmLogoGrayish =
     svg
         [ id "SvgjsSvg1001"
-        , Svg.Attributes.width <| String.fromInt (scaled 1)
-        , Svg.Attributes.height <| String.fromInt (scaled 1)
+        , Svg.Attributes.width <| String.fromInt (scaled -1)
+        , Svg.Attributes.height <| String.fromInt (scaled -1)
         , version "1.1"
         ]
         [ defs
@@ -1242,12 +1242,12 @@ elmLogoGrayish =
             , transform "matrix(1,0,0,1,0,0)"
             ]
             [ svg
-                [ Svg.Attributes.width <| String.fromInt (scaled 1)
-                , Svg.Attributes.height <| String.fromInt (scaled 1)
+                [ Svg.Attributes.width <| String.fromInt (scaled -1)
+                , Svg.Attributes.height <| String.fromInt (scaled -1)
                 ]
                 [ svg
-                    [ Svg.Attributes.width <| String.fromInt (scaled 1)
-                    , Svg.Attributes.height <| String.fromInt (scaled 1)
+                    [ Svg.Attributes.width <| String.fromInt (scaled -1)
+                    , Svg.Attributes.height <| String.fromInt (scaled -1)
                     , enableBackground "new 0 0 323.141 322.95"
                     , viewBox "0 0 323.141 322.95"
                     ]
