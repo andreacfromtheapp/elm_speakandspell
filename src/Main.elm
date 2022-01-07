@@ -708,7 +708,7 @@ commandBtn :
     -> msg
     -> String
     -> Element msg
-commandBtn bgColor align pressAction labelText =
+commandBtn bgColor alignment pressAction labelText =
     Input.button
         [ Region.description ("Command " ++ labelText)
         , Background.color bgColor
@@ -723,7 +723,7 @@ commandBtn bgColor align pressAction labelText =
         , Font.bold
         , Font.size (scaled 1)
         , padding 12
-        , align
+        , alignment
         , mouseOver
             [ Background.color (rgba255 201 68 16 1)
             , Font.color (rgb255 255 255 255)
