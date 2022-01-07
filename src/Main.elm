@@ -305,7 +305,15 @@ yellowShell rightContent leftContent =
 
 speakAndSpellName : Element msg
 speakAndSpellName =
-    paragraph [ Region.description "App Name" ]
+    paragraph
+        [ Region.description "App Name"
+        , Font.family
+            [ Font.typeface "LiberationSerifBold"
+            , Font.serif
+            ]
+        , Font.size 64
+        , Font.heavy
+        ]
         [ el
             [ Font.color (rgba255 209 24 6 0.84)
             , alignLeft
@@ -337,14 +345,7 @@ namePlusLogo =
             }
         ]
         [ paragraph
-            [ Region.description "App name and Elm logo"
-            , Font.family
-                [ Font.typeface "LiberationSerifBold"
-                , Font.serif
-                ]
-            , Font.size 64
-            , Font.heavy
-            ]
+            [ Region.description "App name and Elm logo" ]
             [ speakAndSpellName ]
         , ElLazy.lazy Element.html elmLogoBlue
         ]
@@ -362,13 +363,7 @@ namePlusSoundCtrl =
             }
         ]
         [ paragraph
-            [ Font.family
-                [ Font.typeface "LiberationSerifBold"
-                , Font.serif
-                ]
-            , Font.size 64
-            , Font.heavy
-            ]
+            []
             [ speakAndSpellName ]
         , paragraph
             -- sound controls
