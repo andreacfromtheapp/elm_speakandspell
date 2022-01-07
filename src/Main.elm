@@ -233,11 +233,6 @@ viewLoaded newWord model =
             , topLeft = 40
             , topRight = 40
             }
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
-            ]
-        , Font.bold
         , centerX
         , centerY
         ]
@@ -250,7 +245,6 @@ viewLoaded newWord model =
                 , right = 30
                 , top = 40
                 }
-            , Font.color (rgb255 255 255 255)
             ]
           <|
             newWordScreen newWord
@@ -458,7 +452,13 @@ newWordScreen newWord =
             , topLeft = 30
             , topRight = 0
             }
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.color (rgb255 255 255 255)
         , Font.size (scaled 2)
+        , Font.bold
         , Element.spacing 8
         , paddingEach
             { bottom = 50
@@ -496,7 +496,13 @@ newWordScreen newWord =
             , topLeft = 0
             , topRight = 30
             }
-        , Element.height Element.fill
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.color (rgb255 255 255 255)
+        , Font.bold
+        , Font.size (scaled 2)
         , padding 18
         , mouseOver
             [ Background.color (rgba255 200 153 223 1)
@@ -521,13 +527,13 @@ outputScreen model =
         ]
         [ row
             [ Element.width Element.fill
+            , Font.family
                 [ Font.typeface "LCD14"
                 , Font.monospace
                 ]
             , Font.color (rgba255 110 200 120 0.8)
             , Font.size (scaled 4)
             , padding 55
-            , Element.width Element.fill
             ]
             [ el
                 [ Region.description "Output Text"
@@ -546,6 +552,11 @@ outputScreen model =
             [ Region.description "Elm branding"
             , Element.width Element.fill
             , Element.spacing 6
+            , Font.family
+                [ Font.typeface "LiberationMonoRegular"
+                , Font.monospace
+                ]
+            , Font.bold
             , Font.color (rgba255 120 113 89 1)
             , Font.size (scaled 2)
             , paddingEach
@@ -705,6 +716,11 @@ commandBtn bgColor align pressAction labelText =
         , Border.width 1
         , Border.solid
         , Border.rounded 10
+        , Font.family
+            [ Font.typeface "LiberationMonoRegular"
+            , Font.monospace
+            ]
+        , Font.bold
         , Font.size (scaled 1)
         , padding 12
         , align
@@ -760,6 +776,11 @@ alphabetRow start end =
                     , Border.width 1
                     , Border.solid
                     , Border.rounded 10
+                    , Font.family
+                        [ Font.typeface "LiberationMonoRegular"
+                        , Font.monospace
+                        ]
+                    , Font.bold
                     , Font.size (scaled 2)
                     , padding 20
                     , mouseOver
