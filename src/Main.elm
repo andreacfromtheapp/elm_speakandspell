@@ -266,6 +266,11 @@ viewLoaded newWord model =
 
 
 -- RESPONSIVE HELPERS
+-- scaled deviceClass factor =
+--     Element.modular (case deviceClass of
+--        Phone -> 12
+--        Tablet -> 14
+--        _ -> 16) 2
 
 
 scaled : Int -> Int
@@ -477,6 +482,8 @@ newWordScreen newWord =
             , centerY
             ]
             (ElLazy.lazy Element.text ("Definition: " ++ newWord.definition))
+
+        -- (ElLazy.lazy Element.text "Definition: this is a very long definition to test wrappedRow. Remove when done!")
         , el
             [ Region.description "Word Pronunciation"
             , centerY
