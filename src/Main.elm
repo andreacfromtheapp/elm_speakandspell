@@ -1176,8 +1176,8 @@ elmLogoBlue : Html msg
 elmLogoBlue =
     svg
         [ id "SvgjsSvg1001"
-        , Svg.Attributes.width "100"
-        , Svg.Attributes.height "100"
+        , Svg.Attributes.width <| String.fromInt (scaled 9)
+        , Svg.Attributes.height <| String.fromInt (scaled 9)
         , version "1.1"
         ]
         [ defs
@@ -1191,8 +1191,8 @@ elmLogoBlue =
             [ svg
                 [ enableBackground "new 0 0 323.141 322.95"
                 , viewBox "0 0 323.141 322.95"
-                , Svg.Attributes.width "100"
-                , Svg.Attributes.height "100"
+                , Svg.Attributes.width <| String.fromInt (scaled 9)
+                , Svg.Attributes.height <| String.fromInt (scaled 9)
                 ]
                 [ polygon
                     [ Svg.Attributes.fill "#2da6ef"
@@ -1229,8 +1229,8 @@ elmLogoGrayish : Html msg
 elmLogoGrayish =
     svg
         [ id "SvgjsSvg1001"
-        , Svg.Attributes.width "14"
-        , Svg.Attributes.height "14"
+        , Svg.Attributes.width <| String.fromInt (scaled 1)
+        , Svg.Attributes.height <| String.fromInt (scaled 1)
         , version "1.1"
         ]
         [ defs
@@ -1242,12 +1242,12 @@ elmLogoGrayish =
             , transform "matrix(1,0,0,1,0,0)"
             ]
             [ svg
-                [ Svg.Attributes.width "14"
-                , Svg.Attributes.height "14"
+                [ Svg.Attributes.width <| String.fromInt (scaled 1)
+                , Svg.Attributes.height <| String.fromInt (scaled 1)
                 ]
                 [ svg
-                    [ Svg.Attributes.width "14"
-                    , Svg.Attributes.height "14"
+                    [ Svg.Attributes.width <| String.fromInt (scaled 1)
+                    , Svg.Attributes.height <| String.fromInt (scaled 1)
                     , enableBackground "new 0 0 323.141 322.95"
                     , viewBox "0 0 323.141 322.95"
                     ]
