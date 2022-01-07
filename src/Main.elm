@@ -160,12 +160,12 @@ viewLoading =
     row
         -- blue around animation
         [ Region.description "Loading Screen"
+        , Element.width Element.fill
         , Background.color (rgba255 20 153 223 1)
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
         , Border.rounded 10
-        , Element.width Element.fill
         , paddingEach
             { bottom = 80
             , left = 20
@@ -175,7 +175,6 @@ viewLoading =
         ]
         [ row
             [ Region.description "Loading animation"
-            , Element.width Element.fill
             , Element.spacing 10
             ]
             [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
@@ -388,12 +387,12 @@ theKeyboard : Element Msg
 theKeyboard =
     column
         -- blue around keyboard
-        [ Background.color (rgba255 20 153 223 1)
+        [ Element.width Element.fill
+        , Background.color (rgba255 20 153 223 1)
         , Border.color (rgba255 0 0 20 1)
         , Border.width 1
         , Border.solid
         , Border.rounded 20
-        , Element.width Element.fill
         , Element.spacing 10
         , paddingEach
             { bottom = 50
@@ -442,6 +441,8 @@ newWordScreen newWord =
     [ column
         -- new word "top screen"
         [ Region.description "New Word Screen"
+        , Element.width Element.fill
+        , Element.height Element.fill
         , Background.color (rgba255 20 153 223 1)
         , Border.color (rgba255 0 0 0 1)
         , Border.widthEach
@@ -459,8 +460,6 @@ newWordScreen newWord =
             }
         , Font.size (scaled 2)
         , Element.spacing 8
-        , Element.width Element.fill
-        , Element.height Element.fill
         , paddingEach
             { bottom = 50
             , left = 30
@@ -486,6 +485,7 @@ newWordScreen newWord =
         ]
     , Input.button
         [ Region.description "Command NEW WORD [0]"
+        , Element.height Element.fill
         , Background.color (rgba255 20 153 223 1)
         , Border.color (rgba255 0 0 0 1)
         , Border.width 1
@@ -520,7 +520,7 @@ outputScreen model =
         , Background.color (rgba255 0 0 0 1)
         ]
         [ row
-            [ Font.family
+            [ Element.width Element.fill
                 [ Font.typeface "LCD14"
                 , Font.monospace
                 ]
