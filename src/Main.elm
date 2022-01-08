@@ -124,7 +124,7 @@ init flags =
       , output = Init
       , sound = On
       , newWord =
-            { word = "init"
+            { word = "INIT"
             , definition = ""
             , pronunciation = ""
             }
@@ -1098,9 +1098,9 @@ unwrapNewWordList wordsList =
             word
 
         Nothing ->
-            { word = "Nothing"
-            , definition = "Nothing"
-            , pronunciation = "Nothing"
+            { word = "NOTHING"
+            , definition = ""
+            , pronunciation = ""
             }
 
 
