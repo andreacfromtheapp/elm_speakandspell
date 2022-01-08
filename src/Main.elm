@@ -206,7 +206,7 @@ viewErrored errorMessage =
             , Font.monospace
             ]
         , Font.color (rgb255 255 255 255)
-        , Font.size (scaled 3)
+        , Font.size (scaled 2)
         , paddingEach
             { bottom = 60
             , left = 20
@@ -271,11 +271,21 @@ viewLoaded newWord model =
 --        Phone -> 12
 --        Tablet -> 14
 --        _ -> 16) 2
+-- until this is fixed: https://github.com/mdgriffith/elm-ui/issues/331
+
+
+fixedModular : Float -> Float -> Int -> Float
+fixedModular normal ratio rescale =
+    if rescale == 0 then
+        normal
+
+    else
+        normal * ratio ^ toFloat rescale
 
 
 scaled : Int -> Int
 scaled fs =
-    Basics.round (Element.modular 16 1.25 fs)
+    Basics.round (fixedModular 16 1.25 fs)
 
 
 
@@ -318,7 +328,7 @@ speakAndSpellName =
             [ Font.typeface "LiberationSerifBold"
             , Font.serif
             ]
-        , Font.size (scaled 7)
+        , Font.size (scaled 6)
         , Font.heavy
         ]
         [ el
@@ -462,7 +472,7 @@ newWordScreen newWord =
             , Font.monospace
             ]
         , Font.color (rgb255 255 255 255)
-        , Font.size (scaled 2)
+        , Font.size (scaled 1)
         , Font.bold
         , Element.spacing 8
         , paddingEach
@@ -509,7 +519,7 @@ newWordScreen newWord =
             ]
         , Font.color (rgb255 255 255 255)
         , Font.bold
-        , Font.size (scaled 2)
+        , Font.size (scaled 1)
         , padding 18
         , mouseOver
             [ Background.color (rgba255 200 153 223 1)
@@ -539,7 +549,7 @@ outputScreen model =
                 , Font.monospace
                 ]
             , Font.color (rgba255 110 200 120 0.8)
-            , Font.size (scaled 4)
+            , Font.size (scaled 3)
             , padding 55
             ]
             [ el
@@ -565,7 +575,7 @@ outputScreen model =
                 ]
             , Font.bold
             , Font.color (rgba255 120 113 89 1)
-            , Font.size (scaled 2)
+            , Font.size (scaled 1)
             , paddingEach
                 { bottom = 20
                 , left = 50
@@ -675,7 +685,7 @@ loadingButton labelText =
             [ Font.typeface "LiberationMonoBold"
             , Font.monospace
             ]
-        , Font.size (scaled 4)
+        , Font.size (scaled 3)
         , Font.extraBold
         , padding 14
         ]
@@ -728,7 +738,7 @@ commandBtn bgColor alignment pressAction labelText =
             , Font.monospace
             ]
         , Font.bold
-        , Font.size (scaled 1)
+        , Font.size (scaled 0)
         , padding 12
         , alignment
         , mouseOver
@@ -788,7 +798,7 @@ alphabetRow start end =
                         , Font.monospace
                         ]
                     , Font.bold
-                    , Font.size (scaled 2)
+                    , Font.size (scaled 1)
                     , padding 20
                     , mouseOver
                         [ Background.color (rgba255 201 68 16 1)
@@ -1176,8 +1186,8 @@ elmLogoBlue : Html msg
 elmLogoBlue =
     svg
         [ id "SvgjsSvg1001"
-        , Svg.Attributes.width <| String.fromInt (scaled 9)
-        , Svg.Attributes.height <| String.fromInt (scaled 9)
+        , Svg.Attributes.width <| String.fromInt (scaled 8)
+        , Svg.Attributes.height <| String.fromInt (scaled 8)
         , version "1.1"
         ]
         [ defs
@@ -1191,8 +1201,8 @@ elmLogoBlue =
             [ svg
                 [ enableBackground "new 0 0 323.141 322.95"
                 , viewBox "0 0 323.141 322.95"
-                , Svg.Attributes.width <| String.fromInt (scaled 9)
-                , Svg.Attributes.height <| String.fromInt (scaled 9)
+                , Svg.Attributes.width <| String.fromInt (scaled 8)
+                , Svg.Attributes.height <| String.fromInt (scaled 8)
                 ]
                 [ polygon
                     [ Svg.Attributes.fill "#2da6ef"
