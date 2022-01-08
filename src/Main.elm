@@ -221,42 +221,47 @@ viewErrored errorMessage =
 viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
-        -- outer shell
-        [ Region.description "Loaded App"
-        , Background.color (rgba255 251 50 0 1)
-        , Border.roundEach
-            { bottomLeft = 80
-            , bottomRight = 80
-            , topLeft = 40
-            , topRight = 40
-            }
+        -- outer flex container to give "margin" around the app
+        [ padding 12
         , centerX
         , centerY
         ]
-        [ row
-            -- top orange
-            [ Element.width Element.fill
-            , paddingEach
-                { bottom = 50
-                , left = 30
-                , right = 30
-                , top = 40
+        [ column
+            -- outer shell
+            [ Region.description "Loaded App"
+            , Background.color (rgba255 251 50 0 1)
+            , Border.roundEach
+                { bottomLeft = 80
+                , bottomRight = 80
+                , topLeft = 40
+                , topRight = 40
                 }
             ]
-          <|
-            newWordScreen newWord
-        , outputScreen model
-        , column
-            -- bottom orange
-            [ Element.width Element.fill
-            , paddingEach
-                { bottom = 130
-                , left = 30
-                , right = 30
-                , top = 40
-                }
-            ]
-            [ yellowShell namePlusSoundCtrl theKeyboard
+            [ row
+                -- top orange
+                [ Element.width Element.fill
+                , paddingEach
+                    { bottom = 50
+                    , left = 30
+                    , right = 30
+                    , top = 40
+                    }
+                ]
+              <|
+                newWordScreen newWord
+            , outputScreen model
+            , column
+                -- bottom orange
+                [ Element.width Element.fill
+                , paddingEach
+                    { bottom = 130
+                    , left = 30
+                    , right = 30
+                    , top = 40
+                    }
+                ]
+                [ yellowShell namePlusSoundCtrl theKeyboard
+                ]
             ]
         ]
 
