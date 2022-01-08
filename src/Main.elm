@@ -88,7 +88,6 @@ type alias NewWord =
 type alias Model =
     { winWidth : Int
     , winHeight : Int
-    , browserUA : String
     , status : Status
     , output : Output
     , sound : Sound
@@ -107,7 +106,6 @@ type alias Model =
 type alias Flags =
     { win_width : Int
     , win_height : Int
-    , browser_ua : String
     }
 
 
@@ -119,7 +117,6 @@ init : Flags -> ( Model, Cmd Msg )
 init flags =
     ( { winWidth = flags.win_width
       , winHeight = flags.win_height
-      , browserUA = flags.browser_ua
       , status = Loading
       , output = Init
       , sound = On
