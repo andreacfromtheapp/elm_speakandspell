@@ -37,8 +37,6 @@ randomWordApiUrl =
 
 type Msg
     = OnResize Int Int
-    | ChangeHeight String
-    | ChangeWidth String
     | DoNothing
     | GetNewWord (Result Http.Error (List NewWord))
     | KeyPressed KeyboardEvent
@@ -828,16 +826,6 @@ update msg model =
     case msg of
         OnResize x y ->
             ( { model | winWidth = x, winHeight = y }
-            , Cmd.none
-            )
-
-        ChangeWidth x ->
-            ( { model | winWidth = Maybe.withDefault 0 (String.toInt x) }
-            , Cmd.none
-            )
-
-        ChangeHeight y ->
-            ( { model | winHeight = Maybe.withDefault 0 (String.toInt y) }
             , Cmd.none
             )
 
