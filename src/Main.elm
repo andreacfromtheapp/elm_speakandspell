@@ -273,7 +273,6 @@ viewLoaded newWord model =
 --        Phone -> 12
 --        Tablet -> 14
 --        _ -> 16) 2
--- until this is fixed: https://github.com/mdgriffith/elm-ui/issues/331
 
 
 fixedModular : Float -> Float -> Int -> Float
@@ -283,6 +282,10 @@ fixedModular normal ratio rescale =
 
     else
         normal * ratio ^ toFloat rescale
+
+
+
+-- until this is fixed: https://github.com/mdgriffith/elm-ui/issues/331
 
 
 scaled : Int -> Int
