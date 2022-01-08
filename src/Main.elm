@@ -222,7 +222,7 @@ viewLoaded : NewWord -> Model -> Element Msg
 viewLoaded newWord model =
     column
         -- outer flex container to give "margin" around the app
-        [ padding 12
+        [ padding 8
         , centerX
         , centerY
         ]
