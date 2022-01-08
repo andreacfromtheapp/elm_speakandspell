@@ -172,6 +172,8 @@ viewLoading =
             , right = 20
             , top = 80
             }
+        , centerX
+        , centerY
         ]
         [ row
             [ Region.description "Loading animation"
