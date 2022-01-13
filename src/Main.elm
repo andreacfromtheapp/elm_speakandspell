@@ -310,7 +310,7 @@ speakAndSpellName =
             [ Font.typeface "LiberationSerifBold"
             , Font.serif
             ]
-        , Font.size 64
+        , Font.size 60
         , Font.heavy
         ]
         [ el
