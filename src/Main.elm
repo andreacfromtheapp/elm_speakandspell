@@ -145,81 +145,83 @@ view model =
     layout [ Region.mainContent ] <|
         case model.status of
             Loading ->
-                yellowShell namePlusLogo viewLoading
+                viewLoading
 
             Loaded word ->
                 viewLoaded word model
 
             Errored errorMessage ->
-                yellowShell namePlusLogo (viewErrored errorMessage)
+                viewErrored errorMessage
 
 
 viewLoading : Element Msg
 viewLoading =
-    row
-        -- blue around animation
-        [ Region.description "Loading Screen"
-        , Element.width Element.fill
-        , Background.color (rgba255 20 153 223 1)
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 10
-        , paddingEach
-            { bottom = 80
-            , left = 20
-            , right = 20
-            , top = 80
-            }
-        , centerX
-        , centerY
-        ]
-        [ row
-            [ Region.description "Loading animation"
-            , Element.spacing 10
+    yellowShell namePlusLogo <|
+        row
+            -- blue around animation
+            [ Region.description "Loading Screen"
+            , Element.width Element.fill
+            , Background.color (rgba255 20 153 223 1)
+            , Border.color (rgba255 0 0 20 1)
+            , Border.width 1
+            , Border.solid
+            , Border.rounded 10
+            , paddingEach
+                { bottom = 80
+                , left = 20
+                , right = 20
+                , top = 80
+                }
+            , centerX
+            , centerY
             ]
-            [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "L")
-            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "O")
-            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "A")
-            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "D")
-            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "I")
-            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "N")
-            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "G")
-            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
-            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
-            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+            [ row
+                [ Region.description "Loading animation"
+                , Element.spacing 10
+                ]
+                [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "L")
+                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "O")
+                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "A")
+                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "D")
+                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "I")
+                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "N")
+                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "G")
+                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+                ]
             ]
-        ]
 
 
 viewErrored : Http.Error -> Element msg
 viewErrored errorMessage =
-    wrappedRow
-        -- red around error message
-        [ Region.description "Error Screen"
-        , Background.color (rgba255 250 10 40 1)
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 10
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
+    yellowShell namePlusLogo <|
+        wrappedRow
+            -- red around error message
+            [ Region.description "Error Screen"
+            , Background.color (rgba255 250 10 40 1)
+            , Border.color (rgba255 0 0 20 1)
+            , Border.width 1
+            , Border.solid
+            , Border.rounded 10
+            , Font.family
+                [ Font.typeface "LiberationMonoRegular"
+                , Font.monospace
+                ]
+            , Font.color (rgb255 255 255 255)
+            , Font.size 25
+            , paddingEach
+                { bottom = 60
+                , left = 20
+                , right = 20
+                , top = 60
+                }
+            , centerX
+            , centerY
             ]
-        , Font.color (rgb255 255 255 255)
-        , Font.size 25
-        , paddingEach
-            { bottom = 60
-            , left = 20
-            , right = 20
-            , top = 60
-            }
-        , centerX
-        , centerY
-        ]
-        [ el [ Region.description "Error Message" ]
-            (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
-        ]
+            [ el [ Region.description "Error Message" ]
+                (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+            ]
 
 
 viewLoaded : NewWord -> Model -> Element Msg
