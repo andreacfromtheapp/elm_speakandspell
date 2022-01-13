@@ -680,7 +680,7 @@ animatedUi =
 
 loadingButton : String -> Element Msg
 loadingButton labelText =
-    Input.button
+    el
         [ Background.color (rgba255 250 175 0 1)
         , Border.color (rgba255 253 116 6 1)
         , Border.width 8
@@ -694,9 +694,7 @@ loadingButton labelText =
         , Font.extraBold
         , padding 14
         ]
-        { onPress = Just DoNothing
-        , label = Element.text labelText
-        }
+        (Element.text labelText)
 
 
 errorToString : Http.Error -> String
