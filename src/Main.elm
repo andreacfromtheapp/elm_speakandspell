@@ -84,8 +84,10 @@ type alias NewWord =
 
 
 type alias Model =
-    { winWidth : Int
-    , winHeight : Int
+    { viewport :
+        { width : Int
+        , height : Int
+        }
     , status : Status
     , output : Output
     , sound : Sound
@@ -113,8 +115,10 @@ type alias Flags =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { winWidth = flags.win_width
-      , winHeight = flags.win_height
+    ( { viewport =
+            { width = flags.win_width
+            , height = flags.win_height
+            }
       , status = Loading
       , output = Init
       , sound = On
@@ -804,7 +808,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         OnResize x y ->
-            ( { model | winWidth = x, winHeight = y }
+            ( { model | viewport = { width = x, height = y } }
             , Cmd.none
             )
 
