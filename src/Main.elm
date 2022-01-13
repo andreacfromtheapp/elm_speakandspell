@@ -174,16 +174,16 @@ viewLoading =
             [ Region.description "Loading animation"
             , Element.spacing 10
             ]
-            [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "L")
-            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "O")
-            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "A")
-            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "D")
-            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "I")
-            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingButton "N")
-            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingButton "G")
-            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
-            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingButton ".")
+            [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "L")
+            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "O")
+            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "A")
+            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "D")
+            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "I")
+            , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "N")
+            , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "G")
+            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+            , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
             ]
         ]
 
@@ -651,8 +651,8 @@ animatedUi =
         }
 
 
-loadingButton : String -> Element Msg
-loadingButton labelText =
+loadingLetter : String -> Element Msg
+loadingLetter labelText =
     el
         [ Background.color (rgba255 250 175 0 1)
         , Border.color (rgba255 253 116 6 1)
