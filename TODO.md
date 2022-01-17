@@ -85,18 +85,16 @@
 - [x] create custom error page
   - [x] implement function to handle http.error
   - [x] and return custom (parsed) error messages
-- [ ] ~~make elm-ui design responsive~~
 - [x] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [x] SEO optimization
-- [ ] ~~expandable "side loading screen" for the description?~~
-- [ ] ~~expandable "bottom loading screen" for the help section~~
-  - [x] ~~help toggle in Elm (temporary. exercise more than anything)~~
-  - [ ] ~~separate help and commands section~~
-- [ ] ~~no onscreen keyboard on mobile~~
+- [x] make elm-ui design responsive
+  - [x] elm ui seems abandonware
+  - [x] making it responsive is a bit PITA
+  - [x] leaving as is and will do proper CSS (elm-css?) reponsive design later
 
 ## Improvements
 
-- [ ] [Elm optmization](https://guide.elm-lang.org/optimization/):
+- [x] [Elm optmization](https://guide.elm-lang.org/optimization/):
   - [x] remove debug.string + refactor those fn
   - [x] use lazy
   - [x] assets size
@@ -124,7 +122,7 @@ Provided that a *polyglot API* (or separate different languages APIs) exist, the
 
 Once complete, deploy a static website:
 
-- [ ] implement [GitHub Actions](https://github.com/features/actions)
-  - [ ] use one of the [existing Elm Actions](https://github.com/marketplace?type=actions&query=elm)?
-  - [ ] create my own?
-- [ ] deploy to [GitHub Pages](https://docs.github.com/en/pages)
+- [x] ~~deploy to [GitHub Pages](https://docs.github.com/en/pages)~~
+  - [x] gh pages sucks!!!
+  - [x] c'mon microsoft... learn from gitlab.
+- [x] vercel app :)
