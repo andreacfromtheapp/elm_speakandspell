@@ -1,5 +1,6 @@
 # parceljs
 .parcel-cache
+dist/
 # node
 node_modules
 # don't know where bin comes from?

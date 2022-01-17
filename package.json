@@ -2,11 +2,6 @@
     "name": "speak_and_spell",
     "source": "./src/index.html",
     "browserslist": "> 0.5%, last 2 versions, not dead",
-    "targets": {
-        "default": {
-            "distDir": "./public"
-        }
-    },
     "scripts": {
         "start": "parcel",
         "build": "parcel build"
