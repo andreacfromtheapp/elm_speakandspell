@@ -1,0 +1,28 @@
+@font-face {
+    font-family: "LCD14";
+    src: url("../fonts/lcd-font-otf/LCD14.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "LiberationMonoBold";
+    src: url("../fonts/liberation-fonts-ttf/LiberationMono-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "LiberationMonoRegular";
+    src: url("../fonts/liberation-fonts-ttf/LiberationMono-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: "LiberationSerifBold";
+    src: url("../fonts/liberation-fonts-ttf/LiberationSerif-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: bold;
+}

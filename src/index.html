@@ -13,37 +13,11 @@
         <title>Speak & Spell</title>
         <!-- <link rel="canonical" href="https://example.com" /> -->
 
-        <!-- Compiled Elm code -->
-        <script type="text/javascript" src="elm.min.js"></script>
+        <!-- Parcel -->
+        <script type="module" src="index.js"></script>
 
         <!-- Fonts -->
-        <link
-            rel="stylesheet"
-            media="screen"
-            href="https://fontlibrary.org/face/lcd"
-            type="text/css"
-        />
-
-        <link
-            rel="stylesheet"
-            media="screen"
-            href="https://fontlibrary.org/face/liberation-serif"
-            type="text/css"
-        />
-
-        <link
-            rel="stylesheet"
-            media="screen"
-            href="https://fontlibrary.org/face/liberation-sans"
-            type="text/css"
-        />
-
-        <link
-            rel="stylesheet"
-            media="screen"
-            href="https://fontlibrary.org/face/liberation-mono"
-            type="text/css"
-        />
+        <link rel="stylesheet" href="assets/css/fonts.css" />
 
         <!-- Favicons -->
         <link
@@ -91,6 +65,37 @@
             sizes="180x180"
             href="./assets/img/apple-icon-180x180.png"
         />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="36x36"
+            href="./assets/img/android-icon-36x36.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="48x48"
+            href="./assets/img/android-icon-48x48.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="72x72"
+            href="./assets/img/android-icon-72x72.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="./assets/img/android-icon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="144x144"
+            href="./assets/img/android-icon-144x144.png"
+        />
         <link
             rel="icon"
             type="image/png"
@@ -115,53 +120,10 @@
             sizes="16x16"
             href="./assets/img/favicon-16x16.png"
         />
-        <link rel="manifest" href="./assets/img/manifest.json" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-        <meta name="theme-color" content="#ffffff" />
     </head>
 
     <body>
-        <body>
-            <main></main>
-            <script>
-                let app = Elm.Main.init({
-                    // get window size with flags
-                    flags: {
-                        win_width: window.innerWidth,
-                        win_height: window.innerHeight,
-                    },
-
-                    // Start the Elm application.
-                    node: document.querySelector("main"),
-                });
-
-                // Instantiate Speech Synth API
-                let synth = window.speechSynthesis;
-                let utter = new SpeechSynthesisUtterance();
-
-                // Pause/Resume Speech Synth API (SetSound On | Off)
-                app.ports.sound.subscribe(function (message) {
-                    synth.cancel();
-                    if (message == true) {
-                        synth.resume();
-                    } else {
-                        synth.pause();
-                    }
-                });
-
-                // We receive the whole word here and speak it
-                app.ports.speak.subscribe(function (message) {
-                    utter.text = message;
-                    synth.speak(utter);
-                });
-
-                // We receive the split word here and spell it
-                app.ports.spell.subscribe(function (message) {
-                    utter.text = message;
-                    synth.speak(utter);
-                });
-            </script>
-        </body>
+        <main></main>
+        <a style="display: none" href="./robots.txt" aria-label="robots"></a>
     </body>
 </html>

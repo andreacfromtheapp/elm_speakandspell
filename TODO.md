@@ -85,7 +85,7 @@
 - [x] create custom error page
   - [x] implement function to handle http.error
   - [x] and return custom (parsed) error messages
-- [ ] make elm-ui design responsive
+- [ ] ~~make elm-ui design responsive~~
 - [x] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
 - [x] SEO optimization
 - [ ] ~~expandable "side loading screen" for the description?~~
@@ -99,8 +99,9 @@
 - [ ] [Elm optmization](https://guide.elm-lang.org/optimization/):
   - [x] remove debug.string + refactor those fn
   - [x] use lazy
-  - [ ] assets size
-  - [ ] use fonts locally?
+  - [x] assets size
+  - [x] use local fonts
+- [x] use parceljs
 
 ## Maybe
 
