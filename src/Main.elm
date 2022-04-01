@@ -7,7 +7,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Element.Lazy as ElLazy
+import Element.Lazy as Lazy
 import Element.Region as Region
 import Html exposing (Html)
 import Http
@@ -179,16 +179,16 @@ viewLoading =
                 [ Region.description "Loading animation"
                 , Element.spacing 10
                 ]
-                [ animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "L")
-                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "O")
-                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "A")
-                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "D")
-                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "I")
-                , animatedLetter hoverAnimationDown (ElLazy.lazy loadingLetter "N")
-                , animatedLetter hoverAnimationUp (ElLazy.lazy loadingLetter "G")
-                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
-                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
-                , animatedLetter hoverAnimationRotate (ElLazy.lazy loadingLetter ".")
+                [ animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "L")
+                , animatedLetter hoverAnimationDown (Lazy.lazy loadingLetter "O")
+                , animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "A")
+                , animatedLetter hoverAnimationDown (Lazy.lazy loadingLetter "D")
+                , animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "I")
+                , animatedLetter hoverAnimationDown (Lazy.lazy loadingLetter "N")
+                , animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "G")
+                , animatedLetter hoverAnimationRotate (Lazy.lazy loadingLetter ".")
+                , animatedLetter hoverAnimationRotate (Lazy.lazy loadingLetter ".")
+                , animatedLetter hoverAnimationRotate (Lazy.lazy loadingLetter ".")
                 ]
             ]
 
@@ -220,7 +220,7 @@ viewErrored errorMessage =
             , centerY
             ]
             [ el [ Region.description "Error Message" ]
-                (ElLazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+                (Lazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
             ]
 
 
@@ -319,18 +319,18 @@ speakAndSpellName =
             [ Font.color (rgba255 209 24 6 0.84)
             , alignLeft
             ]
-            (ElLazy.lazy Element.text "Speak")
+            (Lazy.lazy Element.text "Speak")
         , el
             [ Font.color (rgb255 255 234 240)
             , Font.glow (rgb255 45 166 239) 1
             , alignLeft
             ]
-            (ElLazy.lazy Element.text "&")
+            (Lazy.lazy Element.text "&")
         , el
             [ Font.color (rgba255 45 90 232 0.84)
             , alignLeft
             ]
-            (ElLazy.lazy Element.text "Spell")
+            (Lazy.lazy Element.text "Spell")
         ]
 
 
@@ -348,7 +348,7 @@ namePlusLogo =
         [ paragraph
             [ Region.description "App name and Elm logo" ]
             [ speakAndSpellName ]
-        , ElLazy.lazy Element.html elmLogoBlue
+        , Lazy.lazy Element.html elmLogoBlue
         ]
 
 
@@ -470,19 +470,19 @@ newWordScreen newWord =
             [ Region.description "New Word"
             , centerY
             ]
-            (ElLazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
+            (Lazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
         , el
             [ Region.description "Word Definition"
             , centerY
             ]
-            (ElLazy.lazy Element.text ("Definition: " ++ newWord.definition))
+            (Lazy.lazy Element.text ("Definition: " ++ newWord.definition))
 
-        -- (ElLazy.lazy Element.text "Definition: this is a very long definition to test wrappedRow. Remove when done!")
+        -- (Lazy.lazy Element.text "Definition: this is a very long definition to test wrappedRow. Remove when done!")
         , el
             [ Region.description "Word Pronunciation"
             , centerY
             ]
-            (ElLazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
+            (Lazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
         ]
     , Input.button
         [ Region.description "Command NEW WORD [0]"
@@ -547,7 +547,7 @@ outputScreen model =
                     , top = 20
                     }
                 ]
-                (ElLazy.lazy Element.text (outputText model))
+                (Lazy.lazy Element.text (outputText model))
             ]
         , paragraph
             [ Region.description "Elm branding"
@@ -570,11 +570,11 @@ outputScreen model =
             [ newTabLink
                 [ alignRight ]
                 { url = "https://elm-lang.org/"
-                , label = ElLazy.lazy Element.text "Elm Instruments"
+                , label = Lazy.lazy Element.text "Elm Instruments"
                 }
             , row
                 [ alignRight ]
-                [ ElLazy.lazy Element.html elmLogoGrayish ]
+                [ Lazy.lazy Element.html elmLogoGrayish ]
             ]
         ]
 
@@ -732,7 +732,7 @@ commandBtn bgColor alignment pressAction labelText =
             , Font.color (rgb255 255 255 255)
             ]
         ]
-        { onPress = Just pressAction, label = ElLazy.lazy Element.text labelText }
+        { onPress = Just pressAction, label = Lazy.lazy Element.text labelText }
 
 
 yellowCommandBtn : Msg -> String -> Element Msg
@@ -792,7 +792,7 @@ alphabetRow start end =
                         ]
                     ]
                     { onPress = Just (KeyClicked (codeToString asciiCode))
-                    , label = ElLazy.lazy Element.text (codeToString asciiCode)
+                    , label = Lazy.lazy Element.text (codeToString asciiCode)
                     }
             )
 
