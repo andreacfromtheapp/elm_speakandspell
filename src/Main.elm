@@ -368,7 +368,7 @@ namePlusSoundCtrl =
             [ speakAndSpellName ]
         , paragraph
             -- sound controls
-            [ Region.description "Bottom Commands"
+            [ Region.description "Sound Commands"
             ]
             [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
             , blueCommandBtn (SetSound On) "SOUND ON [2]"
