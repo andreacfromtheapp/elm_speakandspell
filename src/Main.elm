@@ -25,8 +25,8 @@ import Svg.Attributes exposing (..)
 -- CONSTANTS
 
 
-randomWordApiUrl : String
-randomWordApiUrl =
+randomWordsApiUrl : String
+randomWordsApiUrl =
     -- api source = https://github.com/mcnaveen/Random-Words-API
     "https://random-words-api.vercel.app/word"
 
@@ -1105,7 +1105,7 @@ main =
 getNewWordCmd : Cmd Msg
 getNewWordCmd =
     Http.get
-        { url = randomWordApiUrl
+        { url = randomWordsApiUrl
         , expect = Http.expectJson GetNewWord (Decode.list newWordDecoder)
         }
 
