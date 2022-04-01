@@ -7,9 +7,9 @@
         "build": "parcel build"
     },
     "devDependencies": {
-        "@parcel/transformer-elm": "^2.2.0",
+        "@parcel/transformer-elm": "2.4.1",
         "@parcel/transformer-webmanifest": "^2.2.0",
         "elm": "^0.19.1-5",
-        "parcel": "^2.2.0"
+        "parcel": "^2.4.1"
     }
 }
