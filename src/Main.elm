@@ -996,7 +996,7 @@ submitWord model =
 
 checkResult : Model -> String
 checkResult model =
-    if String.isEmpty model.guessWord then
+    if isGuessEmtpy model then
         "AN EMPTY STRING IS NEVER THE ANSWER..."
 
     else if model.guessWord == model.checkWord then
@@ -1018,7 +1018,7 @@ setSound switch =
 
 wordToScreen : Model -> Model
 wordToScreen model =
-    if String.isEmpty model.guessWord then
+    if isGuessEmtpy model then
         { model | output = Init }
 
     else
