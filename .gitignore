@@ -1,5 +1,6 @@
 # yarn
 .yarn
+.pnp.*
 # parceljs
 .parcel-cache
 # node
