@@ -1203,8 +1203,8 @@ elmLogoGrayish : Html msg
 elmLogoGrayish =
     svg
         [ id "SvgjsSvg1001"
-        , Svg.Attributes.width "12"
-        , Svg.Attributes.height "12"
+        , Svg.Attributes.width "14"
+        , Svg.Attributes.height "14"
         , version "1.1"
         ]
         [ defs
@@ -1216,12 +1216,12 @@ elmLogoGrayish =
             , transform "matrix(1,0,0,1,0,0)"
             ]
             [ svg
-                [ Svg.Attributes.width "12"
-                , Svg.Attributes.height "12"
+                [ Svg.Attributes.width "14"
+                , Svg.Attributes.height "14"
                 ]
                 [ svg
-                    [ Svg.Attributes.width "12"
-                    , Svg.Attributes.height "12"
+                    [ Svg.Attributes.width "14"
+                    , Svg.Attributes.height "14"
                     , enableBackground "new 0 0 323.141 322.95"
                     , viewBox "0 0 323.141 322.95"
                     ]
