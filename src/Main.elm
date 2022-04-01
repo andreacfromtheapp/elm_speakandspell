@@ -966,20 +966,12 @@ kbdEventToCommand event model =
 
 isStringEmpty : String -> Bool
 isStringEmpty string =
-    if String.isEmpty string then
-        True
-
-    else
-        False
+    String.isEmpty string
 
 
 isGuessEmtpy : Model -> Bool
 isGuessEmtpy model =
-    if String.isEmpty model.guessWord then
-        True
-
-    else
-        False
+    String.isEmpty model.guessWord
 
 
 appendToGuessWord : Model -> String -> Model
