@@ -1,0 +1,29 @@
+@font-face {
+  font-family: LCD14;
+  src: url("LCD14.b22032e3.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: LiberationMonoBold;
+  src: url("LiberationMono-Bold.25879fb8.ttf") format("truetype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: LiberationMonoRegular;
+  src: url("LiberationMono-Regular.29275497.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: LiberationSerifBold;
+  src: url("LiberationSerif-Bold.e3076080.ttf") format("truetype");
+  font-weight: bold;
+  font-style: bold;
+}
+
+/*# sourceMappingURL=index.a37c6532.css.map */
