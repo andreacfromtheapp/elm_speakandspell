@@ -37,6 +37,7 @@ randomWordsApiUrl =
 
 type Msg
     = OnResize Int Int
+    | DoNothing
     | GetNewWord (Result Http.Error (List NewWord))
     | KeyPressed KeyboardEvent
     | KeyClicked String
@@ -810,6 +811,11 @@ update msg model =
     case msg of
         OnResize x y ->
             ( { model | viewport = { width = x, height = y } }
+            , Cmd.none
+            )
+
+        DoNothing ->
+            ( model
             , Cmd.none
             )
 
