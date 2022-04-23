@@ -3,7 +3,6 @@
   "packageManager": "yarn@3.2.0",
   "devDependencies": {
     "@parcel/compressor-brotli": "^2.5.0",
-    "@parcel/compressor-gzip": "^2.5.0",
     "@parcel/config-default": "^2.5.0",
     "@parcel/transformer-elm": "2.5.0",
     "elm": "^0.19.1-5",
@@ -14,7 +13,7 @@
   "scripts": {
     "standard": "standard --fix \"src/**/*.js\"",
     "start": "parcel",
-    "build": "parcel build"
+    "build": "rm -rf dist; rm -rf public; parcel build"
   },
   "standard": {
     "ignore": [

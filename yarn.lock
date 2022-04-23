@@ -166,15 +166,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/compressor-gzip@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "@parcel/compressor-gzip@npm:2.5.0"
-  dependencies:
-    "@parcel/plugin": 2.5.0
-  checksum: ca9201ed0ecbfd8a9a7fbaf0fc3257b3ba696937fc0d067327a1d26557337ef212cd1445336648ef4951bbc3a6fd227fc8d15b8983c441f85a4aa2ba6f4785cd
-  languageName: node
-  linkType: hard
-
 "@parcel/compressor-raw@npm:2.5.0":
   version: 2.5.0
   resolution: "@parcel/compressor-raw@npm:2.5.0"
@@ -4126,7 +4117,6 @@ __metadata:
   resolution: "speakandspell@workspace:."
   dependencies:
     "@parcel/compressor-brotli": ^2.5.0
-    "@parcel/compressor-gzip": ^2.5.0
     "@parcel/config-default": ^2.5.0
     "@parcel/transformer-elm": 2.5.0
     elm: ^0.19.1-5
