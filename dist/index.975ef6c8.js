@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"8pTAr":[function(require,module,exports) {
+})({"l9hPS":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -223,7 +223,7 @@ function _arrayLikeToArray(arr, len) {
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
 }
-/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE */ /*::
+/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser */ /*::
 import type {
   HMRAsset,
   HMRMessage,
@@ -250,11 +250,18 @@ interface ParcelModule {
     _disposeCallbacks: Array<(mixed) => void>,
   |};
 }
+interface ExtensionContext {
+  runtime: {|
+    reload(): void,
+  |};
+}
 declare var module: {bundle: ParcelRequire, ...};
 declare var HMR_HOST: string;
 declare var HMR_PORT: string;
 declare var HMR_ENV_HASH: string;
 declare var HMR_SECURE: boolean;
+declare var chrome: ExtensionContext;
+declare var browser: ExtensionContext;
 */ var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
 function Module(moduleName) {
@@ -309,7 +316,12 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
                     var id = assetsToAccept[i][1];
                     if (!acceptedAssets[id]) hmrAcceptRun(assetsToAccept[i][0], id);
                 }
-            } else window.location.reload();
+            } else if ('reload' in location) location.reload();
+            else {
+                // Web extension context
+                var ext = typeof chrome === 'undefined' ? typeof browser === 'undefined' ? null : browser : chrome;
+                if (ext && ext.runtime && ext.runtime.reload) ext.runtime.reload();
+            }
         }
         if (data.type === 'error') {
             // Log parcel errors to console
@@ -403,7 +415,7 @@ function reloadCSS() {
             var href = links[i].getAttribute('href');
             var hostname = getHostname();
             var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
-            var absolute = /^https?:\/\//i.test(href) && href.indexOf(window.location.origin) !== 0 && !servedFromHMRServer;
+            var absolute = /^https?:\/\//i.test(href) && href.indexOf(location.origin) !== 0 && !servedFromHMRServer;
             if (!absolute) updateLink(links[i]);
         }
         cssTimeout = null;
@@ -515,22 +527,22 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"8lqZg":[function(require,module,exports) {
 var _mainElm = require("./Main.elm");
-let app = _mainElm.Elm.Main.init({
+const app = _mainElm.Elm.Main.init({
     // get window size with flags
     flags: {
         win_width: window.innerWidth,
         win_height: window.innerHeight
     },
     // Start the Elm application.
-    node: document.querySelector("main")
+    node: document.querySelector('main')
 });
 // Instantiate Speech Synth API
-let synth = window.speechSynthesis;
-let utter = new SpeechSynthesisUtterance();
+const synth = window.speechSynthesis;
+const utter = new SpeechSynthesisUtterance();
 // Pause/Resume Speech Synth API (SetSound On | Off)
 app.ports.sound.subscribe(function(message) {
     synth.cancel();
-    if (message == true) synth.resume();
+    if (message === true) synth.resume();
     else synth.pause();
 });
 // We receive the whole word here and speak it
@@ -1166,7 +1178,7 @@ app.ports.spell.subscribe(function(message) {
     });
     function _String_uncons(string) {
         var word = string.charCodeAt(0);
-        return !isNaN(word) ? $elm$core$Maybe$Just(55296 <= word && word <= 56319 ? _Utils_Tuple2(_Utils_chr(string[0] + string[1]), string.slice(2)) : _Utils_Tuple2(_Utils_chr(string[0]), string.slice(1))) : $elm$core$Maybe$Nothing;
+        return !isNaN(word) ? $elm$core$Maybe$Just(0xD800 <= word && word <= 0xDBFF ? _Utils_Tuple2(_Utils_chr(string[0] + string[1]), string.slice(2)) : _Utils_Tuple2(_Utils_chr(string[0]), string.slice(1))) : $elm$core$Maybe$Nothing;
     }
     var _String_append = F2(function(a, b) {
         return a + b;
@@ -1180,7 +1192,7 @@ app.ports.spell.subscribe(function(message) {
         var i = 0;
         while(i < len){
             var word = string.charCodeAt(i);
-            if (55296 <= word && word <= 56319) {
+            if (0xD800 <= word && word <= 0xDBFF) {
                 array[i] = func(_Utils_chr(string[i] + string[i + 1]));
                 i += 2;
                 continue;
@@ -1198,7 +1210,7 @@ app.ports.spell.subscribe(function(message) {
             var char = str[i];
             var word = str.charCodeAt(i);
             i++;
-            if (55296 <= word && word <= 56319) {
+            if (0xD800 <= word && word <= 0xDBFF) {
                 char += str[i];
                 i++;
             }
@@ -1212,7 +1224,7 @@ app.ports.spell.subscribe(function(message) {
         var i = 0;
         while(i < len){
             var word = str.charCodeAt(i);
-            if (55296 <= word && word <= 56319) {
+            if (0xD800 <= word && word <= 0xDBFF) {
                 arr[len - i] = str[i + 1];
                 i++;
                 arr[len - i] = str[i - 1];
@@ -1231,7 +1243,7 @@ app.ports.spell.subscribe(function(message) {
             var char = string[i];
             var word = string.charCodeAt(i);
             i++;
-            if (55296 <= word && word <= 56319) {
+            if (0xD800 <= word && word <= 0xDBFF) {
                 char += string[i];
                 i++;
             }
@@ -1244,7 +1256,7 @@ app.ports.spell.subscribe(function(message) {
         while(i--){
             var char = string[i];
             var word = string.charCodeAt(i);
-            if (56320 <= word && word <= 57343) {
+            if (0xDC00 <= word && word <= 0xDFFF) {
                 i--;
                 char = string[i] + char;
             }
@@ -1287,7 +1299,7 @@ app.ports.spell.subscribe(function(message) {
         while(i--){
             var char = string[i];
             var word = string.charCodeAt(i);
-            if (56320 <= word && word <= 57343) {
+            if (0xDC00 <= word && word <= 0xDFFF) {
                 i--;
                 char = string[i] + char;
             }
@@ -1300,7 +1312,7 @@ app.ports.spell.subscribe(function(message) {
         while(i--){
             var char = string[i];
             var word = string.charCodeAt(i);
-            if (56320 <= word && word <= 57343) {
+            if (0xDC00 <= word && word <= 0xDFFF) {
                 i--;
                 char = string[i] + char;
             }
@@ -1336,13 +1348,13 @@ app.ports.spell.subscribe(function(message) {
     function _String_toInt(str) {
         var total = 0;
         var code0 = str.charCodeAt(0);
-        var start = code0 == 43 /* + */  || code0 == 45 /* - */  ? 1 : 0;
+        var start = code0 == 0x2B /* + */  || code0 == 0x2D /* - */  ? 1 : 0;
         for(var i = start; i < str.length; ++i){
             var code = str.charCodeAt(i);
-            if (code < 48 || 57 < code) return $elm$core$Maybe$Nothing;
-            total = 10 * total + code - 48;
+            if (code < 0x30 || 0x39 < code) return $elm$core$Maybe$Nothing;
+            total = 10 * total + code - 0x30;
         }
-        return i == start ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(code0 == 45 ? -total : total);
+        return i == start ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(code0 == 0x2D ? -total : total);
     }
     // FLOAT CONVERSIONS
     function _String_toFloat(s) {
@@ -1357,11 +1369,11 @@ app.ports.spell.subscribe(function(message) {
     }
     function _Char_toCode(char) {
         var code = char.charCodeAt(0);
-        if (55296 <= code && code <= 56319) return (code - 55296) * 1024 + char.charCodeAt(1) - 56320 + 65536;
+        if (0xD800 <= code && code <= 0xDBFF) return (code - 0xD800) * 0x400 + char.charCodeAt(1) - 0xDC00 + 0x10000;
         return code;
     }
     function _Char_fromCode(code) {
-        return _Utils_chr(code < 0 || 1114111 < code ? '\uFFFD' : code <= 65535 ? String.fromCharCode(code) : (code -= 65536, String.fromCharCode(Math.floor(code / 1024) + 55296, code % 1024 + 56320)));
+        return _Utils_chr(code < 0 || 0x10FFFF < code ? '\uFFFD' : code <= 0xFFFF ? String.fromCharCode(code) : (code -= 0x10000, String.fromCharCode(Math.floor(code / 0x400) + 0xD800, code % 0x400 + 0xDC00)));
     }
     function _Char_toUpper(char) {
         return _Utils_chr(char.toUpperCase());
@@ -3336,7 +3348,7 @@ type alias Process =
         if (typeof value !== 'object' || value === null || !('$' in value)) return '…';
         if (typeof value.$ === 'number') return '…';
         var code = value.$.charCodeAt(0);
-        if (code === 35 /* # */  || /* a */ 97 <= code && code <= 122 /* z */ ) return '…';
+        if (code === 0x23 /* # */  || /* a */ 0x61 <= code && code <= 0x7A /* z */ ) return '…';
         if ([
             'Array_elm_builtin',
             'Set_elm_builtin',
@@ -8776,8 +8788,6 @@ type alias Process =
                         width: x
                     }
                 }), $elm$core$Platform$Cmd$none);
-            case 'DoNothing':
-                return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
             case 'GetNewWord':
                 if (msg.a.$ === 'Ok') {
                     var word = msg.a.a;
@@ -14441,7 +14451,6 @@ type alias Process =
                                     "Basics.Int",
                                     "Basics.Int"
                                 ],
-                                "DoNothing": [],
                                 "GetNewWord": [
                                     "Result.Result Http.Error (List.List Main.NewWord)"
                                 ],
@@ -15055,6 +15064,6 @@ type alias Process =
 //////////////////// HMR END ////////////////////
 })(this);
 
-},{}]},["8pTAr","8lqZg"], "8lqZg", "parcelRequire8452")
+},{}]},["l9hPS","8lqZg"], "8lqZg", "parcelRequire8452")
 
 //# sourceMappingURL=index.975ef6c8.js.map
