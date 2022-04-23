@@ -1,14 +1,32 @@
 {
-  "name": "speak_and_spell",
-  "source": "./src/index.html",
-  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "name": "speakandspell",
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "@parcel/compressor-brotli": "^2.5.0",
+    "@parcel/compressor-gzip": "^2.5.0",
+    "@parcel/config-default": "^2.5.0",
+    "@parcel/transformer-elm": "2.5.0",
+    "elm": "^0.19.1-5",
+    "parcel": "^2.5.0",
+    "standard": "^17.0.0"
+  },
+  "source": "src/index.html",
   "scripts": {
+    "standard": "standard --fix \"src/**/*.js\"",
     "start": "parcel",
     "build": "parcel build"
   },
-  "devDependencies": {
-    "@parcel/transformer-elm": "2.5.0",
-    "elm": "^0.19.1-5",
-    "parcel": "^2.5.0"
+  "standard": {
+    "ignore": [
+      "public",
+      "dist",
+      "tmp.js"
+    ]
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "targets": {
+    "default": {
+      "distDir": "public"
+    }
   }
 }
