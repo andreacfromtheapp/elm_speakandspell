@@ -8788,6 +8788,8 @@ type alias Process =
                         width: x
                     }
                 }), $elm$core$Platform$Cmd$none);
+            case 'DoNothing':
+                return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
             case 'GetNewWord':
                 if (msg.a.$ === 'Ok') {
                     var word = msg.a.a;
@@ -14451,6 +14453,7 @@ type alias Process =
                                     "Basics.Int",
                                     "Basics.Int"
                                 ],
+                                "DoNothing": [],
                                 "GetNewWord": [
                                     "Result.Result Http.Error (List.List Main.NewWord)"
                                 ],
@@ -15064,6 +15067,6 @@ type alias Process =
 //////////////////// HMR END ////////////////////
 })(this);
 
-},{}]},["l9hPS","8lqZg"], "8lqZg", "parcelRequire8452")
+},{}]},["l9hPS","8lqZg"], "8lqZg", "parcelRequired1f6")
 
 //# sourceMappingURL=index.975ef6c8.js.map
