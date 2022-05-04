@@ -1,8 +1,38 @@
-port module Main exposing (main)
+port module Main exposing
+    ( Flags
+    , Model
+    , Msg(..)
+    , NewWord
+    , Output(..)
+    , Sound(..)
+    , Status(..)
+    , main
+    )
 
 import Browser
 import Browser.Events
-import Element exposing (..)
+import Element
+    exposing
+        ( Color
+        , Element
+        , alignLeft
+        , alignRight
+        , centerX
+        , centerY
+        , column
+        , el
+        , focused
+        , layout
+        , mouseOver
+        , newTabLink
+        , padding
+        , paddingEach
+        , paragraph
+        , rgb255
+        , rgba255
+        , row
+        , wrappedRow
+        )
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -17,8 +47,19 @@ import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 import Simple.Animation as Animation exposing (Animation)
 import Simple.Animation.Animated as Animated
 import Simple.Animation.Property as P
-import Svg exposing (..)
-import Svg.Attributes exposing (..)
+import Svg exposing (defs, g, polygon, rect, svg)
+import Svg.Attributes
+    exposing
+        ( class
+        , enableBackground
+        , id
+        , points
+        , transform
+        , version
+        , viewBox
+        , x
+        , y
+        )
 
 
 
@@ -37,7 +78,6 @@ randomWordsApiUrl =
 
 type Msg
     = OnResize Int Int
-    | DoNothing
     | GetNewWord (Result Http.Error (List NewWord))
     | KeyPressed KeyboardEvent
     | KeyClicked String
@@ -62,7 +102,6 @@ type Status
 
 type Output
     = Init
-    | Holder
     | Word
     | Result
 
@@ -751,11 +790,6 @@ outputText model =
         Init ->
             "START TYPING TO MATCH THE WORD ABOVE"
 
-        Holder ->
-            -- this is an alternative to 'output = Init'
-            -- try setting it in 'resetWord' & 'wordToScreen'
-            model.placeholder
-
         Word ->
             model.guessWord
 
@@ -811,11 +845,6 @@ update msg model =
     case msg of
         OnResize x y ->
             ( { model | viewport = { width = x, height = y } }
-            , Cmd.none
-            )
-
-        DoNothing ->
-            ( model
             , Cmd.none
             )
 

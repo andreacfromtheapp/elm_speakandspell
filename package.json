@@ -6,6 +6,8 @@
     "@parcel/config-default": "^2.5.0",
     "@parcel/transformer-elm": "2.5.0",
     "elm": "^0.19.1-5",
+    "elm-review": "^2.7.2",
+    "elm-test": "^0.19.1-revision7",
     "parcel": "^2.5.0",
     "standard": "^17.0.0"
   },
@@ -13,7 +15,7 @@
   "scripts": {
     "standard": "standard --fix \"src/**/*.js\"",
     "start": "parcel",
-    "build": "rm -rf dist; rm -rf public; parcel build"
+    "build": "parcel build"
   },
   "standard": {
     "ignore": [
