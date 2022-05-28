@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Security-Policy" content="object-src 'none'; script-src 'unsafe-inline' 'self' 'unsafe-eval'; script-src-attr 'sha384-g+3iHr0OVKlfN3F9heAduYjfRTqyz9878UFEp4cMBr1hK9ChETWTaDDXsr79myju'; style-src 'unsafe-inline' 'self' 'unsafe-eval'; style-src-attr; base-uri 'self';">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,16 +14,21 @@
     <link rel="canonical" href="https://speak-and-spell.vercel.app/" />
 
     <!-- Vite -->
-    
+    <script type="module" src="./src/js/main.js"></script>
 
     <!-- Tailwind CSS -->
-    
+    <link rel="stylesheet" href="./src/css/styles.css" />
 
     <!-- Fonts -->
-    
+    <link rel="stylesheet" href="./src/css/fonts.css" />
 
     <!-- Fonts with https://github.com/feat-agency/vite-plugin-webfont-dl -->
-    <!-- -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Roboto+Serif:opsz,wght@8..144,500&display=swap"
+      rel="stylesheet"
+    /> -->
 
     <!-- SVG Favicons w/ fallbacks for unsupported browsers -->
     <!-- https://css-tricks.com/svg-favicons-and-all-the-fun-things-we-can-do-with-them/ -->
@@ -58,11 +60,7 @@
     />
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
-    <script type="module" crossorigin src="/assets/index.cf0af60d.js"></script>
-    <link rel="stylesheet" href="/assets/index.d819f72b.css">
-  <link rel="preload" as="style" href="/assets/webfonts.de870846.css">
-  <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');" href="/assets/webfonts.de870846.css">
-</head>
+  </head>
   <body>
     <main></main>
   </body>
