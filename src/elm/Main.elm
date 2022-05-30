@@ -275,20 +275,23 @@ theKeyboard =
         [ div
             -- keyboard top
             [ Aria.label "Top Keyboard Row from A to M"
+            , Attr.class "flex"
             ]
           <|
             alphabetRow 65 77
         , div
             -- keyboard bottom
             [ Aria.label "Bottom Keyboard Row from N to Z"
+            , Attr.class "flex"
             ]
           <|
             alphabetRow 78 90
         , div
             -- keyboard commands
             [ Aria.label "Keyboard Commands"
+            , Attr.class "flex"
             ]
-            [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
+            [ yellowCommandBtn EraseLetter "ERASE [↤]"
             , yellowCommandBtn ResetWord "RESET [5]"
             , yellowCommandBtn Speak "SPEAK [8]"
             , yellowCommandBtn Spell "SPELL [9]"
@@ -394,7 +397,7 @@ commandBtn : String -> msg -> String -> Html msg
 commandBtn bgColor pressAction labelText =
     button
         [ Aria.label ("Command " ++ labelText)
-        , Attr.class <| String.append "font-semibold mt-2 mx-1 py-2 px-3 hover:bg-amber-700 hover:text-white rounded-xl border-solid border border-black " bgColor
+        , Attr.class <| String.append "font-semibold grow mt-1 mx-1 p-2 hover:bg-amber-700 hover:text-white rounded-xl border-solid border border-black " bgColor
         , onClick pressAction
         ]
         [ text labelText ]
@@ -430,7 +433,7 @@ alphabetRow start end =
             (\asciiCode ->
                 button
                     [ Aria.label ("Keyboard Key " ++ codeToString asciiCode)
-                    , Attr.class "text-xl font-semibold m-1 px-5 py-4 border border-black rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
+                    , Attr.class "text-xl font-semibold grow m-1 px-5 py-4 border border-black rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
                     , onClick (KeyClicked (codeToString asciiCode))
                     ]
                     [ text (codeToString asciiCode)
