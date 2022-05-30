@@ -245,7 +245,7 @@ namePlusLogo =
             [ speakAndSpellName ]
         , div
             [ Attr.class "my-auto" ]
-            [ img [ Attr.src elmLogoBlue, Attr.class "w-28" ] [] ]
+            [ img [ Attr.src elmLogoBlue, Attr.class "w-28 h-28" ] [] ]
         ]
 
 
@@ -353,7 +353,7 @@ outputScreen model =
                 [ Attr.src elmLogoGrayish
                 , Attr.alt "Elm Logo"
                 , Attr.title "Elm Logo"
-                , Attr.class "w-3"
+                , Attr.class "w-3 h-3 self-center"
                 ]
                 []
             , a
