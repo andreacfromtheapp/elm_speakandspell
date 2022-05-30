@@ -182,7 +182,7 @@ viewLoading =
             ]
 
 
-viewErrored : Http.Error -> Html msg
+viewErrored : Http.Error -> Html Msg
 viewErrored errorMessage =
     yellowShell namePlusLogo <|
         div
@@ -214,7 +214,7 @@ viewLoaded newWord model =
         ]
 
 
-yellowShell : Html msg -> Html msg -> Html msg
+yellowShell : Html Msg -> Html Msg -> Html Msg
 yellowShell rightContent leftContent =
     div
         -- yellow shell
@@ -224,7 +224,7 @@ yellowShell rightContent leftContent =
         ]
 
 
-speakAndSpellName : Html msg
+speakAndSpellName : Html Msg
 speakAndSpellName =
     div
         [ Aria.label "App Name"
@@ -242,7 +242,7 @@ speakAndSpellName =
         ]
 
 
-namePlusLogo : Html msg
+namePlusLogo : Html Msg
 namePlusLogo =
     div
         [ Aria.label "App name and Elm logo"
@@ -344,7 +344,7 @@ newWordScreen newWord =
         ]
 
 
-outputScreen : Model -> Html msg
+outputScreen : Model -> Html Msg
 outputScreen model =
     div
         -- output screen
@@ -411,7 +411,7 @@ errorToString error =
             errorMessage
 
 
-commandBtn : String -> msg -> String -> Html msg
+commandBtn : String -> Msg -> String -> Html Msg
 commandBtn bgColor pressAction labelText =
     button
         [ Aria.label ("Command " ++ labelText)
