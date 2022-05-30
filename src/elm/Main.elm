@@ -294,6 +294,7 @@ theKeyboard =
             , yellowCommandBtn Spell "SPELL [9]"
             , yellowCommandBtn SubmitWord "SUBMIT [↵]"
             , yellowCommandBtn ResetWord "RETRY [6]"
+            , yellowCommandBtn GetAnotherWord "NEW [0]"
             ]
         ]
 
