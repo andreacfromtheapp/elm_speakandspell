@@ -5,7 +5,9 @@
 
 @font-face {
   font-family: "LCD14";
-  src: url("../fonts/lcd-font-otf/LCD14.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
+  src: local("../fonts/lcd-font-otf/LCD14.otf"),
+    url("../fonts/lcd-font-otf/LCD14.otf") format("opentype");
+  font-display: swap;
 }
