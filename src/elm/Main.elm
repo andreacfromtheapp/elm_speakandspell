@@ -287,7 +287,6 @@ theKeyboard =
         , div
             -- keyboard commands
             [ Aria.label "Keyboard Commands"
-            , Attr.class "mx-auto"
             ]
             [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
             , yellowCommandBtn ResetWord "RESET [5]"
@@ -369,7 +368,7 @@ outputScreen model =
 
 loadingLetter : String -> String -> Html Msg
 loadingLetter labelText animation =
-    p [ Attr.class <| String.append "py-2 px-4 bg-amber-400 text-4xl border-4 border-orange-600 rounded-md " animation ] [ text labelText ]
+    p [ Attr.class <| String.append "py-2 px-4 bg-amber-400 text-4xl font-semibold border-4 border-orange-600 rounded-md " animation ] [ text labelText ]
 
 
 errorToString : Http.Error -> String
@@ -401,7 +400,7 @@ commandBtn : String -> msg -> String -> Html msg
 commandBtn bgColor pressAction labelText =
     button
         [ Aria.label ("Command " ++ labelText)
-        , Attr.class <| String.append "m-1 py-2 px-3 hover:bg-amber-700 hover:text-white rounded-xl border-solid border border-black " bgColor
+        , Attr.class <| String.append "font-semibold mt-2 mx-1 py-2 px-3 hover:bg-amber-700 hover:text-white rounded-xl border-solid border border-black " bgColor
         , onClick pressAction
         ]
         [ text labelText ]
@@ -437,7 +436,7 @@ alphabetRow start end =
             (\asciiCode ->
                 button
                     [ Aria.label ("Keyboard Key " ++ codeToString asciiCode)
-                    , Attr.class "text-xl m-1 px-5 py-4 border border-black rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
+                    , Attr.class "text-xl font-semibold m-1 px-5 py-4 border border-black rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
                     , onClick (KeyClicked (codeToString asciiCode))
                     ]
                     [ text (codeToString asciiCode)
