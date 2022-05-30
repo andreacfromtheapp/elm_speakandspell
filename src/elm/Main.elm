@@ -19,7 +19,7 @@ import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
-import VitePluginHelper
+import VitePluginHelper exposing (asset)
 
 
 
@@ -34,12 +34,12 @@ randomWordsApiUrl =
 
 elmLogoBlue : String
 elmLogoBlue =
-    VitePluginHelper.asset "../img/ElmLogoBlue.svg"
+    asset "../img/ElmLogoBlue.svg"
 
 
 elmLogoGrayish : String
 elmLogoGrayish =
-    VitePluginHelper.asset "../img/ElmLogoGrayish.svg"
+    asset "../img/ElmLogoGrayish.svg"
 
 
 
