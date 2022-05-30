@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@font-face {
+  font-family: "LCD14";
+  src: url("../fonts/lcd-font-otf/LCD14.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
