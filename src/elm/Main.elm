@@ -150,6 +150,21 @@ view model =
 
 viewLoading : Html Msg
 viewLoading =
+    let
+        loadingText : List ( String, String )
+        loadingText =
+            [ ( "L", "animate-bounce-up" )
+            , ( "O", "animate-bounce-down" )
+            , ( "A", "animate-bounce-up" )
+            , ( "D", "animate-bounce-down" )
+            , ( "I", "animate-bounce-up" )
+            , ( "N", "animate-bounce-down" )
+            , ( "G", "animate-bounce-up" )
+            , ( ".", "animate-wiggle" )
+            , ( ".", "animate-wiggle" )
+            , ( ".", "animate-wiggle" )
+            ]
+    in
     yellowShell namePlusLogo <|
         div
             -- blue around animation
@@ -160,17 +175,12 @@ viewLoading =
                 [ Aria.label "Loading animation"
                 , Attr.class "flex justify-around"
                 ]
-                [ loadingLetter "L" "animate-bounce-up"
-                , loadingLetter "O" "animate-bounce-down"
-                , loadingLetter "A" "animate-bounce-up"
-                , loadingLetter "D" "animate-bounce-down"
-                , loadingLetter "I" "animate-bounce-up"
-                , loadingLetter "N" "animate-bounce-down"
-                , loadingLetter "G" "animate-bounce-up"
-                , loadingLetter "." "animate-wiggle"
-                , loadingLetter "." "animate-wiggle"
-                , loadingLetter "." "animate-wiggle"
-                ]
+              <|
+                List.map
+                    (\loadText ->
+                        loadingLetter (Tuple.first loadText) (Tuple.second loadText)
+                    )
+                    loadingText
             ]
 
 
@@ -269,6 +279,18 @@ namePlusSoundCtrl =
 
 theKeyboard : Html Msg
 theKeyboard =
+    let
+        kbdCommands : List ( Msg, String )
+        kbdCommands =
+            [ ( EraseLetter, "ERASE [↤]" )
+            , ( ResetWord, "RESET [5]" )
+            , ( Speak, "SPEAK [8]" )
+            , ( Spell, "SPELL [9]" )
+            , ( SubmitWord, "SUBMIT [↵]" )
+            , ( ResetWord, "RETRY [6]" )
+            , ( GetAnotherWord, "NEW [0]" )
+            ]
+    in
     div
         -- blue around keyboard
         [ Attr.class "bg-sky-500 flex flex-col border border-black rounded-2xl m-2 px-6 py-12" ]
@@ -291,14 +313,12 @@ theKeyboard =
             [ Aria.label "Keyboard Commands"
             , Attr.class "flex"
             ]
-            [ yellowCommandBtn EraseLetter "ERASE [↤]"
-            , yellowCommandBtn ResetWord "RESET [5]"
-            , yellowCommandBtn Speak "SPEAK [8]"
-            , yellowCommandBtn Spell "SPELL [9]"
-            , yellowCommandBtn SubmitWord "SUBMIT [↵]"
-            , yellowCommandBtn ResetWord "RETRY [6]"
-            , yellowCommandBtn GetAnotherWord "NEW [0]"
-            ]
+          <|
+            List.map
+                (\cmd ->
+                    yellowCommandBtn (Tuple.first cmd) (Tuple.second cmd)
+                )
+                kbdCommands
         ]
 
 
