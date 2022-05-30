@@ -125,6 +125,62 @@ init =
 
 
 
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = \_ -> init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
+
+
+
+-- COMMANDS
+
+
+getNewWordCmd : Cmd Msg
+getNewWordCmd =
+    Http.get
+        { url = randomWordsApiUrl
+        , expect = Http.expectJson GetNewWord (Decode.list newWordDecoder)
+        }
+
+
+newWordDecoder : Decoder NewWord
+newWordDecoder =
+    Decode.succeed NewWord
+        |> Pipeline.required "word" Decode.string
+        |> Pipeline.required "definition" Decode.string
+        |> Pipeline.required "pronunciation" Decode.string
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Browser.Events.onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
+
+
+
+-- PORTS
+
+
+port speak : String -> Cmd msg
+
+
+port spell : List String -> Cmd msg
+
+
+port sound : Bool -> Cmd msg
+
+
+
 -- VIEW
 
 
@@ -720,59 +776,3 @@ unwrapNewWordList wordsList =
 setCheckWord : NewWord -> String
 setCheckWord wordsList =
     String.toUpper wordsList.word
-
-
-
--- MAIN
-
-
-main : Program () Model Msg
-main =
-    Browser.element
-        { init = \_ -> init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
-
-
-
--- COMMANDS
-
-
-getNewWordCmd : Cmd Msg
-getNewWordCmd =
-    Http.get
-        { url = randomWordsApiUrl
-        , expect = Http.expectJson GetNewWord (Decode.list newWordDecoder)
-        }
-
-
-newWordDecoder : Decoder NewWord
-newWordDecoder =
-    Decode.succeed NewWord
-        |> Pipeline.required "word" Decode.string
-        |> Pipeline.required "definition" Decode.string
-        |> Pipeline.required "pronunciation" Decode.string
-
-
-
--- SUBSCRIPTIONS
-
-
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Browser.Events.onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
-
-
-
--- PORTS
-
-
-port speak : String -> Cmd msg
-
-
-port spell : List String -> Cmd msg
-
-
-port sound : Bool -> Cmd msg
