@@ -303,9 +303,9 @@ newWordScreen newWord =
     div
         -- new word "top screen"
         [ Aria.label "New Word Screen"
-        , Attr.class "bg-sky-700 text-white text-xl flex flex-row justify-between mb-12 mt-8 mx-6 rounded-3xl border border-solid border-black"
+        , Attr.class "bg-sky-700 text-white text-xl flex flex-col justify-between mb-12 mt-8 mx-6 rounded-3xl border border-solid border-black"
         ]
-        [ div [ Attr.class "border-r border-solid border-black grow mr-3 p-10 self-center" ]
+        [ div [ Attr.class "px-8 py-10" ]
             [ p
                 [ Aria.label "New Word"
                 ]
@@ -318,13 +318,6 @@ newWordScreen newWord =
                 [ Aria.label "Word Pronunciation"
                 ]
                 [ Lazy.lazy text ("Pronunciation: " ++ newWord.pronunciation) ]
-            ]
-        , div [ Attr.class "p-4 self-center" ]
-            [ button
-                [ Aria.label "Command NEW WORD [0]"
-                , onClick GetAnotherWord
-                ]
-                [ text "NEW WORD [0]" ]
             ]
         ]
 
