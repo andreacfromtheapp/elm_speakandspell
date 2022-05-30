@@ -96,7 +96,6 @@ type alias Model =
     , output : Output
     , sound : Sound
     , newWord : NewWord
-    , placeholder : String
     , guessWord : String
     , checkWord : String
     , result : String
@@ -117,7 +116,6 @@ init =
             , definition = ""
             , pronunciation = ""
             }
-      , placeholder = ""
       , guessWord = ""
       , checkWord = ""
       , result = ""
@@ -479,7 +477,6 @@ update msg model =
                     ( { model
                         | status = Loaded (unwrapNewWordList word)
                         , checkWord = setCheckWord (unwrapNewWordList word)
-                        , placeholder = setPlaceHolder (unwrapNewWordList word)
                       }
                     , Cmd.none
                     )
@@ -723,11 +720,6 @@ unwrapNewWordList wordsList =
 setCheckWord : NewWord -> String
 setCheckWord wordsList =
     String.toUpper wordsList.word
-
-
-setPlaceHolder : NewWord -> String
-setPlaceHolder wordsList =
-    String.repeat (String.length wordsList.word) "_ "
 
 
 
