@@ -1,6 +1,5 @@
 port module Main exposing
-    ( Flags
-    , Model
+    ( Model
     , Msg(..)
     , NewWord
     , Output(..)
@@ -9,57 +8,18 @@ port module Main exposing
     , main
     )
 
+import Accessibility.Aria as Aria
 import Browser
 import Browser.Events
-import Element
-    exposing
-        ( Color
-        , Element
-        , alignLeft
-        , alignRight
-        , centerX
-        , centerY
-        , column
-        , el
-        , focused
-        , layout
-        , mouseOver
-        , newTabLink
-        , padding
-        , paddingEach
-        , paragraph
-        , rgb255
-        , rgba255
-        , row
-        , wrappedRow
-        )
-import Element.Background as Background
-import Element.Border as Border
-import Element.Font as Font
-import Element.Input as Input
-import Element.Lazy as Lazy
-import Element.Region as Region
-import Html exposing (Html)
+import Html exposing (Html, a, button, div, img, main_, p, text)
+import Html.Attributes as Attr
+import Html.Events exposing (onClick)
+import Html.Lazy as Lazy
 import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
-import Simple.Animation as Animation exposing (Animation)
-import Simple.Animation.Animated as Animated
-import Simple.Animation.Property as P
-import Svg exposing (defs, g, polygon, rect, svg)
-import Svg.Attributes
-    exposing
-        ( class
-        , enableBackground
-        , id
-        , points
-        , transform
-        , version
-        , viewBox
-        , x
-        , y
-        )
+import VitePluginHelper
 
 
 
@@ -72,13 +32,22 @@ randomWordsApiUrl =
     "https://random-words-api.vercel.app/word"
 
 
+elmLogoBlue : String
+elmLogoBlue =
+    VitePluginHelper.asset "../img/ElmLogoBlue.svg"
+
+
+elmLogoGrayish : String
+elmLogoGrayish =
+    VitePluginHelper.asset "../img/ElmLogoGrayish.svg"
+
+
 
 -- MESSAGES
 
 
 type Msg
-    = OnResize Int Int
-    | GetNewWord (Result Http.Error (List NewWord))
+    = GetNewWord (Result Http.Error (List NewWord))
     | KeyPressed KeyboardEvent
     | KeyClicked String
     | GetAnotherWord
@@ -123,11 +92,7 @@ type alias NewWord =
 
 
 type alias Model =
-    { viewport :
-        { width : Int
-        , height : Int
-        }
-    , status : Status
+    { status : Status
     , output : Output
     , sound : Sound
     , newWord : NewWord
@@ -139,26 +104,12 @@ type alias Model =
 
 
 
--- FLAGS
-
-
-type alias Flags =
-    { win_width : Int
-    , win_height : Int
-    }
-
-
-
 -- INIT
 
 
-init : Flags -> ( Model, Cmd Msg )
-init flags =
-    ( { viewport =
-            { width = flags.win_width
-            , height = flags.win_height
-            }
-      , status = Loading
+init : ( Model, Cmd Msg )
+init =
+    ( { status = Loading
       , output = Init
       , sound = On
       , newWord =
@@ -181,8 +132,11 @@ init flags =
 
 view : Model -> Html Msg
 view model =
-    layout [ Region.mainContent ] <|
-        case model.status of
+    main_
+        [ Aria.label "main content"
+        , Attr.class "font-mono font-medium container m-auto my-4 max-w-[60rem]"
+        ]
+        [ case model.status of
             Loading ->
                 viewLoading
 
@@ -191,223 +145,121 @@ view model =
 
             Errored errorMessage ->
                 viewErrored errorMessage
+        ]
 
 
-viewLoading : Element Msg
+viewLoading : Html Msg
 viewLoading =
     yellowShell namePlusLogo <|
-        row
+        div
             -- blue around animation
-            [ Region.description "Loading Screen"
-            , Element.width Element.fill
-            , Background.color (rgba255 20 153 223 1)
-            , Border.color (rgba255 0 0 20 1)
-            , Border.width 1
-            , Border.solid
-            , Border.rounded 10
-            , paddingEach
-                { bottom = 80
-                , left = 20
-                , right = 20
-                , top = 80
-                }
-            , centerX
-            , centerY
+            [ Aria.label "Loading Screen"
+            , Attr.class "bg-sky-500 border border-black rounded-2xl m-2 px-6 py-12"
             ]
-            [ row
-                [ Region.description "Loading animation"
-                , Element.spacing 10
+            [ div
+                [ Aria.label "Loading animation"
+                , Attr.class "flex justify-around"
                 ]
-                [ animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "L")
-                , animatedLetter hoverAnimationDown (Lazy.lazy loadingLetter "O")
-                , animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "A")
-                , animatedLetter hoverAnimationDown (Lazy.lazy loadingLetter "D")
-                , animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "I")
-                , animatedLetter hoverAnimationDown (Lazy.lazy loadingLetter "N")
-                , animatedLetter hoverAnimationUp (Lazy.lazy loadingLetter "G")
-                , animatedLetter hoverAnimationRotate (Lazy.lazy loadingLetter ".")
-                , animatedLetter hoverAnimationRotate (Lazy.lazy loadingLetter ".")
-                , animatedLetter hoverAnimationRotate (Lazy.lazy loadingLetter ".")
+                [ loadingLetter "L" "animate-bounce-up"
+                , loadingLetter "O" "animate-bounce-down"
+                , loadingLetter "A" "animate-bounce-up"
+                , loadingLetter "D" "animate-bounce-down"
+                , loadingLetter "I" "animate-bounce-up"
+                , loadingLetter "N" "animate-bounce-down"
+                , loadingLetter "G" "animate-bounce-up"
+                , loadingLetter "." "animate-wiggle"
+                , loadingLetter "." "animate-wiggle"
+                , loadingLetter "." "animate-wiggle"
                 ]
             ]
 
 
-viewErrored : Http.Error -> Element msg
+viewErrored : Http.Error -> Html msg
 viewErrored errorMessage =
     yellowShell namePlusLogo <|
-        wrappedRow
+        div
             -- red around error message
-            [ Region.description "Error Screen"
-            , Background.color (rgba255 250 10 40 1)
-            , Border.color (rgba255 0 0 20 1)
-            , Border.width 1
-            , Border.solid
-            , Border.rounded 10
-            , Font.family
-                [ Font.typeface "LiberationMonoRegular"
-                , Font.monospace
+            [ Aria.label "Error Screen"
+            , Attr.class "bg-red-500 border border-black rounded-2xl m-2 px-6 py-12"
+            ]
+            [ p
+                [ Aria.label "Error Message"
+                , Attr.class "text-white text-xl text-center"
                 ]
-            , Font.color (rgb255 255 255 255)
-            , Font.size 25
-            , paddingEach
-                { bottom = 60
-                , left = 20
-                , right = 20
-                , top = 60
-                }
-            , centerX
-            , centerY
-            ]
-            [ el [ Region.description "Error Message" ]
-                (Lazy.lazy Element.text ("Error: " ++ errorToString errorMessage))
+                [ Lazy.lazy text ("Error: " ++ errorToString errorMessage) ]
             ]
 
 
-viewLoaded : NewWord -> Model -> Element Msg
+viewLoaded : NewWord -> Model -> Html Msg
 viewLoaded newWord model =
-    column
-        -- outer flex container to give "margin" around the app
-        [ padding 8
-        , centerX
-        , centerY
+    div
+        -- outer shell
+        [ Aria.label "Loaded App"
+        , Attr.class "bg-shell_orange border rounded-t-[2.5rem] rounded-b-[5rem]"
         ]
-        [ column
-            -- outer shell
-            [ Region.description "Loaded App"
-            , Background.color (rgba255 251 50 0 1)
-            , Border.roundEach
-                { bottomLeft = 80
-                , bottomRight = 80
-                , topLeft = 40
-                , topRight = 40
-                }
+        [ div
+            [ Attr.class "p-1"
             ]
-            [ row
-                -- top orange
-                [ Element.width Element.fill
-                , paddingEach
-                    { bottom = 50
-                    , left = 30
-                    , right = 30
-                    , top = 40
-                    }
-                ]
-              <|
-                newWordScreen newWord
-            , outputScreen model
-            , column
-                -- bottom orange
-                [ Element.width Element.fill
-                , paddingEach
-                    { bottom = 130
-                    , left = 30
-                    , right = 30
-                    , top = 40
-                    }
-                ]
-                [ yellowShell namePlusSoundCtrl theKeyboard
-                ]
-            ]
+            [ newWordScreen newWord ]
+        , div [] [ outputScreen model ]
+        , div [] [ yellowShell namePlusSoundCtrl theKeyboard ]
         ]
 
 
-
--- VIEW HELPERS
-{- this is a weird behaviour: rC before lC need to ask about it.
-   does it have to do with how currying and composition work?
--}
-
-
-yellowShell : Element msg -> Element msg -> Element msg
+yellowShell : Html msg -> Html msg -> Html msg
 yellowShell rightContent leftContent =
-    column
+    div
         -- yellow shell
-        [ Background.color (rgba255 255 215 6 1)
-        , Border.roundEach
-            { bottomLeft = 60
-            , bottomRight = 60
-            , topLeft = 20
-            , topRight = 20
-            }
-        , paddingEach
-            { bottom = 80
-            , left = 20
-            , right = 20
-            , top = 20
-            }
-        , centerX
-        , centerY
-        ]
+        [ Attr.class "bg-yellow-300 mx-8 mt-10 mb-36 px-2 py-6 rounded-t-2xl rounded-b-[3rem]" ]
         [ leftContent
         , rightContent
         ]
 
 
-speakAndSpellName : Element msg
+speakAndSpellName : Html msg
 speakAndSpellName =
-    paragraph
-        [ Region.description "App Name"
-        , Font.family
-            [ Font.typeface "LiberationSerifBold"
-            , Font.serif
-            ]
-        , Font.size 60
-        , Font.heavy
+    div
+        [ Aria.label "App Name"
+        , Attr.class "font-serif text-6xl font-bold flex"
         ]
-        [ el
-            [ Font.color (rgba255 209 24 6 0.84)
-            , alignLeft
-            ]
-            (Lazy.lazy Element.text "Speak")
-        , el
-            [ Font.color (rgb255 255 234 240)
-            , Font.glow (rgb255 45 166 239) 1
-            , alignLeft
-            ]
-            (Lazy.lazy Element.text "&")
-        , el
-            [ Font.color (rgba255 45 90 232 0.84)
-            , alignLeft
-            ]
-            (Lazy.lazy Element.text "Spell")
+        [ p
+            [ Attr.class "text-red-600 pr-1" ]
+            [ Lazy.lazy text "Speak" ]
+        , p
+            [ Attr.class "text-white pr-1" ]
+            [ Lazy.lazy text "&" ]
+        , p
+            [ Attr.class "text-blue-600" ]
+            [ Lazy.lazy text "Spell" ]
         ]
 
 
-namePlusLogo : Element msg
+namePlusLogo : Html msg
 namePlusLogo =
-    row
-        [ Element.width Element.fill
-        , paddingEach
-            { bottom = 0
-            , left = 0
-            , right = 0
-            , top = 42
-            }
+    div
+        [ Aria.label "App name and Elm logo"
+        , Attr.class "flex justify-between my-12 mx-2"
         ]
-        [ paragraph
-            [ Region.description "App name and Elm logo" ]
+        [ div
+            [ Attr.class "my-auto" ]
             [ speakAndSpellName ]
-        , Lazy.lazy Element.html elmLogoBlue
+        , div
+            [ Attr.class "my-auto" ]
+            [ img [ Attr.src elmLogoBlue, Attr.class "w-28" ] [] ]
         ]
 
 
-namePlusSoundCtrl : Element Msg
+namePlusSoundCtrl : Html Msg
 namePlusSoundCtrl =
-    row
-        [ Element.width Element.fill
-        , paddingEach
-            { bottom = 0
-            , left = 0
-            , right = 0
-            , top = 42
-            }
-        ]
-        [ paragraph
-            []
+    div
+        [ Attr.class "flex my-12 mx-2" ]
+        [ div
+            [ Attr.class "grow" ]
             [ speakAndSpellName ]
-        , paragraph
+        , div
             -- sound controls
-            [ Region.description "Sound Commands"
+            [ Aria.label "Sound Commands"
+            , Attr.class "my-auto"
             ]
             [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
             , blueCommandBtn (SetSound On) "SOUND ON [2]"
@@ -415,48 +267,27 @@ namePlusSoundCtrl =
         ]
 
 
-theKeyboard : Element Msg
+theKeyboard : Html Msg
 theKeyboard =
-    column
+    div
         -- blue around keyboard
-        [ Element.width Element.fill
-        , Background.color (rgba255 20 153 223 1)
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 20
-        , Element.spacing 10
-        , paddingEach
-            { bottom = 50
-            , left = 24
-            , right = 24
-            , top = 60
-            }
-        ]
-        [ row
+        [ Attr.class "bg-sky-500 flex flex-col border border-black rounded-2xl m-2 px-6 py-12" ]
+        [ div
             -- keyboard top
-            [ Region.description "Top Keyboard Row from A to M"
-            , Element.spacingXY 10 0
-            , centerY
-            , centerX
+            [ Aria.label "Top Keyboard Row from A to M"
             ]
           <|
             alphabetRow 65 77
-        , row
+        , div
             -- keyboard bottom
-            [ Region.description "Bottom Keyboard Row from N to Z"
-            , Element.spacingXY 10 0
-            , centerY
-            , centerX
+            [ Aria.label "Bottom Keyboard Row from N to Z"
             ]
           <|
             alphabetRow 78 90
-        , row
+        , div
             -- keyboard commands
-            [ Region.description "Keyboard Commands"
-            , Element.spacingXY 14 0
-            , centerY
-            , centerX
+            [ Aria.label "Keyboard Commands"
+            , Attr.class "mx-auto"
             ]
             [ yellowCommandBtn EraseLetter "ERASE LETTER [↤]"
             , yellowCommandBtn ResetWord "RESET [5]"
@@ -468,251 +299,77 @@ theKeyboard =
         ]
 
 
-newWordScreen : NewWord -> List (Element Msg)
+newWordScreen : NewWord -> Html Msg
 newWordScreen newWord =
-    [ column
+    div
         -- new word "top screen"
-        [ Region.description "New Word Screen"
-        , Element.width Element.fill
-        , Element.height Element.fill
-        , Background.color (rgba255 20 153 223 1)
-        , Border.color (rgba255 0 0 0 1)
-        , Border.widthEach
-            { bottom = 1
-            , left = 1
-            , right = 0
-            , top = 1
-            }
-        , Border.solid
-        , Border.roundEach
-            { bottomLeft = 30
-            , bottomRight = 0
-            , topLeft = 30
-            , topRight = 0
-            }
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
-            ]
-        , Font.color (rgb255 255 255 255)
-        , Font.size 20
-        , Font.bold
-        , Element.spacing 8
-        , paddingEach
-            { bottom = 50
-            , left = 30
-            , right = 30
-            , top = 50
-            }
+        [ Aria.label "New Word Screen"
+        , Attr.class "bg-sky-700 text-white text-xl flex flex-row justify-between mb-12 mt-8 mx-6 rounded-3xl border border-solid border-black"
         ]
-        [ el
-            [ Region.description "New Word"
-            , centerY
+        [ div [ Attr.class "border-r border-solid border-black grow mr-3 p-10 self-center" ]
+            [ p
+                [ Aria.label "New Word"
+                ]
+                [ Lazy.lazy text ("Your word is: " ++ String.toUpper newWord.word) ]
+            , p
+                [ Aria.label "Word Definition"
+                ]
+                [ Lazy.lazy text ("Definition: " ++ newWord.definition) ]
+            , p
+                [ Aria.label "Word Pronunciation"
+                ]
+                [ Lazy.lazy text ("Pronunciation: " ++ newWord.pronunciation) ]
             ]
-            (Lazy.lazy Element.text ("Your word is: " ++ String.toUpper newWord.word))
-        , el
-            [ Region.description "Word Definition"
-            , centerY
-            ]
-            (Lazy.lazy Element.text ("Definition: " ++ newWord.definition))
-
-        -- (Lazy.lazy Element.text "Definition: this is a very long definition to test wrappedRow. Remove when done!")
-        , el
-            [ Region.description "Word Pronunciation"
-            , centerY
-            ]
-            (Lazy.lazy Element.text ("Pronunciation: " ++ newWord.pronunciation))
-        ]
-    , Input.button
-        [ Region.description "Command NEW WORD [0]"
-        , Element.height Element.fill
-        , Background.color (rgba255 20 153 223 1)
-        , Border.color (rgba255 0 0 0 1)
-        , Border.width 1
-        , Border.solid
-        , Border.roundEach
-            { bottomLeft = 0
-            , bottomRight = 30
-            , topLeft = 0
-            , topRight = 30
-            }
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
-            ]
-        , Font.color (rgb255 255 255 255)
-        , Font.bold
-        , Font.size 20
-        , padding 18
-        , mouseOver
-            [ Background.color (rgba255 200 153 223 1)
-            , Font.color (rgb255 255 255 255)
-            ]
-        , focused
-            [ Background.color (rgba255 200 153 223 1)
-            , Font.color (rgb255 255 255 255)
+        , div [ Attr.class "p-4 self-center" ]
+            [ button
+                [ Aria.label "Command NEW WORD [0]"
+                , onClick GetAnotherWord
+                ]
+                [ text "NEW WORD [0]" ]
             ]
         ]
-        { onPress = Just GetAnotherWord, label = Element.text "NEW WORD [0]" }
-    ]
 
 
-outputScreen : Model -> Element msg
+outputScreen : Model -> Html msg
 outputScreen model =
-    column
+    div
         -- output screen
-        [ Region.description "Output Screen"
-        , Element.width Element.fill
-        , Background.color (rgba255 0 0 0 1)
+        [ Aria.label "Output Screen"
+        , Attr.class "bg-black h-48 flex flex-col justify-between"
         ]
-        [ row
-            [ Element.width Element.fill
-            , Font.family
-                [ Font.typeface "LCD14"
-                , Font.monospace
+        [ div
+            [ Attr.class "text-center" ]
+            [ p
+                [ Aria.label "Output Text"
+                , Attr.class "font-lcd text-lcd_text text-3xl pt-16"
                 ]
-            , Font.color (rgba255 110 200 120 0.8)
-            , Font.size 32
-            , padding 55
+                [ Lazy.lazy text (outputText model) ]
             ]
-            [ el
-                [ Region.description "Output Text"
-                , centerX
-                , centerY
-                , paddingEach
-                    { bottom = 0
-                    , left = 0
-                    , right = 0
-                    , top = 20
-                    }
+        , div
+            [ Aria.label "Elm branding"
+            , Attr.class "inline-flex self-end mr-12 mb-2"
+            ]
+            [ img
+                [ Attr.src elmLogoGrayish
+                , Attr.alt "Elm Logo"
+                , Attr.title "Elm Logo"
+                , Attr.class "w-3"
                 ]
-                (Lazy.lazy Element.text (outputText model))
-            ]
-        , paragraph
-            [ Region.description "Elm branding"
-            , Element.width Element.fill
-            , Element.spacing 6
-            , Font.family
-                [ Font.typeface "LiberationMonoRegular"
-                , Font.monospace
+                []
+            , a
+                [ Attr.href "https://elm-lang.org/"
+                , Attr.target "_blank"
+                , Attr.rel "noreferrer noopener"
+                , Attr.class "text-stone-400 pl-2"
                 ]
-            , Font.bold
-            , Font.color (rgba255 120 113 89 1)
-            , Font.size 20
-            , paddingEach
-                { bottom = 20
-                , left = 50
-                , right = 50
-                , top = 0
-                }
-            ]
-            [ newTabLink
-                [ alignRight ]
-                { url = "https://elm-lang.org/"
-                , label = Lazy.lazy Element.text "Elm Instruments"
-                }
-            , row
-                [ alignRight ]
-                [ Lazy.lazy Element.html elmLogoGrayish ]
+                [ Lazy.lazy text "Elm Instruments" ]
             ]
         ]
 
 
-animatedLetter : Animation -> Element msg -> Element msg
-animatedLetter animation element =
-    animatedEl animation
-        []
-        element
-
-
-hoverAnimationRotate : Animation
-hoverAnimationRotate =
-    Animation.steps
-        { startAt = [ P.rotate 0 ]
-        , options =
-            [ Animation.loop
-            , Animation.easeInBack
-            ]
-        }
-        [ Animation.step 400 [ P.rotate 10 ]
-        , Animation.step 640 [ P.rotate 90 ]
-        ]
-
-
-hoverAnimationUp : Animation
-hoverAnimationUp =
-    Animation.steps
-        { startAt = [ P.y 0 ]
-        , options =
-            [ Animation.loop
-            , Animation.easeInBack
-            ]
-        }
-        [ Animation.step 400 [ P.y 8 ]
-        , Animation.step 640 [ P.y 0 ]
-        ]
-
-
-hoverAnimationDown : Animation
-hoverAnimationDown =
-    Animation.steps
-        { startAt = [ P.y 8 ]
-        , options =
-            [ Animation.loop
-            , Animation.reverse
-            , Animation.easeOutBack
-            ]
-        }
-        [ Animation.step 640 [ P.y 0 ]
-        , Animation.step 400 [ P.y 8 ]
-        ]
-
-
-animatedEl :
-    Animation
-    -> List (Element.Attribute msg)
-    -> Element msg
-    -> Element msg
-animatedEl =
-    -- Element.row or Element.column can be used here too
-    animatedUi Element.el
-
-
-animatedUi :
-    (List
-        (Element.Attribute msg)
-     -> children
-     -> Element msg
-    )
-    -> Animation
-    -> List (Element.Attribute msg)
-    -> children
-    -> Element msg
-animatedUi =
-    Animated.ui
-        { behindContent = Element.behindContent
-        , htmlAttribute = Element.htmlAttribute
-        , html = Element.html
-        }
-
-
-loadingLetter : String -> Element Msg
-loadingLetter labelText =
-    el
-        [ Background.color (rgba255 250 175 0 1)
-        , Border.color (rgba255 253 116 6 1)
-        , Border.width 8
-        , Border.solid
-        , Border.rounded 12
-        , Font.family
-            [ Font.typeface "LiberationMonoBold"
-            , Font.monospace
-            ]
-        , Font.size 32
-        , Font.extraBold
-        , padding 14
-        ]
-        (Element.text labelText)
+loadingLetter : String -> String -> Html Msg
+loadingLetter labelText animation =
+    p [ Attr.class <| String.append "py-2 px-4 bg-amber-400 text-4xl border-4 border-orange-600 rounded-md " animation ] [ text labelText ]
 
 
 errorToString : Http.Error -> String
@@ -740,48 +397,24 @@ errorToString error =
             errorMessage
 
 
-commandBtn :
-    Color
-    -> Element.Attribute msg
-    -> msg
-    -> String
-    -> Element msg
-commandBtn bgColor alignment pressAction labelText =
-    Input.button
-        [ Region.description ("Command " ++ labelText)
-        , Background.color bgColor
-        , Border.color (rgba255 0 0 20 1)
-        , Border.width 1
-        , Border.solid
-        , Border.rounded 10
-        , Font.family
-            [ Font.typeface "LiberationMonoRegular"
-            , Font.monospace
-            ]
-        , Font.bold
-        , Font.size 16
-        , padding 12
-        , alignment
-        , mouseOver
-            [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 255 255)
-            ]
-        , focused
-            [ Background.color (rgba255 201 68 16 1)
-            , Font.color (rgb255 255 255 255)
-            ]
+commandBtn : String -> msg -> String -> Html msg
+commandBtn bgColor pressAction labelText =
+    button
+        [ Aria.label ("Command " ++ labelText)
+        , Attr.class <| String.append "m-1 py-2 px-3 hover:bg-amber-700 hover:text-white rounded-xl border-solid border border-black " bgColor
+        , onClick pressAction
         ]
-        { onPress = Just pressAction, label = Lazy.lazy Element.text labelText }
+        [ text labelText ]
 
 
-yellowCommandBtn : Msg -> String -> Element Msg
+yellowCommandBtn : Msg -> String -> Html Msg
 yellowCommandBtn pressAction labelText =
-    commandBtn (rgba255 250 175 0 1) alignLeft pressAction labelText
+    commandBtn "bg-amber-400" pressAction labelText
 
 
-blueCommandBtn : Msg -> String -> Element Msg
+blueCommandBtn : Msg -> String -> Html Msg
 blueCommandBtn pressAction labelText =
-    commandBtn (rgba255 45 166 239 1) alignRight pressAction labelText
+    commandBtn "bg-sky-500" pressAction labelText
 
 
 outputText : Model -> String
@@ -797,37 +430,18 @@ outputText model =
             model.result
 
 
-alphabetRow : Int -> Int -> List (Element Msg)
+alphabetRow : Int -> Int -> List (Html Msg)
 alphabetRow start end =
     List.range start end
         |> List.map
             (\asciiCode ->
-                Input.button
-                    [ Region.description ("Keyboard Key " ++ codeToString asciiCode)
-                    , Background.color (rgba255 253 116 6 1)
-                    , Border.color (rgba255 0 0 20 1)
-                    , Border.width 1
-                    , Border.solid
-                    , Border.rounded 10
-                    , Font.family
-                        [ Font.typeface "LiberationMonoRegular"
-                        , Font.monospace
-                        ]
-                    , Font.bold
-                    , Font.size 20
-                    , padding 20
-                    , mouseOver
-                        [ Background.color (rgba255 201 68 16 1)
-                        , Font.color (rgb255 255 255 255)
-                        ]
-                    , focused
-                        [ Background.color (rgba255 201 68 16 1)
-                        , Font.color (rgb255 255 255 255)
-                        ]
+                button
+                    [ Aria.label ("Keyboard Key " ++ codeToString asciiCode)
+                    , Attr.class "text-xl m-1 px-5 py-4 border border-black rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
+                    , onClick (KeyClicked (codeToString asciiCode))
                     ]
-                    { onPress = Just (KeyClicked (codeToString asciiCode))
-                    , label = Lazy.lazy Element.text (codeToString asciiCode)
-                    }
+                    [ text (codeToString asciiCode)
+                    ]
             )
 
 
@@ -843,11 +457,6 @@ codeToString asciiCode =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        OnResize x y ->
-            ( { model | viewport = { width = x, height = y } }
-            , Cmd.none
-            )
-
         GetNewWord (Ok word) ->
             case word of
                 _ :: _ ->
@@ -1109,10 +718,10 @@ setPlaceHolder wordsList =
 -- MAIN
 
 
-main : Program Flags Model Msg
+main : Program () Model Msg
 main =
     Browser.element
-        { init = init
+        { init = \_ -> init
         , view = view
         , update = update
         , subscriptions = subscriptions
@@ -1145,16 +754,6 @@ newWordDecoder =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.batch [ windowResizeSub, onKeyDownSub ]
-
-
-windowResizeSub : Sub Msg
-windowResizeSub =
-    Browser.Events.onResize OnResize
-
-
-onKeyDownSub : Sub Msg
-onKeyDownSub =
     Browser.Events.onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
 
 
@@ -1169,104 +768,3 @@ port spell : List String -> Cmd msg
 
 
 port sound : Bool -> Cmd msg
-
-
-
--- SVG LOGOs
-
-
-elmLogoBlue : Html msg
-elmLogoBlue =
-    svg
-        [ id "SvgjsSvg1001"
-        , Svg.Attributes.width "96"
-        , Svg.Attributes.height "96"
-        , version "1.1"
-        ]
-        [ defs
-            [ id "SvgjsDefs1002"
-            ]
-            []
-        , g
-            [ id "SvgjsG1008"
-            , transform "matrix(1,0,0,1,0,0)"
-            ]
-            [ svg
-                [ enableBackground "new 0 0 323.141 322.95"
-                , viewBox "0 0 323.141 322.95"
-                , Svg.Attributes.width "96"
-                , Svg.Attributes.height "96"
-                ]
-                [ polygon
-                    [ Svg.Attributes.fill "#2da6ef"
-                    , points "161.649 152.782 231.514 82.916 91.783 82.916"
-                    , class "colorF0AD00 svgShape"
-                    ]
-                    []
-                , polygon
-                    [ Svg.Attributes.fill "#2da6ef"
-                    , points "8.867 0 79.241 70.375 232.213 70.375 161.838 0"
-                    , class "color7FD13B svgShape"
-                    ]
-                    []
-                , rect
-                    [ Svg.Attributes.width "107.676"
-                    , Svg.Attributes.height "108.167"
-                    , x "192.99"
-                    , y "107.392"
-                    , Svg.Attributes.fill "#2da6ef"
-                    , transform "rotate(45.001 246.83 161.471)"
-                    , class "color7FD13B svgShape"
-                    ]
-                    []
-                , polygon [ Svg.Attributes.fill "#2da6ef", points "323.298 143.724 323.298 0 179.573 0", class "color60B5CC svgShape" ] []
-                , polygon [ Svg.Attributes.fill "#2da6ef", points "152.781 161.649 0 8.868 0 314.432", class "color5A6378 svgShape" ] []
-                , polygon [ Svg.Attributes.fill "#2da6ef", points "255.522 246.655 323.298 314.432 323.298 178.879", class "colorF0AD00 svgShape" ] []
-                , polygon [ Svg.Attributes.fill "#2da6ef", points "161.649 170.517 8.869 323.298 314.43 323.298", class "color60B5CC svgShape" ] []
-                ]
-            ]
-        ]
-
-
-elmLogoGrayish : Html msg
-elmLogoGrayish =
-    svg
-        [ id "SvgjsSvg1001"
-        , Svg.Attributes.width "14"
-        , Svg.Attributes.height "14"
-        , version "1.1"
-        ]
-        [ defs
-            [ id "SvgjsDefs1002"
-            ]
-            []
-        , g
-            [ id "SvgjsG1008"
-            , transform "matrix(1,0,0,1,0,0)"
-            ]
-            [ svg
-                [ Svg.Attributes.width "14"
-                , Svg.Attributes.height "14"
-                ]
-                [ svg
-                    [ Svg.Attributes.width "14"
-                    , Svg.Attributes.height "14"
-                    , enableBackground "new 0 0 323.141 322.95"
-                    , viewBox "0 0 323.141 322.95"
-                    ]
-                    [ polygon
-                        [ Svg.Attributes.fill "#787159"
-                        , points "161.649 152.782 231.514 82.916 91.783 82.916"
-                        , class "colorF0AD00 svgShape color2da6ef"
-                        ]
-                        []
-                    , polygon [ Svg.Attributes.fill "#787159", points "8.867 0 79.241 70.375 232.213 70.375 161.838 0", class "color7FD13B svgShape color2da6ef" ] []
-                    , rect [ Svg.Attributes.width "107.676", Svg.Attributes.height "108.167", x "192.99", y "107.392", Svg.Attributes.fill "#787159", class "color7FD13B svgShape color2da6ef", transform "rotate(45.001 246.83 161.471)" ] []
-                    , polygon [ Svg.Attributes.fill "#787159", points "323.298 143.724 323.298 0 179.573 0", class "color60B5CC svgShape color2da6ef" ] []
-                    , polygon [ Svg.Attributes.fill "#787159", points "152.781 161.649 0 8.868 0 314.432", class "color5A6378 svgShape color2da6ef" ] []
-                    , polygon [ Svg.Attributes.fill "#787159", points "255.522 246.655 323.298 314.432 323.298 178.879", class "colorF0AD00 svgShape color2da6ef" ] []
-                    , polygon [ Svg.Attributes.fill "#787159", points "161.649 170.517 8.869 323.298 314.43 323.298", class "color60B5CC svgShape color2da6ef" ] []
-                    ]
-                ]
-            ]
-        ]
