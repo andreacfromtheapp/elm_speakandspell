@@ -3,12 +3,10 @@ import elmPlugin from 'vite-plugin-elm'
 import { ViteWebfontDownload } from 'vite-plugin-webfont-dl'
 import viteImagemin from 'vite-plugin-imagemin'
 import viteCompression from 'vite-plugin-compression'
-import ViteCspPlugin from 'vite-plugin-csp'
 
 export default defineConfig({
   plugins: [
     elmPlugin(),
-    ViteCspPlugin(),
     ViteWebfontDownload(),
     viteImagemin({
       gifsicle: {
