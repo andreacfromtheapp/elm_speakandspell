@@ -11,15 +11,3 @@ This is a limited reproduction of the original game: 1) match the word on the sc
 [Speak & Spell](https://en.wikipedia.org/wiki/Speak_%26_Spell_(toy))™ is © of Texas Instruments Inc.
 
 The favicon used on the Vercel app is © [Gregor Cresnar](https://thenounproject.com/icon/speak-1616157/). Licensed under the [Creative Commons CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/).
-
-## As Is
-
-This exercise is over, for now. I've learned a bunch from it and went above and beyond the primary goal of understanding and internalizing Elm in Action's teachings up to chapter 5. I'd give it a 100/100 on that one.
-
-Exploring elm-ui was also fun and interesting. Unfortunately, I realized that it's abandonware a little too deep into the exercise. Having said that, getting into elm-ui details and even doing a [bug fix](https://github.com/mdgriffith/elm-ui/issues/331) was priceless.
-
-I decided to stop here, becasue of the cumbersomeness of making elm-ui responsive. Using [Device](https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/Element#Device) functions or [derivatives of those](https://ellie-app.com/7R3Xv8m4rZRa1), was **almost** ok. However, to make it all work I should have modified the entire code base and that is beyond the scope of this exercise.
-
-One day I'll resume this exercise and switch to elm-css elm/html to redo the UI/UX and make it properly responsive.
-
-So long... and thank you for all the teachings...
