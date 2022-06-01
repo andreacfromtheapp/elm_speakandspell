@@ -381,7 +381,7 @@ newWordScreen newWord =
     div
         -- new word "top screen"
         [ Aria.label "New Word Screen"
-        , Attr.class "bg-sky-700 text-white text-xl flex flex-col justify-between mb-12 mt-8 mx-6 rounded-3xl border border-solid border-black"
+        , Attr.class "bg-sky-500 text-xl flex flex-col justify-between mb-12 mt-8 mx-6 rounded-3xl border border-solid border-black"
         ]
         [ div [ Attr.class "px-8 py-10" ]
             [ p
@@ -423,14 +423,14 @@ outputScreen model =
                 [ Attr.src elmLogoGrayish
                 , Attr.alt "Elm Logo"
                 , Attr.title "Elm Logo"
-                , Attr.class "w-3 h-3 self-center"
+                , Attr.class "w-4 h-4 self-center"
                 ]
                 []
             , a
                 [ Attr.href "https://elm-lang.org/"
                 , Attr.target "_blank"
                 , Attr.rel "noreferrer noopener"
-                , Attr.class "text-stone-400 pl-2"
+                , Attr.class "text-stone-400 text-lg pl-2"
                 ]
                 [ Lazy.lazy text "Elm Instruments" ]
             ]
