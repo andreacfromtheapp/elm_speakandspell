@@ -8,11 +8,11 @@ This is a limited reproduction of the original game: 1) match the word on the sc
 
 ## Made With
 
-Initially, I used [Elm UI](https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/) for the UI/UX. However, I hit a stopper when doing responsive design. Whilst Elm UI does permit good responsive design, the way I had laid out the UI would have meant to refactor everything. Since Elm UI was an experiment for me, and that I should have refactored everything UI anyway, I have switched to Tailwind CSS, and I'm in the process of making this fully reponsive.
+Initially, I used [Elm UI](https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/) for the UI/UX. However, I hit a stopper when doing responsive design. Whilst Elm UI does permit good responsive design, the way I had laid out the UI would have meant to refactor everything. Since Elm UI was an experiment for me, and that I should have refactored everything UI anyway, I have switched to Tailwind CSS and made this fully reponsive.
 
 ### Tooling
 
-This repository/code is very opinionated and uses tooling from my own [Vite, Elm, and Tailwind CSS, Template](https://github.com/gacallea/elm_vite_tailwind_template), check it out :)
+This repository/code uses tooling from my own [Vite, Elm, and Tailwind CSS, Template](https://github.com/gacallea/elm_vite_tailwind_template), check it out :)
 
 ## Credits & Copyright
 
