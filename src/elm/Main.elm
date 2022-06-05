@@ -188,7 +188,7 @@ view : Model -> Html Msg
 view model =
     main_
         [ Aria.label "main content"
-        , Attr.class "font-mono font-medium container m-auto my-4 max-w-[60rem]"
+        , Attr.class "font-mono font-medium container m-auto lg:my-2 max-w-[54rem]"
         ]
         [ case model.status of
             Loading ->
@@ -223,11 +223,11 @@ viewLoading =
         div
             -- blue around animation
             [ Aria.label "Loading Screen"
-            , Attr.class "bg-sky-500 border border-black rounded-2xl m-2 px-6 py-12"
+            , Attr.class "bg-sky-500 border border-black rounded-2xl m-2 px-3 py-12"
             ]
             [ div
                 [ Aria.label "Loading animation"
-                , Attr.class "flex justify-around"
+                , Attr.class "flex flex-nowrap"
                 ]
               <|
                 List.map
@@ -244,11 +244,11 @@ viewErrored errorMessage =
         div
             -- red around error message
             [ Aria.label "Error Screen"
-            , Attr.class "bg-red-500 border border-black rounded-2xl m-2 px-6 py-12"
+            , Attr.class "bg-red-500 border border-black rounded-2xl m-2 px-3 py-12"
             ]
             [ p
                 [ Aria.label "Error Message"
-                , Attr.class "text-white text-xl text-center"
+                , Attr.class "text-white text-sm md:text-lg lg:text-xl text-center"
                 ]
                 [ Lazy.lazy text ("Error: " ++ errorToString errorMessage) ]
             ]
@@ -259,7 +259,7 @@ viewLoaded newWord model =
     div
         -- outer shell
         [ Aria.label "Loaded App"
-        , Attr.class "bg-shell_orange border rounded-t-[2.5rem] rounded-b-[5rem]"
+        , Attr.class "bg-shell_orange border md:rounded-t-[2.5rem] md:rounded-b-[5rem]"
         ]
         [ div
             [ Attr.class "p-1"
@@ -274,7 +274,7 @@ yellowShell : Html Msg -> Html Msg -> Html Msg
 yellowShell rightContent leftContent =
     div
         -- yellow shell
-        [ Attr.class "bg-yellow-300 mx-8 mt-10 mb-36 px-2 py-6 rounded-t-2xl rounded-b-[3rem]" ]
+        [ Attr.class "bg-yellow-300 m-4 md:mx-8 md:mt-10 md:mb-36 px-1 md:px-4 py-3 md:py-8 rounded-t-xl md:rounded-t-2xl rounded-b-3xl md:rounded-b-[3rem]" ]
         [ leftContent
         , rightContent
         ]
@@ -284,7 +284,7 @@ speakAndSpellName : Html Msg
 speakAndSpellName =
     div
         [ Aria.label "App Name"
-        , Attr.class "font-serif text-6xl font-bold flex"
+        , Attr.class "font-serif text-3xl md:text-4xl lg:text-5xl font-bold flex"
         ]
         [ p
             [ Attr.class "text-red-600 pr-1" ]
@@ -309,21 +309,21 @@ namePlusLogo =
             [ speakAndSpellName ]
         , div
             [ Attr.class "my-auto" ]
-            [ img [ Attr.src elmLogoBlue, Attr.class "w-28 h-28" ] [] ]
+            [ img [ Attr.src elmLogoBlue, Attr.class "w-10 h-10 md:w-20 md:h-20 lg:w-24 lg:h-24" ] [] ]
         ]
 
 
 namePlusSoundCtrl : Html Msg
 namePlusSoundCtrl =
     div
-        [ Attr.class "flex my-12 mx-2" ]
+        [ Attr.class "flex flex-col md:flex-row my-8 md:my-12 lg:my-14" ]
         [ div
-            [ Attr.class "grow" ]
+            [ Attr.class "grow self-center" ]
             [ speakAndSpellName ]
         , div
             -- sound controls
             [ Aria.label "Sound Commands"
-            , Attr.class "my-auto"
+            , Attr.class "my-auto self-center"
             ]
             [ blueCommandBtn (SetSound Off) "SOUND OFF [3]"
             , blueCommandBtn (SetSound On) "SOUND ON [2]"
@@ -347,25 +347,18 @@ theKeyboard =
     in
     div
         -- blue around keyboard
-        [ Attr.class "bg-sky-500 flex flex-col border border-black rounded-2xl m-2 px-6 py-12" ]
+        [ Attr.class "bg-sky-500 flex flex-col border border-black rounded-2xl m-1 md:m-0 px-1 lg:px-4 py-4 md:py-8" ]
         [ div
-            -- keyboard top
-            [ Aria.label "Top Keyboard Row from A to M"
-            , Attr.class "flex"
+            -- keyboard letters
+            [ Aria.label "Keyboard from A to Z"
+            , Attr.class "flex flex-wrap"
             ]
           <|
-            alphabetRow 65 77
-        , div
-            -- keyboard bottom
-            [ Aria.label "Bottom Keyboard Row from N to Z"
-            , Attr.class "flex"
-            ]
-          <|
-            alphabetRow 78 90
+            alphabetRow 65 90
         , div
             -- keyboard commands
             [ Aria.label "Keyboard Commands"
-            , Attr.class "flex"
+            , Attr.class "flex flex-wrap"
             ]
           <|
             List.map
@@ -381,9 +374,9 @@ newWordScreen newWord =
     div
         -- new word "top screen"
         [ Aria.label "New Word Screen"
-        , Attr.class "bg-sky-500 text-xl flex flex-col justify-between mb-12 mt-8 mx-6 rounded-3xl border border-solid border-black"
+        , Attr.class "bg-sky-500 text-base md:text-lg lg:text-xl flex flex-col justify-between m-2 md:mb-10 md:mt-8 md:mx-6 rounded-lg md:rounded-3xl border border-solid border-black"
         ]
-        [ div [ Attr.class "px-8 py-10" ]
+        [ div [ Attr.class "px-4 py-8 md:px-8 md:py-10" ]
             [ p
                 [ Aria.label "New Word"
                 ]
@@ -405,32 +398,32 @@ outputScreen model =
     div
         -- output screen
         [ Aria.label "Output Screen"
-        , Attr.class "bg-black h-48 flex flex-col justify-between"
+        , Attr.class "bg-black h-32 md:h-44 lg:h-48 flex flex-col justify-between"
         ]
         [ div
             [ Attr.class "text-center" ]
             [ p
                 [ Aria.label "Output Text"
-                , Attr.class "font-lcd text-lcd_text text-3xl pt-16"
+                , Attr.class "font-lcd text-lcd_text px-4 text-base md:text-2xl pt-8 md:pt-16"
                 ]
                 [ Lazy.lazy text (outputText model) ]
             ]
         , div
             [ Aria.label "Elm branding"
-            , Attr.class "inline-flex self-end mr-12 mb-2"
+            , Attr.class "inline-flex self-end mr-4 md:mr-12 mb-2"
             ]
             [ img
                 [ Attr.src elmLogoGrayish
                 , Attr.alt "Elm Logo"
                 , Attr.title "Elm Logo"
-                , Attr.class "w-4 h-4 self-center"
+                , Attr.class "w-2 h-2 md:w-3 md:h-3 self-center"
                 ]
                 []
             , a
                 [ Attr.href "https://elm-lang.org/"
                 , Attr.target "_blank"
                 , Attr.rel "noreferrer noopener"
-                , Attr.class "text-stone-400 text-lg pl-2"
+                , Attr.class "text-stone-400 text-xs md:text-base lg:text-lg pl-2"
                 ]
                 [ Lazy.lazy text "Elm Instruments" ]
             ]
@@ -439,7 +432,7 @@ outputScreen model =
 
 loadingLetter : String -> String -> Html Msg
 loadingLetter labelText animation =
-    p [ Attr.class <| String.append "py-2 px-4 bg-amber-400 text-4xl font-semibold border-4 border-orange-600 rounded-md " animation ] [ text labelText ]
+    p [ Attr.class <| String.append "grow basis-auto text-center m-[0.025rem] m-auto md:m-1 py-1 md:py-2 px-1 md:px-4 bg-amber-400 md:text-2xl lg:text-4xl font-semibold border-2 md:border-4 border-orange-600 rounded-md " animation ] [ text labelText ]
 
 
 errorToString : Http.Error -> String
@@ -471,7 +464,7 @@ commandBtn : String -> Msg -> String -> Html Msg
 commandBtn bgColor pressAction labelText =
     button
         [ Aria.label ("Command " ++ labelText)
-        , Attr.class <| String.append "font-semibold grow mt-1 mx-1 p-2 hover:bg-amber-700 hover:text-white rounded-xl border-solid border border-black " bgColor
+        , Attr.class <| String.append "text-[0.5rem] md:text-xs lg:text-sm md:font-semibold grow basis-3 md:basis-auto mt-1 mx-1 p-2 hover:bg-amber-700 hover:text-white rounded-md md:rounded-xl border-solid border border-black " bgColor
         , onClick pressAction
         ]
         [ text labelText ]
@@ -507,7 +500,7 @@ alphabetRow start end =
             (\asciiCode ->
                 button
                     [ Aria.label ("Keyboard Key " ++ codeToString asciiCode)
-                    , Attr.class "text-xl font-semibold grow m-1 px-5 py-4 border border-black rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
+                    , Attr.class "text-xs md:text-sm md:font-semibold grow basis-6 md:basis-10 lg:basis-12 m-1 p-1 lg:px-4 md:py-4 border border-black rounded-md md:rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
                     , onClick (KeyClicked (codeToString asciiCode))
                     ]
                     [ text (codeToString asciiCode)
