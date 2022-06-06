@@ -1,4 +1,4 @@
-port module Main exposing
+port module SpeakAndSpell exposing
     ( Model
     , Msg(..)
     , NewWord
