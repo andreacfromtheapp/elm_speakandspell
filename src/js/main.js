@@ -1,7 +1,7 @@
 import '../css/style.css'
-import { Elm } from '../elm/Main.elm'
+import { Elm } from '../elm/SpeakAndSpell.elm'
 
-const app = Elm.Main.init({
+const app = Elm.SpeakAndSpell.init({
   // Start the Elm application.
   node: document.querySelector('main')
 })
