@@ -5,6 +5,7 @@ port module SpeakAndSpell exposing
     , Output(..)
     , Sound(..)
     , Status(..)
+    , initialModel
     , main
     )
 
@@ -106,8 +107,8 @@ type alias Model =
 -- INIT
 
 
-init : ( Model, Cmd Msg )
-init =
+initialModel : ( Model, Cmd Msg )
+initialModel =
     ( { status = Loading
       , output = Init
       , sound = On
@@ -131,7 +132,7 @@ init =
 main : Program () Model Msg
 main =
     Browser.element
-        { init = \_ -> init
+        { init = \_ -> initialModel
         , view = view
         , update = update
         , subscriptions = subscriptions
