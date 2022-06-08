@@ -28,7 +28,7 @@ alphabetIsComplete =
 
 newWordApiTest : Test
 newWordApiTest =
-    fuzz3 string string string "words fetched correctly :)" <|
+    fuzz3 string string string "correctly fetching words from the random word API" <|
         \word definition pronunciation ->
             [ ( "word", Encode.string word )
             , ( "definition", Encode.string definition )
