@@ -7,6 +7,8 @@ port module SpeakAndSpell exposing
     , Status(..)
     , initialModel
     , main
+    , newWordDecoder
+    , view
     )
 
 import Accessibility.Aria as Aria
