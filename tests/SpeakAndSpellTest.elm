@@ -1,5 +1,6 @@
 module SpeakAndSpellTest exposing
     ( fecthingWordsFromApiOk
+    , onScreenClickKeysOk
     , onScreenKeyboardCommandsOk
     , onScreenKeyboardOk
     , onScreenSoundControlsOk
@@ -14,13 +15,15 @@ import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
 import SpeakAndSpell
     exposing
-        ( initialModel
+        ( Msg(..)
+        , initialModel
         , namePlusSoundCtrl
         , newWordDecoder
         , outputScreen
         , theKeyboard
         )
 import Test exposing (Test, describe, fuzz3, test)
+import Test.Html.Event as Event
 import Test.Html.Query as Query
 import Test.Html.Selector exposing (attribute, text)
 
@@ -63,15 +66,39 @@ testAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
                     ]
 
 
+clickAllLetterKeys : Html Msg -> String -> String -> String -> Test
+clickAllLetterKeys componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
+    test (testName ++ ariaLabelSpecificPart) <|
+        \_ ->
+            componentToTest
+                |> Query.fromHtml
+                |> Query.find
+                    [ attribute
+                        (Attr.attribute "aria-label"
+                            (ariaLabelCommonPart ++ ariaLabelSpecificPart)
+                        )
+                    ]
+                |> Event.simulate Event.click
+                |> Event.expect (KeyClicked ariaLabelSpecificPart)
+
+
 alphabet : List String
 alphabet =
     -- A to Z in ASCII is 65 to 90
     List.range 65 90
         |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
 
+
+onScreenKeyboardOk : Test
+onScreenKeyboardOk =
     describe "all letters are present on the onscreen keyboard" <|
         List.map
             (\letter ->
+                clickAllLetterKeys theKeyboard "testing alphabet letter " "Keyboard Key " letter
+            )
+            alphabet
+
+
 onScreenClickKeysOk : Test
 onScreenClickKeysOk =
     describe "click all letters keys on the onscreen keyboard" <|
