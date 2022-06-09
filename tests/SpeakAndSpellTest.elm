@@ -52,6 +52,13 @@ outputScreenInitialized =
                 |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
+alphabet : List String
+alphabet =
+    -- A to Z in ASCII is 65 to 90
+    List.range 65 90
+        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
+
+
 findAriaLabel : Html msg -> String -> String -> String -> Query.Single msg
 findAriaLabel componentToTest _ ariaLabelCommonPart ariaLabelSpecificPart =
     componentToTest
