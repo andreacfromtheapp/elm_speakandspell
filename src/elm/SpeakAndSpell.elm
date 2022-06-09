@@ -7,6 +7,7 @@ port module SpeakAndSpell exposing
     , Status(..)
     , initialModel
     , main
+    , namePlusSoundCtrl
     , newWordDecoder
     , outputScreen
     , theKeyboard

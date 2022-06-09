@@ -1,11 +1,12 @@
-module SpeakAndSpellTest exposing (newWordApiTest, onScreenKeyboardComplete, outputScreenInitialized)
+module SpeakAndSpellTest exposing (newWordApiTest, onScreenKeyboardCommandsOk, onScreenKeyboardComplete, outputScreenInitialized, soundControlsTest)
 
 import Expect
 import Fuzz exposing (string)
+import Html exposing (Html)
 import Html.Attributes as Attr
 import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
-import SpeakAndSpell exposing (initialModel, newWordDecoder, outputScreen, theKeyboard)
+import SpeakAndSpell exposing (initialModel, namePlusSoundCtrl, newWordDecoder, outputScreen, theKeyboard)
 import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Query as Query
 import Test.Html.Selector exposing (attribute, text)
@@ -38,7 +39,50 @@ outputScreenInitialized =
 onScreenKeyboardComplete : Test
 onScreenKeyboardComplete =
     describe "all letters are present on the onscreen keyboard" <|
-        List.map (\letter -> testLetter letter) alphabet
+        List.map
+            (\letter ->
+                testAriaLabel "testing alphabet letter " theKeyboard "Keyboard Key " letter
+            )
+            alphabet
+
+
+onScreenKeyboardCommandsOk : Test
+onScreenKeyboardCommandsOk =
+    let
+        kbdCommands : List String
+        kbdCommands =
+            [ "ERASE [↤]"
+            , "RESET [5]"
+            , "SPEAK [8]"
+            , "SPELL [9]"
+            , "SUBMIT [↵]"
+            , "RETRY [6]"
+            , "NEW [0]"
+            ]
+    in
+    describe "all keyboard commands are present on the onscreen" <|
+        List.map
+            (\cmdDesc ->
+                testAriaLabel "testing keyboard command " theKeyboard "Command " cmdDesc
+            )
+            kbdCommands
+
+
+soundControlsTest : Test
+soundControlsTest =
+    let
+        soundCommands : List String
+        soundCommands =
+            [ "SOUND OFF [3]"
+            , "SOUND ON [2]"
+            ]
+    in
+    describe "all sound controls are present on the onscreen" <|
+        List.map
+            (\cmdDesc ->
+                testAriaLabel "testing sound command " namePlusSoundCtrl "Command " cmdDesc
+            )
+            soundCommands
 
 
 alphabet : List String
@@ -48,11 +92,11 @@ alphabet =
         |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
 
 
-testLetter : String -> Test
-testLetter letter =
-    test ("testing alphabet letter " ++ letter) <|
+testAriaLabel : String -> Html msg -> String -> String -> Test
+testAriaLabel testName component labelFirst labelSecond =
+    test (testName ++ labelSecond) <|
         \_ ->
-            theKeyboard
+            component
                 |> Query.fromHtml
                 |> Query.has
-                    [ attribute (Attr.attribute "aria-label" ("Keyboard Key " ++ letter)) ]
+                    [ attribute (Attr.attribute "aria-label" (labelFirst ++ labelSecond)) ]
