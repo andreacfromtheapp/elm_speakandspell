@@ -12,7 +12,14 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
-import SpeakAndSpell exposing (initialModel, namePlusSoundCtrl, newWordDecoder, outputScreen, theKeyboard)
+import SpeakAndSpell
+    exposing
+        ( initialModel
+        , namePlusSoundCtrl
+        , newWordDecoder
+        , outputScreen
+        , theKeyboard
+        )
 import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Query as Query
 import Test.Html.Selector exposing (attribute, text)
