@@ -74,46 +74,41 @@ findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
             ]
 
 
-clickAllLetterKeys : Html Msg -> String -> String -> String -> Test
-clickAllLetterKeys componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
-    test (testName ++ ariaLabelSpecificPart) <|
+clickAllLetterKeys : String -> Test
+clickAllLetterKeys letter =
+    test ("clicking alphabet letter " ++ letter) <|
         \_ ->
-            findAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
+            findAriaLabel theKeyboard "Keyboard Key " letter
                 |> Event.simulate Event.click
-                |> Event.expect (KeyClicked ariaLabelSpecificPart)
+                |> Event.expect (KeyClicked letter)
 
 
 onScreenClickKeysOk : Test
 onScreenClickKeysOk =
     describe "click all letters keys on the onscreen keyboard" <|
-        List.map
-            (\letter ->
-                clickAllLetterKeys theKeyboard "clicking alphabet letter " "Keyboard Key " letter
-            )
-            alphabet
+        List.map (\letter -> clickAllLetterKeys letter) alphabet
 
 
-checkAllLetterKeys : Html msg -> String -> String -> String -> Test
-checkAllLetterKeys componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
-    test (testName ++ ariaLabelSpecificPart) <|
+checkAllLetterKeys : String -> Test
+checkAllLetterKeys letter =
+    test ("testing alphabet letter " ++ letter) <|
         \_ ->
-            findAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
-                |> Query.has [ text ariaLabelSpecificPart ]
+            findAriaLabel theKeyboard "Keyboard Key " letter
+                |> Query.has [ text letter ]
 
 
 onScreenKeyboardOk : Test
 onScreenKeyboardOk =
     describe "all letters are present on the onscreen keyboard" <|
-        List.map
-            (\letter ->
-                checkAllLetterKeys theKeyboard "testing alphabet letter " "Keyboard Key " letter
-            )
-            alphabet
+        List.map (\letter -> checkAllLetterKeys letter) alphabet
 
 
-checkAllCommandsButtons : Html msg -> String -> String -> String -> Test
-checkAllCommandsButtons =
-    checkAllLetterKeys
+checkAllCommandsButtons : Html msg -> String -> Test
+checkAllCommandsButtons componentToTest command =
+    test ("testing command button " ++ command) <|
+        \_ ->
+            findAriaLabel componentToTest "Command " command
+                |> Query.has [ text command ]
 
 
 onScreenKeyboardCommandsOk : Test
@@ -133,7 +128,7 @@ onScreenKeyboardCommandsOk =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                checkAllCommandsButtons theKeyboard "testing keyboard command " "Command " command
+                checkAllCommandsButtons theKeyboard command
             )
             keyboardCommands
 
@@ -150,6 +145,6 @@ onScreenSoundControlsOk =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                checkAllCommandsButtons namePlusSoundCtrl "testing sound command " "Command " command
+                checkAllCommandsButtons namePlusSoundCtrl command
             )
             soundCommands
