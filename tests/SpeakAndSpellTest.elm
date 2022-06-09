@@ -63,15 +63,12 @@ testAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
                     ]
 
 
-onScreenKeyboardOk : Test
-onScreenKeyboardOk =
-    let
-        alphabet : List String
-        alphabet =
-            -- A to Z in ASCII is 65 to 90
-            List.range 65 90
-                |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
-    in
+alphabet : List String
+alphabet =
+    -- A to Z in ASCII is 65 to 90
+    List.range 65 90
+        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
+
     describe "all letters are present on the onscreen keyboard" <|
         List.map
             (\letter ->
