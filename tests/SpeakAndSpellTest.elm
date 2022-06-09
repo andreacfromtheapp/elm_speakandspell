@@ -49,8 +49,21 @@ outputScreenInitialized =
                 |> Query.has [ text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
-onScreenKeyboardComplete : Test
-onScreenKeyboardComplete =
+testAriaLabel : Html msg -> String -> String -> String -> Test
+testAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
+    test (testName ++ ariaLabelSpecificPart) <|
+        \_ ->
+            componentToTest
+                |> Query.fromHtml
+                |> Query.has
+                    [ attribute
+                        (Attr.attribute "aria-label"
+                            (ariaLabelCommonPart ++ ariaLabelSpecificPart)
+                        )
+                    ]
+
+
+onScreenKeyboardOk : Test
     describe "all letters are present on the onscreen keyboard" <|
         List.map
             (\letter ->
