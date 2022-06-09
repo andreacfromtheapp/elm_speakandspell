@@ -10,6 +10,19 @@ import Test.Html.Query as Query
 import Test.Html.Selector exposing (containing, tag, text)
 
 
+newWordApiTest : Test
+newWordApiTest =
+    fuzz3 string string string "correctly fetching words from the random word API" <|
+        \word definition pronunciation ->
+            [ ( "word", Encode.string word )
+            , ( "definition", Encode.string definition )
+            , ( "pronunciation", Encode.string pronunciation )
+            ]
+                |> Encode.object
+                |> decodeValue newWordDecoder
+                |> Expect.ok
+
+
 outputScreenInitialized : Test
 outputScreenInitialized =
     test "correctly renders the output screen" <|
@@ -35,16 +48,3 @@ alphabetIsComplete =
                     , containing [ text "Speak" ]
                     ]
                 |> Query.count (Expect.equal 1)
-
-
-newWordApiTest : Test
-newWordApiTest =
-    fuzz3 string string string "correctly fetching words from the random word API" <|
-        \word definition pronunciation ->
-            [ ( "word", Encode.string word )
-            , ( "definition", Encode.string definition )
-            , ( "pronunciation", Encode.string pronunciation )
-            ]
-                |> Encode.object
-                |> decodeValue newWordDecoder
-                |> Expect.ok
