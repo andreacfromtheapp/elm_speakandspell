@@ -72,7 +72,12 @@ alphabet =
     describe "all letters are present on the onscreen keyboard" <|
         List.map
             (\letter ->
-                testAriaLabel theKeyboard "testing alphabet letter " "Keyboard Key " letter
+onScreenClickKeysOk : Test
+onScreenClickKeysOk =
+    describe "click all letters keys on the onscreen keyboard" <|
+        List.map
+            (\letter ->
+                testAriaLabel theKeyboard "clicking alphabet letter " "Keyboard Key " letter
             )
             alphabet
 
