@@ -25,8 +25,8 @@ import Test.Html.Query as Query
 import Test.Html.Selector exposing (attribute, text)
 
 
-newWordApiTest : Test
-newWordApiTest =
+fecthingWordsFromApiOk : Test
+fecthingWordsFromApiOk =
     fuzz3 string string string "correctly fetching words from the random word API" <|
         \word definition pronunciation ->
             [ ( "word", Encode.string word )
