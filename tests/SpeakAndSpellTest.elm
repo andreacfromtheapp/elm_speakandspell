@@ -50,7 +50,7 @@ alphabet =
 
 testLetter : String -> Test
 testLetter letter =
-    test (String.append "testing alphabet letter " letter) <|
+    test ("testing alphabet letter " ++ letter) <|
         \_ ->
             theKeyboard
                 |> Query.fromHtml
