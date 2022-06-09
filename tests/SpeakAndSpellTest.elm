@@ -1,9 +1,9 @@
 module SpeakAndSpellTest exposing
-    ( fecthingWordsFromApiOk
-    , onScreenClickKeysOk
-    , onScreenKeyboardCommandsOk
-    , onScreenKeyboardOk
-    , onScreenSoundControlsOk
+    ( fecthingWordsFromApi
+    , onScreenClickKeys
+    , onScreenKeyboard
+    , onScreenKeyboardCommands
+    , onScreenSoundControls
     , outputScreenInitialized
     )
 
@@ -28,8 +28,8 @@ import Test.Html.Query as Query
 import Test.Html.Selector exposing (attribute, tag, text)
 
 
-fecthingWordsFromApiOk : Test
-fecthingWordsFromApiOk =
+fecthingWordsFromApi : Test
+fecthingWordsFromApi =
     fuzz3 string string string "correctly fetching words from the words API" <|
         \word definition pronunciation ->
             [ ( "word", Encode.string word )
@@ -83,8 +83,8 @@ clickAllLetterKeys letter =
                 |> Event.expect (KeyClicked letter)
 
 
-onScreenClickKeysOk : Test
-onScreenClickKeysOk =
+onScreenClickKeys : Test
+onScreenClickKeys =
     describe "click all letters keys on the onscreen keyboard" <|
         List.map (\letter -> clickAllLetterKeys letter) alphabet
 
@@ -97,8 +97,8 @@ checkAllLetterKeys letter =
                 |> Query.has [ text letter ]
 
 
-onScreenKeyboardOk : Test
-onScreenKeyboardOk =
+onScreenKeyboard : Test
+onScreenKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
         List.map (\letter -> checkAllLetterKeys letter) alphabet
 
@@ -111,8 +111,8 @@ checkAllCommandsButtons componentToTest command =
                 |> Query.has [ text command ]
 
 
-onScreenKeyboardCommandsOk : Test
-onScreenKeyboardCommandsOk =
+onScreenKeyboardCommands : Test
+onScreenKeyboardCommands =
     let
         keyboardCommands : List String
         keyboardCommands =
@@ -133,8 +133,8 @@ onScreenKeyboardCommandsOk =
             keyboardCommands
 
 
-onScreenSoundControlsOk : Test
-onScreenSoundControlsOk =
+onScreenSoundControls : Test
+onScreenSoundControls =
     let
         soundCommands : List String
         soundCommands =
