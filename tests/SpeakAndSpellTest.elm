@@ -30,7 +30,7 @@ import Test.Html.Selector exposing (attribute, tag, text)
 
 fecthingWordsFromApiOk : Test
 fecthingWordsFromApiOk =
-    fuzz3 string string string "correctly fetching words from the random word API" <|
+    fuzz3 string string string "correctly fetching words from the words API" <|
         \word definition pronunciation ->
             [ ( "word", Encode.string word )
             , ( "definition", Encode.string definition )
@@ -49,7 +49,10 @@ outputScreenInitialized =
                 |> Tuple.first
                 |> outputScreen
                 |> Query.fromHtml
-                |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
+                |> Query.has
+                    [ tag "p"
+                    , text "START TYPING TO MATCH THE WORD ABOVE"
+                    ]
 
 
 alphabet : List String
