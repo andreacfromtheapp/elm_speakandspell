@@ -1,4 +1,10 @@
-module SpeakAndSpellTest exposing (newWordApiTest, onScreenKeyboardCommandsOk, onScreenKeyboardComplete, outputScreenInitialized, soundControlsTest)
+module SpeakAndSpellTest exposing
+    ( fecthingWordsFromApiOk
+    , onScreenKeyboardCommandsOk
+    , onScreenKeyboardOk
+    , onScreenSoundControlsOk
+    , outputScreenInitialized
+    )
 
 import Expect
 import Fuzz exposing (string)
