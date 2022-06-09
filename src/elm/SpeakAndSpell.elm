@@ -9,7 +9,7 @@ port module SpeakAndSpell exposing
     , main
     , newWordDecoder
     , outputScreen
-    , view
+    , theKeyboard
     )
 
 import Accessibility.Aria as Aria

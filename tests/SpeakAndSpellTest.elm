@@ -4,10 +4,10 @@ import Expect
 import Fuzz exposing (string)
 import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
-import SpeakAndSpell exposing (initialModel, newWordDecoder, outputScreen, view)
+import SpeakAndSpell exposing (initialModel, newWordDecoder, outputScreen, theKeyboard)
 import Test exposing (Test, fuzz3, test)
 import Test.Html.Query as Query
-import Test.Html.Selector exposing (containing, tag, text)
+import Test.Html.Selector exposing (tag, text)
 
 
 newWordApiTest : Test
@@ -25,7 +25,7 @@ newWordApiTest =
 
 outputScreenInitialized : Test
 outputScreenInitialized =
-    test "correctly renders the output screen" <|
+    test "correctly renders the output screen with the default message" <|
         \_ ->
             initialModel
                 |> Tuple.first
@@ -37,14 +37,10 @@ outputScreenInitialized =
 alphabetIsComplete : Test
 alphabetIsComplete =
     -- this is not done yet
-    test "all letters are present on the keyboard" <|
+    test "all of the alphabet letters are present on the keyboard" <|
         \_ ->
-            initialModel
-                |> Tuple.first
-                |> view
+            theKeyboard
                 |> Query.fromHtml
                 |> Query.findAll
-                    [ tag "p"
-                    , containing [ text "Speak" ]
-                    ]
-                |> Query.count (Expect.equal 1)
+                    [ tag "button" ]
+                |> Query.count (Expect.equal 33)
