@@ -1,4 +1,4 @@
-module SpeakAndSpellTest exposing (alphabetIsComplete, newWordApiTest, outputScreenInitialized)
+module SpeakAndSpellTest exposing (newWordApiTest, onScreenKeyboardComplete, outputScreenInitialized)
 
 import Expect
 import Fuzz exposing (string)
@@ -35,9 +35,9 @@ outputScreenInitialized =
                 |> Query.has [ text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
-alphabetIsComplete : Test
-alphabetIsComplete =
-    describe "all of the alphabet letters are present on the keyboard" <|
+onScreenKeyboardComplete : Test
+onScreenKeyboardComplete =
+    describe "all letters are present on the onscreen keyboard" <|
         List.map (\letter -> testLetter letter) alphabet
 
 
