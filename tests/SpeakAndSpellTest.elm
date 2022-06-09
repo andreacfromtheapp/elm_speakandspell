@@ -75,33 +75,9 @@ clickAllLetterKeys : Html Msg -> String -> String -> String -> Test
 clickAllLetterKeys componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
     test (testName ++ ariaLabelSpecificPart) <|
         \_ ->
-            componentToTest
-                |> Query.fromHtml
-                |> Query.find
-                    [ attribute
-                        (Attr.attribute "aria-label"
-                            (ariaLabelCommonPart ++ ariaLabelSpecificPart)
-                        )
-                    ]
+            findAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
                 |> Event.simulate Event.click
                 |> Event.expect (KeyClicked ariaLabelSpecificPart)
-
-
-alphabet : List String
-alphabet =
-    -- A to Z in ASCII is 65 to 90
-    List.range 65 90
-        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
-
-
-onScreenKeyboardOk : Test
-onScreenKeyboardOk =
-    describe "all letters are present on the onscreen keyboard" <|
-        List.map
-            (\letter ->
-                testAriaLabel theKeyboard "testing alphabet letter " "Keyboard Key " letter
-            )
-            alphabet
 
 
 onScreenClickKeysOk : Test
@@ -112,6 +88,29 @@ onScreenClickKeysOk =
                 clickAllLetterKeys theKeyboard "clicking alphabet letter " "Keyboard Key " letter
             )
             alphabet
+
+
+checkAllLetterKeys : Html msg -> String -> String -> String -> Test
+checkAllLetterKeys componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
+    test (testName ++ ariaLabelSpecificPart) <|
+        \_ ->
+            findAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
+                |> Query.has [ text ariaLabelSpecificPart ]
+
+
+onScreenKeyboardOk : Test
+onScreenKeyboardOk =
+    describe "all letters are present on the onscreen keyboard" <|
+        List.map
+            (\letter ->
+                checkAllLetterKeys theKeyboard "testing alphabet letter " "Keyboard Key " letter
+            )
+            alphabet
+
+
+checkAllCommandsButtons : Html msg -> String -> String -> String -> Test
+checkAllCommandsButtons =
+    checkAllLetterKeys
 
 
 onScreenKeyboardCommandsOk : Test
@@ -131,7 +130,7 @@ onScreenKeyboardCommandsOk =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                testAriaLabel theKeyboard "testing keyboard command " "Command " command
+                checkAllCommandsButtons theKeyboard "testing keyboard command " "Command " command
             )
             keyboardCommands
 
@@ -148,6 +147,6 @@ onScreenSoundControlsOk =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                testAriaLabel namePlusSoundCtrl "testing sound command " "Command " command
+                checkAllCommandsButtons namePlusSoundCtrl "testing sound command " "Command " command
             )
             soundCommands
