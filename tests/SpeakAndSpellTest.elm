@@ -2,12 +2,13 @@ module SpeakAndSpellTest exposing (alphabetIsComplete, newWordApiTest, outputScr
 
 import Expect
 import Fuzz exposing (string)
+import Html.Attributes as Attr
 import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
 import SpeakAndSpell exposing (initialModel, newWordDecoder, outputScreen, theKeyboard)
-import Test exposing (Test, fuzz3, test)
+import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Query as Query
-import Test.Html.Selector exposing (tag, text)
+import Test.Html.Selector exposing (attribute, text)
 
 
 newWordApiTest : Test
@@ -36,11 +37,22 @@ outputScreenInitialized =
 
 alphabetIsComplete : Test
 alphabetIsComplete =
-    -- this is not done yet
-    test "all of the alphabet letters are present on the keyboard" <|
+    describe "all of the alphabet letters are present on the keyboard" <|
+        List.map (\char -> testLetter char) alphabet
+
+
+alphabet : List String
+alphabet =
+    -- A to Z in ASCII is 65 to 90
+    List.range 65 90
+        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
+
+
+testLetter : String -> Test
+testLetter letter =
+    test (String.append "testing alphabet letter " letter) <|
         \_ ->
             theKeyboard
                 |> Query.fromHtml
-                |> Query.findAll
-                    [ tag "button" ]
-                |> Query.count (Expect.equal 33)
+                |> Query.has
+                    [ attribute (Attr.attribute "aria-label" ("Keyboard Key " ++ letter)) ]
