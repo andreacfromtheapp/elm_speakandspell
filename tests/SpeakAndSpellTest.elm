@@ -52,18 +52,16 @@ outputScreenInitialized =
                 |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
-testAriaLabel : Html msg -> String -> String -> String -> Test
-testAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart =
-    test (testName ++ ariaLabelSpecificPart) <|
-        \_ ->
-            componentToTest
-                |> Query.fromHtml
-                |> Query.has
-                    [ attribute
-                        (Attr.attribute "aria-label"
-                            (ariaLabelCommonPart ++ ariaLabelSpecificPart)
-                        )
-                    ]
+findAriaLabel : Html msg -> String -> String -> String -> Query.Single msg
+findAriaLabel componentToTest _ ariaLabelCommonPart ariaLabelSpecificPart =
+    componentToTest
+        |> Query.fromHtml
+        |> Query.find
+            [ attribute
+                (Attr.attribute "aria-label"
+                    (ariaLabelCommonPart ++ ariaLabelSpecificPart)
+                )
+            ]
 
 
 clickAllLetterKeys : Html Msg -> String -> String -> String -> Test
