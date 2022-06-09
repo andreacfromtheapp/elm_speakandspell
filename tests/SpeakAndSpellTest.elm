@@ -38,7 +38,7 @@ outputScreenInitialized =
 alphabetIsComplete : Test
 alphabetIsComplete =
     describe "all of the alphabet letters are present on the keyboard" <|
-        List.map (\char -> testLetter char) alphabet
+        List.map (\letter -> testLetter letter) alphabet
 
 
 alphabet : List String
