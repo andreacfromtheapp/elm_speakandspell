@@ -25,7 +25,7 @@ import SpeakAndSpell
 import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
-import Test.Html.Selector exposing (attribute, text)
+import Test.Html.Selector exposing (attribute, tag, text)
 
 
 fecthingWordsFromApiOk : Test
@@ -49,7 +49,7 @@ outputScreenInitialized =
                 |> Tuple.first
                 |> outputScreen
                 |> Query.fromHtml
-                |> Query.has [ text "START TYPING TO MATCH THE WORD ABOVE" ]
+                |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
 testAriaLabel : Html msg -> String -> String -> String -> Test
