@@ -64,10 +64,18 @@ testAriaLabel componentToTest testName ariaLabelCommonPart ariaLabelSpecificPart
 
 
 onScreenKeyboardOk : Test
+onScreenKeyboardOk =
+    let
+        alphabet : List String
+        alphabet =
+            -- A to Z in ASCII is 65 to 90
+            List.range 65 90
+                |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
+    in
     describe "all letters are present on the onscreen keyboard" <|
         List.map
             (\letter ->
-                testAriaLabel "testing alphabet letter " theKeyboard "Keyboard Key " letter
+                testAriaLabel theKeyboard "testing alphabet letter " "Keyboard Key " letter
             )
             alphabet
 
@@ -75,8 +83,8 @@ onScreenKeyboardOk : Test
 onScreenKeyboardCommandsOk : Test
 onScreenKeyboardCommandsOk =
     let
-        kbdCommands : List String
-        kbdCommands =
+        keyboardCommands : List String
+        keyboardCommands =
             [ "ERASE [↤]"
             , "RESET [5]"
             , "SPEAK [8]"
@@ -86,16 +94,16 @@ onScreenKeyboardCommandsOk =
             , "NEW [0]"
             ]
     in
-    describe "all keyboard commands are present on the onscreen" <|
+    describe "all commands are present on the onscreen keyboard" <|
         List.map
-            (\cmdDesc ->
-                testAriaLabel "testing keyboard command " theKeyboard "Command " cmdDesc
+            (\command ->
+                testAriaLabel theKeyboard "testing keyboard command " "Command " command
             )
-            kbdCommands
+            keyboardCommands
 
 
-soundControlsTest : Test
-soundControlsTest =
+onScreenSoundControlsOk : Test
+onScreenSoundControlsOk =
     let
         soundCommands : List String
         soundCommands =
@@ -103,26 +111,9 @@ soundControlsTest =
             , "SOUND ON [2]"
             ]
     in
-    describe "all sound controls are present on the onscreen" <|
+    describe "all sound controls are present" <|
         List.map
-            (\cmdDesc ->
-                testAriaLabel "testing sound command " namePlusSoundCtrl "Command " cmdDesc
+            (\command ->
+                testAriaLabel namePlusSoundCtrl "testing sound command " "Command " command
             )
             soundCommands
-
-
-alphabet : List String
-alphabet =
-    -- A to Z in ASCII is 65 to 90
-    List.range 65 90
-        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
-
-
-testAriaLabel : String -> Html msg -> String -> String -> Test
-testAriaLabel testName component labelFirst labelSecond =
-    test (testName ++ labelSecond) <|
-        \_ ->
-            component
-                |> Query.fromHtml
-                |> Query.has
-                    [ attribute (Attr.attribute "aria-label" (labelFirst ++ labelSecond)) ]
