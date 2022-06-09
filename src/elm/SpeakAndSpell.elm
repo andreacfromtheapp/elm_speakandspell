@@ -8,6 +8,7 @@ port module SpeakAndSpell exposing
     , initialModel
     , main
     , newWordDecoder
+    , outputScreen
     , view
     )
 

@@ -1,13 +1,24 @@
-module SpeakAndSpellTest exposing (alphabetIsComplete, newWordApiTest)
+module SpeakAndSpellTest exposing (alphabetIsComplete, newWordApiTest, outputScreenInitialized)
 
 import Expect
 import Fuzz exposing (string)
 import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
-import SpeakAndSpell exposing (initialModel, newWordDecoder, view)
+import SpeakAndSpell exposing (initialModel, newWordDecoder, outputScreen, view)
 import Test exposing (Test, fuzz3, test)
 import Test.Html.Query as Query
 import Test.Html.Selector exposing (containing, tag, text)
+
+
+outputScreenInitialized : Test
+outputScreenInitialized =
+    test "correctly renders the output screen" <|
+        \_ ->
+            initialModel
+                |> Tuple.first
+                |> outputScreen
+                |> Query.fromHtml
+                |> Query.has [ text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
 alphabetIsComplete : Test
