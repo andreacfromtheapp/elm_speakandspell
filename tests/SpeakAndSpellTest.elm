@@ -62,8 +62,8 @@ alphabet =
         |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
 
 
-findAriaLabel : Html msg -> String -> String -> String -> Query.Single msg
-findAriaLabel componentToTest _ ariaLabelCommonPart ariaLabelSpecificPart =
+findAriaLabel : Html msg -> String -> String -> Query.Single msg
+findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
     componentToTest
         |> Query.fromHtml
         |> Query.find
