@@ -5,6 +5,8 @@ port module SpeakAndSpell exposing
     , Output(..)
     , Sound(..)
     , Status(..)
+    , elmLogoBlue
+    , elmLogoGrayish
     , initialModel
     , main
     , namePlusLogo

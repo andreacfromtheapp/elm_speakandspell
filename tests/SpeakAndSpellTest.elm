@@ -1,5 +1,8 @@
 module SpeakAndSpellTest exposing
-    ( fecthingWordsFromApi
+    ( brandLinkPresent
+    , brandLogoPresent
+    , brandNamePresent
+    , fecthingWordsFromApi
     , loadingMessagePresent
     , onScreenClickCommands
     , onScreenClickKeys
@@ -8,6 +11,7 @@ module SpeakAndSpellTest exposing
     , onScreenKeyboardCommands
     , onScreenSoundControls
     , outputScreenInitialized
+    , shellLogoLogoPresent
     , speakAndSpellHasTheRightColors
     , speakAndSpellNamePresent
     )
@@ -22,6 +26,8 @@ import SpeakAndSpell
     exposing
         ( Msg(..)
         , Sound(..)
+        , elmLogoBlue
+        , elmLogoGrayish
         , initialModel
         , namePlusLogo
         , namePlusSoundCtrl
@@ -32,7 +38,7 @@ import SpeakAndSpell
         )
 import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Event as Event
-import Test.Html.Query as Query
+import Test.Html.Query as Query exposing (Single)
 import Test.Html.Selector exposing (attribute, classes, tag, text)
 
 
@@ -83,7 +89,7 @@ soundCommands =
 -- HELPER FUNCTIONS
 
 
-findAriaLabel : Html msg -> String -> String -> Query.Single msg
+findAriaLabel : Html msg -> String -> String -> Single msg
 findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
     componentToTest
         |> Query.fromHtml
@@ -95,6 +101,14 @@ findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
             ]
 
 
+brandQueryHtml : Single Msg
+brandQueryHtml =
+    initialModel
+        |> Tuple.first
+        |> outputScreen
+        |> Query.fromHtml
+
+
 
 -- LOADING SCREEN TESTS
 
@@ -103,7 +117,7 @@ checkLoadingLetters : String -> Test
 checkLoadingLetters letter =
     test ("loading letter present " ++ letter) <|
         \_ ->
-            findAriaLabel viewLoading "Loading animation" ""
+            findAriaLabel viewLoading "Loading Animation" ""
                 |> Query.has [ tag "p", text letter ]
 
 
@@ -117,9 +131,41 @@ loadingMessagePresent =
 -- BRAND, APP NAME, AND LOGOS TESTS
 
 
+brandNamePresent : Test
+brandNamePresent =
+    test "brand name present" <|
+        \_ ->
+            brandQueryHtml
+                |> Query.has [ tag "a", text "Elm Instruments" ]
+
+
+brandLinkPresent : Test
+brandLinkPresent =
+    test "brand link present" <|
+        \_ ->
+            brandQueryHtml
+                |> Query.has [ tag "a", attribute (Attr.href "https://elm-lang.org/") ]
+
+
+brandLogoPresent : Test
+brandLogoPresent =
+    test "brand logo present" <|
+        \_ ->
+            brandQueryHtml
+                |> Query.has [ tag "img", attribute (Attr.src elmLogoGrayish) ]
+
+
+shellLogoLogoPresent : Test
+shellLogoLogoPresent =
+    test "yellow shell logo present" <|
+        \_ ->
+            findAriaLabel namePlusLogo "Elm Logo" ""
+                |> Query.has [ tag "img", attribute (Attr.src elmLogoBlue) ]
+
+
 checkAppNameWording : String -> Test
 checkAppNameWording word =
-    test ("speak and spell present " ++ word) <|
+    test ("speak and spell word " ++ word) <|
         \_ ->
             findAriaLabel namePlusLogo "App Name" ""
                 |> Query.has [ tag "p", text word ]
@@ -127,7 +173,7 @@ checkAppNameWording word =
 
 speakAndSpellNamePresent : Test
 speakAndSpellNamePresent =
-    describe "all brand words are present on yellow shell" <|
+    describe "app name words are present on yellow shell" <|
         List.map (\word -> checkAppNameWording (Tuple.first word)) speakAndSpell
 
 
@@ -141,7 +187,7 @@ checkAppNameColors color =
 
 speakAndSpellHasTheRightColors : Test
 speakAndSpellHasTheRightColors =
-    describe "all brand words have the right colors" <|
+    describe "all app name words have the right colors" <|
         List.map (\color -> checkAppNameColors (Tuple.second color)) speakAndSpell
 
 
