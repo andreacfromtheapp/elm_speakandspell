@@ -28,6 +28,53 @@ import Test.Html.Query as Query
 import Test.Html.Selector exposing (attribute, tag, text)
 
 
+
+-- CONSTANTS
+
+
+alphabet : List String
+alphabet =
+    -- A to Z in ASCII is 65 to 90
+    List.range 65 90
+        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
+
+
+keyboardCommands : List ( Msg, String )
+keyboardCommands =
+    [ ( EraseLetter, "ERASE [↤]" )
+    , ( ResetWord, "RESET [5]" )
+    , ( Speak, "SPEAK [8]" )
+    , ( Spell, "SPELL [9]" )
+    , ( SubmitWord, "SUBMIT [↵]" )
+    , ( ResetWord, "RETRY [6]" )
+    , ( GetAnotherWord, "NEW [0]" )
+    ]
+
+
+soundCommands : List ( Msg, String )
+soundCommands =
+    [ ( SetSound Off, "SOUND OFF [3]" )
+    , ( SetSound On, "SOUND ON [2]" )
+    ]
+
+
+
+-- HELPER FUNCTIONS
+
+
+findAriaLabel : Html msg -> String -> String -> Query.Single msg
+findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
+    componentToTest
+        |> Query.fromHtml
+        |> Query.find
+            [ attribute
+                (Attr.attribute "aria-label"
+                    (ariaLabelCommonPart ++ ariaLabelSpecificPart)
+                )
+            ]
+
+
+
 fecthingWordsFromApi : Test
 fecthingWordsFromApi =
     fuzz3 string string string "correctly fetching words from the words API" <|
