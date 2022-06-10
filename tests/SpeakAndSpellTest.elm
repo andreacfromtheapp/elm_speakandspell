@@ -80,7 +80,7 @@ findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
 
 fecthingWordsFromApi : Test
 fecthingWordsFromApi =
-    fuzz3 string string string "correctly fetching words from the words API" <|
+    fuzz3 string string string "get new words from the words API" <|
         \word definition pronunciation ->
             [ ( "word", Encode.string word )
             , ( "definition", Encode.string definition )
@@ -97,7 +97,7 @@ fecthingWordsFromApi =
 
 outputScreenInitialized : Test
 outputScreenInitialized =
-    test "correctly renders the output screen with the default message" <|
+    test "render the output screen with the default message" <|
         \_ ->
             initialModel
                 |> Tuple.first
@@ -120,7 +120,7 @@ alphabet =
 
 clickAllLetterKeys : String -> Test
 clickAllLetterKeys letter =
-    test ("clicking alphabet letter " ++ letter) <|
+    test ("click alphabet letter " ++ letter) <|
         \_ ->
             findAriaLabel theKeyboard "Keyboard Key " letter
                 |> Event.simulate Event.click
@@ -135,7 +135,7 @@ onScreenClickKeys =
 
 checkAllLetterKeys : String -> Test
 checkAllLetterKeys letter =
-    test ("testing alphabet letter " ++ letter) <|
+    test ("alphabet letter present " ++ letter) <|
         \_ ->
             findAriaLabel theKeyboard "Keyboard Key " letter
                 |> Query.has [ text letter ]
@@ -153,7 +153,7 @@ onScreenKeyboard =
 
 checkAllCommandsButtons : Html msg -> String -> Test
 checkAllCommandsButtons componentToTest command =
-    test ("testing command button " ++ command) <|
+    test ("command button present " ++ command) <|
         \_ ->
             findAriaLabel componentToTest "Command " command
                 |> Query.has [ text command ]
@@ -193,6 +193,7 @@ onScreenSoundControls =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                checkAllCommandsButtons namePlusSoundCtrl command
+    describe "click all onscreen keyboard commands" <|
+    describe "click all sound controls commands" <|
             )
             soundCommands
