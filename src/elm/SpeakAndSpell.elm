@@ -196,7 +196,7 @@ port sound : Bool -> Cmd msg
 view : Model -> Html Msg
 view model =
     main_
-        [ Aria.label "main content"
+        [ Aria.label "Main Content"
         , Attr.class "font-mono font-medium container m-auto lg:my-2 max-w-[54rem]"
         ]
         [ case model.status of
@@ -235,7 +235,7 @@ viewLoading =
             , Attr.class "bg-sky-500 border border-black rounded-2xl m-2 px-3 py-12"
             ]
             [ div
-                [ Aria.label "Loading animation"
+                [ Aria.label "Loading Animation"
                 , Attr.class "flex flex-nowrap"
                 ]
               <|
@@ -317,7 +317,7 @@ namePlusLogo =
             [ Attr.class "my-auto", Aria.label "App Name" ]
             [ speakAndSpellName ]
         , div
-            [ Attr.class "my-auto", Aria.label "Elm logo" ]
+            [ Attr.class "my-auto", Aria.label "Elm Logo" ]
             [ img [ Attr.src elmLogoBlue, Attr.class "w-10 h-10 md:w-20 md:h-20 lg:w-24 lg:h-24" ] [] ]
         ]
 
@@ -418,7 +418,7 @@ outputScreen model =
                 [ Lazy.lazy text (outputText model) ]
             ]
         , div
-            [ Aria.label "Elm branding"
+            [ Aria.label "Elm Branding"
             , Attr.class "inline-flex self-end mr-4 md:mr-12 mb-2"
             ]
             [ img
