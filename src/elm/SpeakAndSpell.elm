@@ -423,7 +423,7 @@ outputScreen model =
                 [ Attr.src elmLogoGrayish
                 , Attr.alt "Elm Logo"
                 , Attr.title "Elm Logo"
-                , Attr.class "w-2 h-2 md:w-3 md:h-3 self-center"
+                , Attr.class "w-2 h-2 md:w-3 md:h-3 lg:w-4 lg:h-4 self-center"
                 ]
                 []
             , a
