@@ -15,13 +15,13 @@ The point of this exercise was to: study, internalize, apply, learn some more, i
 
 When I first started this project, I hadn't finished the book yet. In fact, I started it right after finishing Chapter 5: all the basics up to testing. I needed to internalize the concepts I had learned so far, and to make sure I was getting them. After some time, and after improving my skills on [Exercism](https://exercism.org/profiles/gacallea) and doing some exploring, I have:
 
-- migrated the code to [my template](https://github.com/gacallea/elm_vite_tailwind_template).
-- migrated the code to [Tailwind CSS](https://tailwindcss.com/)
-- made it reponsive.
+- migrated the project to [my template](https://github.com/gacallea/elm_vite_tailwind_template).
+- migrated the UI to [Tailwind CSS](https://tailwindcss.com/)
+- made it fully reponsive to the best of my abilities.
 - resumed the book from where I left off: Chapter 6: Testing
-- wrote all tests.
+- wrote [all tests](https://github.com/gacallea/elm_speakandspell/blob/main/tests/SpeakAndSpellTest.elm) to make of the API and of various UI items.
 
-With all tests complete, the project fully served its purpose and it is now complete.
+With all testing complete, the project fully served its purpose and it is now complete.
 
 Initially, I used [Elm UI](https://github.com/gacallea/elm_speakandspell/tree/elm_ui_version) for the UI/UX. However, I hit a stopper when doing responsive design. Whilst Elm UI does permit good responsive design, the way I had laid out the UI would have meant to refactor everything. Since Elm UI was an experiment for me, and that I should have refactored everything UI anyway, I have switched to [Tailwind CSS](https://tailwindcss.com/) and made this reponsive to the best of my abilities.
 
