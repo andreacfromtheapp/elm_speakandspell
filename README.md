@@ -1,8 +1,8 @@
 # Speak & Spell in Elm
 
-My very first attempt at an [Elm](https://elm-lang.org/) application. Created to test my understanding of Elm and of my learning with ["Elm in Action"](https://www.manning.com/books/elm-in-action).
+My very first attempt at [Elm](https://elm-lang.org/), to test my understanding and my learning with ["Elm in Action"](https://www.manning.com/books/elm-in-action).
 
-Why Speak & Spell? Because there was room for a good mix of UI/UX and for a great starting point to learn and practice. I fancied creating completely from scratch and not basing my learning on pre-existing concepts.
+Why Speak & Spell? Because there was room for a good mix of UI/UX. It seemed like a great starting point to learn and practice. Moreover, I fancied creating completely from scratch. As opposed to basing my learning on pre-existing concepts or to-do apps.
 
 Being a *toy project* (no pun intended), this is a limited reproduction of the original game:
 
@@ -13,21 +13,21 @@ No *Mystery Word* or other play modes from the original Speak & Spell.
 
 The point of this exercise was to: study, internalize, apply, learn some more, improve skills and code, rinse and repeat. Not to be an 1:1 clone.
 
-When I first started this project, I hadn't finished the book yet. In fact, I started it right after finishing Chapter 5: all the basics up to testing. I needed to internalize the concepts I had learned so far, and to make sure I was getting them. After some time, and after improving my skills on [Exercism](https://exercism.org/profiles/gacallea) and doing some exploring, I have:
+When I first started this project, I hadn't finished the book yet. In fact, I started it right after finishing Chapter 5: all the basics up to testing. I needed to internalize the concepts I had learned up to that point, and to make sure I was getting them right.
+
+After some time, improving my skills on [Exercism](https://exercism.org/profiles/gacallea), and doing some exploring, I have:
 
 - migrated the project to [my template](https://github.com/gacallea/elm_vite_tailwind_template).
-- migrated the UI to [Tailwind CSS](https://tailwindcss.com/)
+- migrated from [Elm UI](https://github.com/gacallea/elm_speakandspell/tree/elm_ui_version) to [Tailwind CSS](https://tailwindcss.com/)
 - made it fully reponsive to the best of my abilities.
 - resumed the book from where I left off: Chapter 6: Testing
 - wrote [all tests](https://github.com/gacallea/elm_speakandspell/blob/main/tests/SpeakAndSpellTest.elm) to make of the API and of various UI items.
 
-With all testing complete, the project fully served its purpose and it is now complete.
-
-Initially, I used [Elm UI](https://github.com/gacallea/elm_speakandspell/tree/elm_ui_version) for the UI/UX. However, I hit a stopper when doing responsive design. Whilst Elm UI does permit good responsive design, the way I had laid out the UI would have meant to refactor everything. Since Elm UI was an experiment for me, and that I should have refactored everything UI anyway, I have switched to [Tailwind CSS](https://tailwindcss.com/) and made this reponsive to the best of my abilities.
+With all testing complete, the project fully served its purpose and it is now complete. 🎉 🎉 🎉
 
 ## Made With
 
-Tooling privided by [Vite, Elm, and Tailwind CSS, Template](https://github.com/gacallea/elm_vite_tailwind_template). Check it out :)
+Tooling privided by my own [Vite, Elm, and Tailwind CSS, Template](https://github.com/gacallea/elm_vite_tailwind_template). Check it out 😃
 
 ## Credits & Copyright
 
