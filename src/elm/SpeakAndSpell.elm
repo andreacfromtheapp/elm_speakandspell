@@ -11,6 +11,7 @@ port module SpeakAndSpell exposing
     , newWordDecoder
     , outputScreen
     , theKeyboard
+    , viewLoading
     )
 
 import Accessibility.Aria as Aria

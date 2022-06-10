@@ -1,5 +1,6 @@
 module SpeakAndSpellTest exposing
     ( fecthingWordsFromApi
+    , loadingMessagePresent
     , onScreenClickCommands
     , onScreenClickKeys
     , onScreenClickSoundControls
@@ -24,6 +25,7 @@ import SpeakAndSpell
         , newWordDecoder
         , outputScreen
         , theKeyboard
+        , viewLoading
         )
 import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Event as Event
@@ -33,6 +35,11 @@ import Test.Html.Selector exposing (attribute, tag, text)
 
 
 -- CONSTANTS
+
+
+loadingText : List String
+loadingText =
+    [ "L", "O", "A", "D", "I", "N", "G" ]
 
 
 alphabet : List String
@@ -75,6 +82,24 @@ findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
                     (ariaLabelCommonPart ++ ariaLabelSpecificPart)
                 )
             ]
+
+
+
+-- LOADING SCREEN TESTS
+
+
+checkLoadingLetters : String -> Test
+checkLoadingLetters letter =
+    test ("loading letter present " ++ letter) <|
+        \_ ->
+            findAriaLabel viewLoading "Loading animation" ""
+                |> Query.has [ tag "p", text letter ]
+
+
+loadingMessagePresent : Test
+loadingMessagePresent =
+    describe "all letters are present on loading screen" <|
+        List.map (\letter -> checkLoadingLetters letter) loadingText
 
 
 
