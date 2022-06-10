@@ -75,6 +75,9 @@ findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
 
 
 
+-- API TESTS
+
+
 fecthingWordsFromApi : Test
 fecthingWordsFromApi =
     fuzz3 string string string "correctly fetching words from the words API" <|
@@ -86,6 +89,10 @@ fecthingWordsFromApi =
                 |> Encode.object
                 |> decodeValue newWordDecoder
                 |> Expect.ok
+
+
+
+-- OUTPUT SCREEN TESTS
 
 
 outputScreenInitialized : Test
@@ -108,17 +115,7 @@ alphabet =
     List.range 65 90
         |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
 
-
-findAriaLabel : Html msg -> String -> String -> Query.Single msg
-findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
-    componentToTest
-        |> Query.fromHtml
-        |> Query.find
-            [ attribute
-                (Attr.attribute "aria-label"
-                    (ariaLabelCommonPart ++ ariaLabelSpecificPart)
-                )
-            ]
+-- KEYBOARD TESTS
 
 
 clickAllLetterKeys : String -> Test
@@ -148,6 +145,10 @@ onScreenKeyboard : Test
 onScreenKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
         List.map (\letter -> checkAllLetterKeys letter) alphabet
+
+
+
+-- COMMANDS TESTS
 
 
 checkAllCommandsButtons : Html msg -> String -> Test
