@@ -1,6 +1,8 @@
 module SpeakAndSpellTest exposing
     ( fecthingWordsFromApi
+    , onScreenClickCommands
     , onScreenClickKeys
+    , onScreenClickSoundControls
     , onScreenKeyboard
     , onScreenKeyboardCommands
     , onScreenSoundControls
@@ -16,6 +18,7 @@ import Json.Encode as Encode
 import SpeakAndSpell
     exposing
         ( Msg(..)
+        , Sound(..)
         , initialModel
         , namePlusSoundCtrl
         , newWordDecoder
@@ -103,17 +106,9 @@ outputScreenInitialized =
                 |> Tuple.first
                 |> outputScreen
                 |> Query.fromHtml
-                |> Query.has
-                    [ tag "p"
-                    , text "START TYPING TO MATCH THE WORD ABOVE"
-                    ]
+                |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
-alphabet : List String
-alphabet =
-    -- A to Z in ASCII is 65 to 90
-    List.range 65 90
-        |> List.map (\ascii -> String.fromChar (Char.fromCode ascii))
 
 -- KEYBOARD TESTS
 
@@ -138,7 +133,7 @@ checkAllLetterKeys letter =
     test ("alphabet letter present " ++ letter) <|
         \_ ->
             findAriaLabel theKeyboard "Keyboard Key " letter
-                |> Query.has [ text letter ]
+                |> Query.has [ tag "button", text letter ]
 
 
 onScreenKeyboard : Test
@@ -156,44 +151,53 @@ checkAllCommandsButtons componentToTest command =
     test ("command button present " ++ command) <|
         \_ ->
             findAriaLabel componentToTest "Command " command
-                |> Query.has [ text command ]
+                |> Query.has [ tag "button", text command ]
 
 
 onScreenKeyboardCommands : Test
 onScreenKeyboardCommands =
-    let
-        keyboardCommands : List String
-        keyboardCommands =
-            [ "ERASE [↤]"
-            , "RESET [5]"
-            , "SPEAK [8]"
-            , "SPELL [9]"
-            , "SUBMIT [↵]"
-            , "RETRY [6]"
-            , "NEW [0]"
-            ]
-    in
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                checkAllCommandsButtons theKeyboard command
+                checkAllCommandsButtons theKeyboard (Tuple.second command)
             )
             keyboardCommands
 
 
 onScreenSoundControls : Test
 onScreenSoundControls =
-    let
-        soundCommands : List String
-        soundCommands =
-            [ "SOUND OFF [3]"
-            , "SOUND ON [2]"
-            ]
-    in
     describe "all sound controls are present" <|
         List.map
             (\command ->
+                checkAllCommandsButtons namePlusSoundCtrl (Tuple.second command)
+            )
+            soundCommands
+
+
+clickAllButtons : Html Msg -> Msg -> String -> Test
+clickAllButtons componentToTest command label =
+    test ("click command button " ++ label) <|
+        \_ ->
+            findAriaLabel componentToTest "Command " label
+                |> Event.simulate Event.click
+                |> Event.expect command
+
+
+onScreenClickCommands : Test
+onScreenClickCommands =
     describe "click all onscreen keyboard commands" <|
+        List.map
+            (\kbdCmd ->
+                clickAllButtons theKeyboard (Tuple.first kbdCmd) (Tuple.second kbdCmd)
+            )
+            keyboardCommands
+
+
+onScreenClickSoundControls : Test
+onScreenClickSoundControls =
     describe "click all sound controls commands" <|
+        List.map
+            (\sndCmd ->
+                clickAllButtons namePlusSoundCtrl (Tuple.first sndCmd) (Tuple.second sndCmd)
             )
             soundCommands
