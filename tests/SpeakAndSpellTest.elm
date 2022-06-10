@@ -8,6 +8,8 @@ module SpeakAndSpellTest exposing
     , onScreenKeyboardCommands
     , onScreenSoundControls
     , outputScreenInitialized
+    , speakAndSpellHasTheRightColors
+    , speakAndSpellNamePresent
     )
 
 import Expect
@@ -21,6 +23,7 @@ import SpeakAndSpell
         ( Msg(..)
         , Sound(..)
         , initialModel
+        , namePlusLogo
         , namePlusSoundCtrl
         , newWordDecoder
         , outputScreen
@@ -30,11 +33,19 @@ import SpeakAndSpell
 import Test exposing (Test, describe, fuzz3, test)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
-import Test.Html.Selector exposing (attribute, tag, text)
+import Test.Html.Selector exposing (attribute, classes, tag, text)
 
 
 
 -- CONSTANTS
+
+
+speakAndSpell : List ( String, String )
+speakAndSpell =
+    [ ( "Speak", "text-red-600" )
+    , ( "&", "text-white" )
+    , ( "Spell", "text-blue-600" )
+    ]
 
 
 loadingText : List String
@@ -100,6 +111,38 @@ loadingMessagePresent : Test
 loadingMessagePresent =
     describe "all letters are present on loading screen" <|
         List.map (\letter -> checkLoadingLetters letter) loadingText
+
+
+
+-- NAME AND LOGO TESTS
+
+
+checkBrandName : String -> Test
+checkBrandName word =
+    test ("speak and spell present " ++ word) <|
+        \_ ->
+            findAriaLabel namePlusLogo "App Name" ""
+                |> Query.has [ tag "p", text word ]
+
+
+speakAndSpellNamePresent : Test
+speakAndSpellNamePresent =
+    describe "all brand words are present on yellow shell" <|
+        List.map (\word -> checkBrandName (Tuple.first word)) speakAndSpell
+
+
+checkBrandColors : String -> Test
+checkBrandColors color =
+    test ("speak and spell color " ++ color) <|
+        \_ ->
+            findAriaLabel namePlusLogo "App Name" ""
+                |> Query.has [ tag "p", classes [ color ] ]
+
+
+speakAndSpellHasTheRightColors : Test
+speakAndSpellHasTheRightColors =
+    describe "all brand words have the right colors" <|
+        List.map (\color -> checkBrandColors (Tuple.second color)) speakAndSpell
 
 
 

@@ -7,6 +7,7 @@ port module SpeakAndSpell exposing
     , Status(..)
     , initialModel
     , main
+    , namePlusLogo
     , namePlusSoundCtrl
     , newWordDecoder
     , outputScreen
@@ -289,7 +290,7 @@ yellowShell rightContent leftContent =
 speakAndSpellName : Html Msg
 speakAndSpellName =
     div
-        [ Aria.label "App Name"
+        [ Aria.label "Brand Name"
         , Attr.class "font-serif text-3xl md:text-4xl lg:text-5xl font-bold flex"
         ]
         [ p
@@ -311,10 +312,10 @@ namePlusLogo =
         , Attr.class "flex justify-between my-12 mx-2"
         ]
         [ div
-            [ Attr.class "my-auto" ]
+            [ Attr.class "my-auto", Aria.label "App Name" ]
             [ speakAndSpellName ]
         , div
-            [ Attr.class "my-auto" ]
+            [ Attr.class "my-auto", Aria.label "Elm logo" ]
             [ img [ Attr.src elmLogoBlue, Attr.class "w-10 h-10 md:w-20 md:h-20 lg:w-24 lg:h-24" ] [] ]
         ]
 
