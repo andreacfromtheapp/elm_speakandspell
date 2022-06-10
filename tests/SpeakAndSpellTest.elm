@@ -114,11 +114,11 @@ loadingMessagePresent =
 
 
 
--- NAME AND LOGO TESTS
+-- BRAND, APP NAME, AND LOGOS TESTS
 
 
-checkBrandName : String -> Test
-checkBrandName word =
+checkAppNameWording : String -> Test
+checkAppNameWording word =
     test ("speak and spell present " ++ word) <|
         \_ ->
             findAriaLabel namePlusLogo "App Name" ""
@@ -128,11 +128,11 @@ checkBrandName word =
 speakAndSpellNamePresent : Test
 speakAndSpellNamePresent =
     describe "all brand words are present on yellow shell" <|
-        List.map (\word -> checkBrandName (Tuple.first word)) speakAndSpell
+        List.map (\word -> checkAppNameWording (Tuple.first word)) speakAndSpell
 
 
-checkBrandColors : String -> Test
-checkBrandColors color =
+checkAppNameColors : String -> Test
+checkAppNameColors color =
     test ("speak and spell color " ++ color) <|
         \_ ->
             findAriaLabel namePlusLogo "App Name" ""
@@ -142,7 +142,7 @@ checkBrandColors color =
 speakAndSpellHasTheRightColors : Test
 speakAndSpellHasTheRightColors =
     describe "all brand words have the right colors" <|
-        List.map (\color -> checkBrandColors (Tuple.second color)) speakAndSpell
+        List.map (\color -> checkAppNameColors (Tuple.second color)) speakAndSpell
 
 
 
