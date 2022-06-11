@@ -227,21 +227,23 @@ outputScreenInitialized =
 -- KEYBOARD TESTS
 
 
-clickAllLetterKeys : String -> Test
-clickAllLetterKeys letter =
+keysClicking : String -> Test
+keysClicking letter =
     test ("click alphabet letter " ++ letter) <|
         \_ ->
             findAriaLabel theKeyboard "Keyboard Key " letter
                 |> Event.simulate Event.click
                 |> Event.expect (KeyClicked letter)
+
+
 clickAllLetterKeys : Test
 clickAllLetterKeys =
     describe "click all letters keys on the onscreen keyboard" <|
-        List.map (\letter -> clickAllLetterKeys letter) alphabet
+        List.map (\letter -> keysClicking letter) alphabet
 
 
-checkAllLetterKeys : String -> Test
-checkAllLetterKeys letter =
+lettersClicking : String -> Test
+lettersClicking letter =
     test ("alphabet letter present " ++ letter) <|
         \_ ->
             findAriaLabel theKeyboard "Keyboard Key " letter
@@ -251,7 +253,7 @@ checkAllLetterKeys letter =
 isPresentScreenKeyboard : Test
 isPresentScreenKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
-        List.map (\letter -> checkAllLetterKeys letter) alphabet
+        List.map (\letter -> lettersClicking letter) alphabet
 
 
 
