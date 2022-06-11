@@ -2,7 +2,8 @@ module SpeakAndSpellTest exposing
     ( clickCommands
     , clickLetters
     , clickSoundControls
-    , fecthingWordsFromApi
+    , getWordsFromAPI
+    , isInitializedOutputScreen
     , isPresentAppColors
     , isPresentAppName
     , isPresentBrandLink
@@ -13,7 +14,6 @@ module SpeakAndSpellTest exposing
     , isPresentLoading
     , isPresentShellLogo
     , isPresentSoundControls
-    , outputScreenInitialized
     )
 
 import Expect
@@ -204,8 +204,8 @@ checkAppNameColors color =
 -- API TESTS
 
 
-fecthingWordsFromApi : Test
-fecthingWordsFromApi =
+getWordsFromAPI : Test
+getWordsFromAPI =
     fuzz3 string string string "get new words from the words API" <|
         \word definition pronunciation ->
             [ ( "word", Encode.string word )
@@ -221,8 +221,8 @@ fecthingWordsFromApi =
 -- OUTPUT SCREEN TESTS
 
 
-outputScreenInitialized : Test
-outputScreenInitialized =
+isInitializedOutputScreen : Test
+isInitializedOutputScreen =
     test "render the output screen with the default message" <|
         \_ ->
             initialModel
