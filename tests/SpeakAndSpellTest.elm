@@ -1,6 +1,6 @@
 module SpeakAndSpellTest exposing
-    ( clickAllCommands
-    , clickAllLetterKeys
+    ( clickCommands
+    , clickLetters
     , clickSoundControls
     , fecthingWordsFromApi
     , isPresentAppColors
@@ -8,10 +8,10 @@ module SpeakAndSpellTest exposing
     , isPresentBrandLink
     , isPresentBrandLogo
     , isPresentBrandName
-    , isPresentKeyboardCommands
-    , isPresentLoadingMessage
-    , isPresentScreenKeyboard
-    , isPresentShellLogoLogo
+    , isPresentCommands
+    , isPresentKeyboard
+    , isPresentLoading
+    , isPresentShellLogo
     , isPresentSoundControls
     , outputScreenInitialized
     )
@@ -90,15 +90,24 @@ soundCommands =
 
 
 findAriaLabel : Html msg -> String -> String -> Single msg
-findAriaLabel componentToTest ariaLabelCommonPart ariaLabelSpecificPart =
+findAriaLabel componentToTest ariaLabelCommon ariaLabelSpecific =
     componentToTest
         |> Query.fromHtml
         |> Query.find
             [ attribute
                 (Attr.attribute "aria-label"
-                    (ariaLabelCommonPart ++ ariaLabelSpecificPart)
+                    (ariaLabelCommon ++ ariaLabelSpecific)
                 )
             ]
+
+
+allThingsClicker : Html Msg -> Msg -> String -> String -> Test
+allThingsClicker componentToTest message ariaToFind item =
+    test ("clicking " ++ item) <|
+        \_ ->
+            findAriaLabel componentToTest ariaToFind item
+                |> Event.simulate Event.click
+                |> Event.expect message
 
 
 brandQueryHtml : Single Msg
@@ -113,18 +122,18 @@ brandQueryHtml =
 -- LOADING SCREEN TESTS
 
 
+isPresentLoading : Test
+isPresentLoading =
+    describe "all letters are present on loading screen" <|
+        List.map (\letter -> checkLoadingLetters letter) loadingText
+
+
 checkLoadingLetters : String -> Test
 checkLoadingLetters letter =
     test ("loading letter present " ++ letter) <|
         \_ ->
             findAriaLabel viewLoading "Loading Animation" ""
                 |> Query.has [ tag "p", text letter ]
-
-
-isPresentLoadingMessage : Test
-isPresentLoadingMessage =
-    describe "all letters are present on loading screen" <|
-        List.map (\letter -> checkLoadingLetters letter) loadingText
 
 
 
@@ -155,12 +164,18 @@ isPresentBrandLogo =
                 |> Query.has [ tag "img", attribute (Attr.src elmLogoGrayish) ]
 
 
-isPresentShellLogoLogo : Test
-isPresentShellLogoLogo =
+isPresentShellLogo : Test
+isPresentShellLogo =
     test "yellow shell logo present" <|
         \_ ->
             findAriaLabel namePlusLogo "Elm Logo" ""
                 |> Query.has [ tag "img", attribute (Attr.src elmLogoBlue) ]
+
+
+isPresentAppName : Test
+isPresentAppName =
+    describe "app name words are present on yellow shell" <|
+        List.map (\word -> checkAppNameWording (Tuple.first word)) speakAndSpell
 
 
 checkAppNameWording : String -> Test
@@ -171,10 +186,10 @@ checkAppNameWording word =
                 |> Query.has [ tag "p", text word ]
 
 
-isPresentAppName : Test
-isPresentAppName =
-    describe "app name words are present on yellow shell" <|
-        List.map (\word -> checkAppNameWording (Tuple.first word)) speakAndSpell
+isPresentAppColors : Test
+isPresentAppColors =
+    describe "all app name words have the right colors" <|
+        List.map (\color -> checkAppNameColors (Tuple.second color)) speakAndSpell
 
 
 checkAppNameColors : String -> Test
@@ -183,12 +198,6 @@ checkAppNameColors color =
         \_ ->
             findAriaLabel namePlusLogo "App Name" ""
                 |> Query.has [ tag "p", classes [ color ] ]
-
-
-isPresentAppColors : Test
-isPresentAppColors =
-    describe "all app name words have the right colors" <|
-        List.map (\color -> checkAppNameColors (Tuple.second color)) speakAndSpell
 
 
 
@@ -224,56 +233,67 @@ outputScreenInitialized =
 
 
 
--- KEYBOARD TESTS
+-- CLICKING TESTS
 
 
-keysClicking : String -> Test
-keysClicking letter =
-    test ("click alphabet letter " ++ letter) <|
-        \_ ->
-            findAriaLabel theKeyboard "Keyboard Key " letter
-                |> Event.simulate Event.click
-                |> Event.expect (KeyClicked letter)
-
-
-clickAllLetterKeys : Test
-clickAllLetterKeys =
+clickLetters : Test
+clickLetters =
     describe "click all letters keys on the onscreen keyboard" <|
-        List.map (\letter -> keysClicking letter) alphabet
+        List.map
+            (\letter ->
+                allThingsClicker theKeyboard (KeyClicked letter) "Keyboard Key " letter
+            )
+            alphabet
 
 
-lettersClicking : String -> Test
-lettersClicking letter =
+clickCommands : Test
+clickCommands =
+    describe "click all onscreen keyboard commands" <|
+        List.map
+            (\cmd ->
+                allThingsClicker theKeyboard (Tuple.first cmd) "Command " (Tuple.second cmd)
+            )
+            keyboardCommands
+
+
+clickSoundControls : Test
+clickSoundControls =
+    describe "click all sound controls commands" <|
+        List.map
+            (\cmd ->
+                allThingsClicker namePlusSoundCtrl (Tuple.first cmd) "Command " (Tuple.second cmd)
+            )
+            soundCommands
+
+
+
+-- LETTERS TESTS
+
+
+isPresentKeyboard : Test
+isPresentKeyboard =
+    describe "all letters are present on the onscreen keyboard" <|
+        List.map (\letter -> checkAllLetters letter) alphabet
+
+
+checkAllLetters : String -> Test
+checkAllLetters letter =
     test ("alphabet letter present " ++ letter) <|
         \_ ->
             findAriaLabel theKeyboard "Keyboard Key " letter
                 |> Query.has [ tag "button", text letter ]
 
 
-isPresentScreenKeyboard : Test
-isPresentScreenKeyboard =
-    describe "all letters are present on the onscreen keyboard" <|
-        List.map (\letter -> lettersClicking letter) alphabet
-
-
 
 -- COMMANDS TESTS
 
 
-checkAllCommandsButtons : Html msg -> String -> Test
-checkAllCommandsButtons componentToTest command =
-    test ("command button present " ++ command) <|
-        \_ ->
-            findAriaLabel componentToTest "Command " command
-                |> Query.has [ tag "button", text command ]
-
-
-isPresentKeyboardCommands : Test
-isPresentKeyboardCommands =
+isPresentCommands : Test
+isPresentCommands =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                checkAllCommandsButtons theKeyboard (Tuple.second command)
+                checkAllButtons theKeyboard (Tuple.second command)
             )
             keyboardCommands
 
@@ -283,35 +303,14 @@ isPresentSoundControls =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                checkAllCommandsButtons namePlusSoundCtrl (Tuple.second command)
+                checkAllButtons namePlusSoundCtrl (Tuple.second command)
             )
             soundCommands
 
 
-clickAllButtons : Html Msg -> Msg -> String -> Test
-clickAllButtons componentToTest command label =
-    test ("click command button " ++ label) <|
+checkAllButtons : Html msg -> String -> Test
+checkAllButtons componentToTest command =
+    test ("command button present " ++ command) <|
         \_ ->
-            findAriaLabel componentToTest "Command " label
-                |> Event.simulate Event.click
-                |> Event.expect command
-
-
-clickAllCommands : Test
-clickAllCommands =
-    describe "click all onscreen keyboard commands" <|
-        List.map
-            (\kbdCmd ->
-                clickAllButtons theKeyboard (Tuple.first kbdCmd) (Tuple.second kbdCmd)
-            )
-            keyboardCommands
-
-
-clickSoundControls : Test
-clickSoundControls =
-    describe "click all sound controls commands" <|
-        List.map
-            (\sndCmd ->
-                clickAllButtons namePlusSoundCtrl (Tuple.first sndCmd) (Tuple.second sndCmd)
-            )
-            soundCommands
+            findAriaLabel componentToTest "Command " command
+                |> Query.has [ tag "button", text command ]
