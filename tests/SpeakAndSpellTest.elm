@@ -1,19 +1,19 @@
 module SpeakAndSpellTest exposing
-    ( brandLinkPresent
-    , brandLogoPresent
-    , brandNamePresent
+    ( clickAllCommands
+    , clickAllLetterKeys
+    , clickSoundControls
     , fecthingWordsFromApi
-    , loadingMessagePresent
-    , onScreenClickCommands
-    , onScreenClickKeys
-    , onScreenClickSoundControls
-    , onScreenKeyboard
-    , onScreenKeyboardCommands
-    , onScreenSoundControls
+    , isPresentAppColors
+    , isPresentAppName
+    , isPresentBrandLink
+    , isPresentBrandLogo
+    , isPresentBrandName
+    , isPresentKeyboardCommands
+    , isPresentLoadingMessage
+    , isPresentScreenKeyboard
+    , isPresentShellLogoLogo
+    , isPresentSoundControls
     , outputScreenInitialized
-    , shellLogoLogoPresent
-    , speakAndSpellHasTheRightColors
-    , speakAndSpellNamePresent
     )
 
 import Expect
@@ -121,8 +121,8 @@ checkLoadingLetters letter =
                 |> Query.has [ tag "p", text letter ]
 
 
-loadingMessagePresent : Test
-loadingMessagePresent =
+isPresentLoadingMessage : Test
+isPresentLoadingMessage =
     describe "all letters are present on loading screen" <|
         List.map (\letter -> checkLoadingLetters letter) loadingText
 
@@ -131,32 +131,32 @@ loadingMessagePresent =
 -- BRAND, APP NAME, AND LOGOS TESTS
 
 
-brandNamePresent : Test
-brandNamePresent =
+isPresentBrandName : Test
+isPresentBrandName =
     test "brand name present" <|
         \_ ->
             brandQueryHtml
                 |> Query.has [ tag "a", text "Elm Instruments" ]
 
 
-brandLinkPresent : Test
-brandLinkPresent =
+isPresentBrandLink : Test
+isPresentBrandLink =
     test "brand link present" <|
         \_ ->
             brandQueryHtml
                 |> Query.has [ tag "a", attribute (Attr.href "https://elm-lang.org/") ]
 
 
-brandLogoPresent : Test
-brandLogoPresent =
+isPresentBrandLogo : Test
+isPresentBrandLogo =
     test "brand logo present" <|
         \_ ->
             brandQueryHtml
                 |> Query.has [ tag "img", attribute (Attr.src elmLogoGrayish) ]
 
 
-shellLogoLogoPresent : Test
-shellLogoLogoPresent =
+isPresentShellLogoLogo : Test
+isPresentShellLogoLogo =
     test "yellow shell logo present" <|
         \_ ->
             findAriaLabel namePlusLogo "Elm Logo" ""
@@ -171,8 +171,8 @@ checkAppNameWording word =
                 |> Query.has [ tag "p", text word ]
 
 
-speakAndSpellNamePresent : Test
-speakAndSpellNamePresent =
+isPresentAppName : Test
+isPresentAppName =
     describe "app name words are present on yellow shell" <|
         List.map (\word -> checkAppNameWording (Tuple.first word)) speakAndSpell
 
@@ -185,8 +185,8 @@ checkAppNameColors color =
                 |> Query.has [ tag "p", classes [ color ] ]
 
 
-speakAndSpellHasTheRightColors : Test
-speakAndSpellHasTheRightColors =
+isPresentAppColors : Test
+isPresentAppColors =
     describe "all app name words have the right colors" <|
         List.map (\color -> checkAppNameColors (Tuple.second color)) speakAndSpell
 
@@ -234,10 +234,8 @@ clickAllLetterKeys letter =
             findAriaLabel theKeyboard "Keyboard Key " letter
                 |> Event.simulate Event.click
                 |> Event.expect (KeyClicked letter)
-
-
-onScreenClickKeys : Test
-onScreenClickKeys =
+clickAllLetterKeys : Test
+clickAllLetterKeys =
     describe "click all letters keys on the onscreen keyboard" <|
         List.map (\letter -> clickAllLetterKeys letter) alphabet
 
@@ -250,8 +248,8 @@ checkAllLetterKeys letter =
                 |> Query.has [ tag "button", text letter ]
 
 
-onScreenKeyboard : Test
-onScreenKeyboard =
+isPresentScreenKeyboard : Test
+isPresentScreenKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
         List.map (\letter -> checkAllLetterKeys letter) alphabet
 
@@ -268,8 +266,8 @@ checkAllCommandsButtons componentToTest command =
                 |> Query.has [ tag "button", text command ]
 
 
-onScreenKeyboardCommands : Test
-onScreenKeyboardCommands =
+isPresentKeyboardCommands : Test
+isPresentKeyboardCommands =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
@@ -278,8 +276,8 @@ onScreenKeyboardCommands =
             keyboardCommands
 
 
-onScreenSoundControls : Test
-onScreenSoundControls =
+isPresentSoundControls : Test
+isPresentSoundControls =
     describe "all sound controls are present" <|
         List.map
             (\command ->
@@ -297,8 +295,8 @@ clickAllButtons componentToTest command label =
                 |> Event.expect command
 
 
-onScreenClickCommands : Test
-onScreenClickCommands =
+clickAllCommands : Test
+clickAllCommands =
     describe "click all onscreen keyboard commands" <|
         List.map
             (\kbdCmd ->
@@ -307,8 +305,8 @@ onScreenClickCommands =
             keyboardCommands
 
 
-onScreenClickSoundControls : Test
-onScreenClickSoundControls =
+clickSoundControls : Test
+clickSoundControls =
     describe "click all sound controls commands" <|
         List.map
             (\sndCmd ->
