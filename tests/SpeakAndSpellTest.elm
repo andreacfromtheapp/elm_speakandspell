@@ -110,6 +110,14 @@ allThingsClicker componentToTest message ariaToFind item =
                 |> Event.expect message
 
 
+allThingsChecker : Html msg -> String -> String -> String -> Test
+allThingsChecker componentToTest ariaToFind tagToFind item =
+    test ("is present " ++ item) <|
+        \_ ->
+            findAriaLabel componentToTest ariaToFind item
+                |> Query.has [ tag tagToFind, text item ]
+
+
 brandQueryHtml : Single Msg
 brandQueryHtml =
     initialModel
@@ -273,15 +281,7 @@ clickSoundControls =
 isPresentKeyboard : Test
 isPresentKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
-        List.map (\letter -> checkAllLetters letter) alphabet
-
-
-checkAllLetters : String -> Test
-checkAllLetters letter =
-    test ("alphabet letter present " ++ letter) <|
-        \_ ->
-            findAriaLabel theKeyboard "Keyboard Key " letter
-                |> Query.has [ tag "button", text letter ]
+        List.map (\letter -> allThingsChecker theKeyboard "Keyboard Key " "button" letter) alphabet
 
 
 
@@ -293,7 +293,7 @@ isPresentCommands =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                checkAllButtons theKeyboard (Tuple.second command)
+                allThingsChecker theKeyboard "Command " "button" (Tuple.second command)
             )
             keyboardCommands
 
@@ -303,14 +303,6 @@ isPresentSoundControls =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                checkAllButtons namePlusSoundCtrl (Tuple.second command)
+                allThingsChecker namePlusSoundCtrl "Command " "button" (Tuple.second command)
             )
             soundCommands
-
-
-checkAllButtons : Html msg -> String -> Test
-checkAllButtons componentToTest command =
-    test ("command button present " ++ command) <|
-        \_ ->
-            findAriaLabel componentToTest "Command " command
-                |> Query.has [ tag "button", text command ]
