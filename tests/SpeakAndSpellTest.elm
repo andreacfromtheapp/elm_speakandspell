@@ -118,8 +118,8 @@ allThingsChecker componentToTest ariaToFind tagToFind item =
                 |> Query.has [ tag tagToFind, text item ]
 
 
-brandQueryHtml : Single Msg
-brandQueryHtml =
+outputScreenQueryHtml : Single Msg
+outputScreenQueryHtml =
     initialModel
         |> Tuple.first
         |> outputScreen
@@ -152,7 +152,7 @@ isPresentBrandName : Test
 isPresentBrandName =
     test "brand name present" <|
         \_ ->
-            brandQueryHtml
+            outputScreenQueryHtml
                 |> Query.has [ tag "a", text "Elm Instruments" ]
 
 
@@ -160,7 +160,7 @@ isPresentBrandLink : Test
 isPresentBrandLink =
     test "brand link present" <|
         \_ ->
-            brandQueryHtml
+            outputScreenQueryHtml
                 |> Query.has [ tag "a", attribute (Attr.href "https://elm-lang.org/") ]
 
 
@@ -168,7 +168,7 @@ isPresentBrandLogo : Test
 isPresentBrandLogo =
     test "brand logo present" <|
         \_ ->
-            brandQueryHtml
+            outputScreenQueryHtml
                 |> Query.has [ tag "img", attribute (Attr.src elmLogoGrayish) ]
 
 
@@ -233,10 +233,7 @@ isInitializedOutputScreen : Test
 isInitializedOutputScreen =
     test "render the output screen with the default message" <|
         \_ ->
-            initialModel
-                |> Tuple.first
-                |> outputScreen
-                |> Query.fromHtml
+            outputScreenQueryHtml
                 |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
 
 
