@@ -105,7 +105,7 @@ allThingsClicker : Html Msg -> Msg -> String -> String -> Test
 allThingsClicker componentToTest message ariaToFind item =
     test ("clicking " ++ item) <|
         \_ ->
-            findAriaLabel componentToTest ariaToFind item
+            findAriaLabel componentToTest ariaToFind (" " ++ item)
                 |> Event.simulate Event.click
                 |> Event.expect message
 
@@ -114,7 +114,7 @@ allThingsChecker : Html msg -> String -> String -> String -> Test
 allThingsChecker componentToTest ariaToFind tagToFind item =
     test ("is present " ++ item) <|
         \_ ->
-            findAriaLabel componentToTest ariaToFind item
+            findAriaLabel componentToTest ariaToFind (" " ++ item)
                 |> Query.has [ tag tagToFind, text item ]
 
 
@@ -249,7 +249,7 @@ clickLetters =
     describe "click all letters keys on the onscreen keyboard" <|
         List.map
             (\letter ->
-                allThingsClicker theKeyboard (KeyClicked letter) "Keyboard Key " letter
+                allThingsClicker theKeyboard (KeyClicked letter) "Keyboard Key" letter
             )
             alphabet
 
@@ -259,7 +259,7 @@ clickCommands =
     describe "click all onscreen keyboard commands" <|
         List.map
             (\cmd ->
-                allThingsClicker theKeyboard (Tuple.first cmd) "Command " (Tuple.second cmd)
+                allThingsClicker theKeyboard (Tuple.first cmd) "Command" (Tuple.second cmd)
             )
             keyboardCommands
 
@@ -269,7 +269,7 @@ clickSoundControls =
     describe "click all sound controls commands" <|
         List.map
             (\cmd ->
-                allThingsClicker namePlusSoundCtrl (Tuple.first cmd) "Command " (Tuple.second cmd)
+                allThingsClicker namePlusSoundCtrl (Tuple.first cmd) "Command" (Tuple.second cmd)
             )
             soundCommands
 
@@ -281,7 +281,7 @@ clickSoundControls =
 isPresentKeyboard : Test
 isPresentKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
-        List.map (\letter -> allThingsChecker theKeyboard "Keyboard Key " "button" letter) alphabet
+        List.map (\letter -> allThingsChecker theKeyboard "Keyboard Key" "button" letter) alphabet
 
 
 
@@ -293,7 +293,7 @@ isPresentCommands =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                allThingsChecker theKeyboard "Command " "button" (Tuple.second command)
+                allThingsChecker theKeyboard "Command" "button" (Tuple.second command)
             )
             keyboardCommands
 
@@ -303,6 +303,6 @@ isPresentSoundControls =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                allThingsChecker namePlusSoundCtrl "Command " "button" (Tuple.second command)
+                allThingsChecker namePlusSoundCtrl "Command" "button" (Tuple.second command)
             )
             soundCommands
