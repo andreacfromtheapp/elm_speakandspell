@@ -278,7 +278,11 @@ clickSoundControls =
 isPresentKeyboard : Test
 isPresentKeyboard =
     describe "all letters are present on the onscreen keyboard" <|
-        List.map (\letter -> allThingsChecker theKeyboard "Keyboard Key" "button" letter) alphabet
+        List.map
+            (\letter ->
+                allThingsChecker theKeyboard "Keyboard Key" "button" letter
+            )
+            alphabet
 
 
 
