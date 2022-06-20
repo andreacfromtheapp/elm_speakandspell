@@ -8,7 +8,12 @@ const app = Elm.SpeakAndSpell.init({
 
 // Instantiate Speech Synth API
 const synth = window.speechSynthesis
-const utter = new SpeechSynthesisUtterance()
+
+function speak(message) {
+  const utter = new SpeechSynthesisUtterance()
+  utter.text = message;
+  synth.speak(utter);
+}
 
 // Pause/Resume Speech Synth API (SetSound On | Off)
 app.ports.sound.subscribe(function (message) {
@@ -22,12 +27,10 @@ app.ports.sound.subscribe(function (message) {
 
 // We receive the whole word here and speak it
 app.ports.speak.subscribe(function (message) {
-  utter.text = message
-  synth.speak(utter)
+  speak(message);
 })
 
 // We receive the split word here and spell it
 app.ports.spell.subscribe(function (message) {
-  utter.text = message
-  synth.speak(utter)
+  speak(message);
 })
