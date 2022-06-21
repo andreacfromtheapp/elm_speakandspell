@@ -11,7 +11,7 @@ const synth = window.speechSynthesis
 
 // https://github.com/gacallea/elm_speakandspell/pull/2
 function speak (message) {
-  const utter = new SpeechSynthesisUtterance()
+  const utter = new window.SpeechSynthesisUtterance()
   utter.text = message
   synth.speak(utter)
 }
