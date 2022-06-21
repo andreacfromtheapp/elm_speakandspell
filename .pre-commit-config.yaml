@@ -1,12 +1,13 @@
 repos:
-  # https://standardjs.com/#is-there-a-git-pre-commit-hook
   - repo: https://github.com/standard/standard
-    rev: master
+    rev: v17.0.0
+    files: "./src/**/*.js"
     hooks:
       - id: standard
 
   - repo: https://github.com/thibaudcolas/pre-commit-stylelint
     rev: v14.8.5
+    files: "./src/**/*.{css|scss}"
     hooks:
       - id: stylelint
         additional_dependencies:
