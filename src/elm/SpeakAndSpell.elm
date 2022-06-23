@@ -23,7 +23,6 @@ import Browser.Events
 import Html exposing (Html, a, button, div, img, main_, p, text)
 import Html.Attributes as Attr
 import Html.Events exposing (onClick)
-import Html.Lazy as Lazy
 import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
@@ -259,7 +258,7 @@ viewErrored errorMessage =
                 [ Aria.label "Error Message"
                 , Attr.class "text-white text-sm md:text-lg lg:text-xl text-center"
                 ]
-                [ Lazy.lazy text ("Error: " ++ errorToString errorMessage) ]
+                [ text ("Error: " ++ errorToString errorMessage) ]
             ]
 
 
@@ -297,13 +296,13 @@ speakAndSpellName =
         ]
         [ p
             [ Attr.class "text-red-600 pr-1" ]
-            [ Lazy.lazy text "Speak" ]
+            [ text "Speak" ]
         , p
             [ Attr.class "text-white pr-1" ]
-            [ Lazy.lazy text "&" ]
+            [ text "&" ]
         , p
             [ Attr.class "text-blue-600" ]
-            [ Lazy.lazy text "Spell" ]
+            [ text "Spell" ]
         ]
 
 
@@ -389,15 +388,15 @@ newWordScreen newWord =
             [ p
                 [ Aria.label "New Word"
                 ]
-                [ Lazy.lazy text ("Your word is: " ++ String.toUpper newWord.word) ]
+                [ text ("Your word is: " ++ String.toUpper newWord.word) ]
             , p
                 [ Aria.label "Word Definition"
                 ]
-                [ Lazy.lazy text ("Definition: " ++ newWord.definition) ]
+                [ text ("Definition: " ++ newWord.definition) ]
             , p
                 [ Aria.label "Word Pronunciation"
                 ]
-                [ Lazy.lazy text ("Pronunciation: " ++ newWord.pronunciation) ]
+                [ text ("Pronunciation: " ++ newWord.pronunciation) ]
             ]
         ]
 
@@ -415,7 +414,7 @@ outputScreen model =
                 [ Aria.label "Output Text"
                 , Attr.class "font-lcd text-lcd_text px-4 text-base md:text-2xl pt-8 md:pt-16"
                 ]
-                [ Lazy.lazy text (outputText model) ]
+                [ text (outputText model) ]
             ]
         , div
             [ Aria.label "Elm Branding"
@@ -434,7 +433,7 @@ outputScreen model =
                 , Attr.rel "noreferrer noopener"
                 , Attr.class "text-stone-400 text-xs md:text-base lg:text-lg pl-2"
                 ]
-                [ Lazy.lazy text "Elm Instruments" ]
+                [ text "Elm Instruments" ]
             ]
         ]
 
