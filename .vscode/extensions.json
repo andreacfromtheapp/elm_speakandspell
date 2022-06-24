@@ -3,7 +3,6 @@
     "elmtooling.elm-ls-vscode",
     "standard.vscode-standard",
     "esbenp.prettier-vscode",
-    "numso.prettier-standard-vscode",
     "stylelint.vscode-stylelint",
     "yzhang.markdown-all-in-one",
     "davidanson.vscode-markdownlint",
@@ -11,7 +10,6 @@
     "bradlc.vscode-tailwindcss",
     "ecmel.vscode-html-css",
     "zignd.html-css-class-completion",
-    "ms-azuretools.vscode-docker",
     "gitlab.gitlab-workflow",
     "github.vscode-pull-request-github",
     "eamodio.gitlens"
