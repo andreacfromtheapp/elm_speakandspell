@@ -440,7 +440,11 @@ outputScreen model =
 
 loadingLetter : String -> String -> Html Msg
 loadingLetter labelText animation =
-    p [ Attr.class <| String.append "grow basis-auto text-center m-[0.025rem] m-auto md:m-1 py-1 md:py-2 px-1 md:px-4 bg-amber-400 md:text-2xl lg:text-4xl font-semibold border-2 md:border-4 border-orange-600 rounded-md " animation ] [ text labelText ]
+    p
+        [ Attr.class "grow basis-auto text-center m-[0.025rem] md:m-1 py-1 md:py-2 px-1 md:px-4 bg-amber-400 md:text-2xl lg:text-4xl font-semibold border-2 md:border-4 border-orange-600 rounded-md"
+        , Attr.class animation
+        ]
+        [ text labelText ]
 
 
 errorToString : Http.Error -> String
@@ -472,7 +476,8 @@ commandBtn : String -> Msg -> String -> Html Msg
 commandBtn bgColor pressAction labelText =
     button
         [ Aria.label ("Command " ++ labelText)
-        , Attr.class <| String.append "text-[0.5rem] md:text-xs lg:text-sm md:font-semibold grow basis-3 md:basis-auto mt-1 mx-1 p-2 hover:bg-amber-700 hover:text-white rounded-md md:rounded-xl border-solid border border-black " bgColor
+        , Attr.class "text-[0.5rem] md:text-xs lg:text-sm md:font-semibold grow basis-3 md:basis-auto mt-1 mx-1 p-2 hover:bg-amber-700 hover:text-white rounded-md md:rounded-xl border-solid border border-black"
+        , Attr.class bgColor
         , onClick pressAction
         ]
         [ text labelText ]
