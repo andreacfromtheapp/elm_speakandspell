@@ -210,7 +210,7 @@ view model =
         ]
 
 
-viewLoading : Html Msg
+viewLoading : Html msg
 viewLoading =
     let
         loadingText : List ( String, String )
@@ -246,7 +246,7 @@ viewLoading =
             ]
 
 
-viewErrored : Http.Error -> Html Msg
+viewErrored : Http.Error -> Html msg
 viewErrored errorMessage =
     yellowShell namePlusLogo <|
         div
@@ -278,7 +278,7 @@ viewLoaded newWord model =
         ]
 
 
-yellowShell : Html Msg -> Html Msg -> Html Msg
+yellowShell : Html msg -> Html msg -> Html msg
 yellowShell rightContent leftContent =
     div
         -- yellow shell
@@ -288,7 +288,7 @@ yellowShell rightContent leftContent =
         ]
 
 
-speakAndSpellName : Html Msg
+speakAndSpellName : Html msg
 speakAndSpellName =
     div
         [ Aria.label "Brand Name"
@@ -306,7 +306,7 @@ speakAndSpellName =
         ]
 
 
-namePlusLogo : Html Msg
+namePlusLogo : Html msg
 namePlusLogo =
     div
         [ Aria.label "App name and Elm logo"
@@ -377,7 +377,7 @@ theKeyboard =
         ]
 
 
-newWordScreen : NewWord -> Html Msg
+newWordScreen : NewWord -> Html msg
 newWordScreen newWord =
     div
         -- new word "top screen"
@@ -401,7 +401,7 @@ newWordScreen newWord =
         ]
 
 
-outputScreen : Model -> Html Msg
+outputScreen : Model -> Html msg
 outputScreen model =
     div
         -- output screen
@@ -438,7 +438,7 @@ outputScreen model =
         ]
 
 
-loadingLetter : String -> String -> Html Msg
+loadingLetter : String -> String -> Html msg
 loadingLetter labelText animation =
     p
         [ Attr.class "grow basis-auto text-center m-[0.025rem] md:m-1 py-1 md:py-2 px-1 md:px-4 bg-amber-400 md:text-2xl lg:text-4xl font-semibold border-2 md:border-4 border-orange-600 rounded-md"
