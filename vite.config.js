@@ -5,6 +5,9 @@ import viteImagemin from 'vite-plugin-imagemin'
 import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig({
+  build: {
+    target: 'esnext'
+  },
   plugins: [
     elmPlugin(),
     ViteWebfontDownload(),
