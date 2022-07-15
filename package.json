@@ -6,6 +6,7 @@
   "private": true,
   "devDependencies": {
     "autoprefixer": "^10.4.7",
+    "elm-i18next-gen": "^1.1.0",
     "elm-review": "^2.7.2",
     "elm-test": "^0.19.1-revision8",
     "elm-tooling": "^1.8.0",
@@ -30,14 +31,15 @@
   "scripts": {
     "postinstall": "elm-tooling install",
     "dev": "vite",
-    "prebuild": "elm-tooling install",
+    "prebuild": "elm-tooling install && npm run localegen",
     "build": "vite build",
     "preview": "vite preview",
     "standard": "standard --fix src/**/*.js",
     "markdown": "standard-markdown --fix src/**/*.md",
     "stylelint": "stylelint --fix 'src/**/*.(css|scss|sass)'",
     "review": "elm-review --fix-all",
-    "test": "elm-test-rs"
+    "test": "elm-test-rs",
+    "localegen": "elm-i18next-gen --source public/translations/translations.en.json --target src/elm --overwrite"
   },
   "standard": {
     "ignore": [
