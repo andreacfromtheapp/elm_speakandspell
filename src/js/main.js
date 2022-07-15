@@ -17,7 +17,7 @@ function speak (message) {
 }
 
 // Pause/Resume Speech Synth API (SetSound On | Off)
-app.ports.sound.subscribe(function (message) {
+app.ports.sound.subscribe((message) => {
   synth.cancel()
   if (message === true) {
     synth.resume()
@@ -27,11 +27,11 @@ app.ports.sound.subscribe(function (message) {
 })
 
 // We receive the whole word here and speak it
-app.ports.speak.subscribe(function (message) {
+app.ports.speak.subscribe((message) => {
   speak(message)
 })
 
 // We receive the split word here and spell it
-app.ports.spell.subscribe(function (message) {
+app.ports.spell.subscribe((message) => {
   speak(message)
 })
