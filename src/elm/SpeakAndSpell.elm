@@ -41,12 +41,6 @@ import VitePluginHelper exposing (asset)
 -- CONSTANTS
 
 
-randomWordsApiUrl : String
-randomWordsApiUrl =
-    -- api source = https://github.com/mcnaveen/Random-Words-API
-    "https://random-words-api.vercel.app/word"
-
-
 elmLogoBlue : String
 elmLogoBlue =
     asset "../img/ElmLogoBlue.svg"
@@ -82,7 +76,7 @@ type Msg
     | SetSound Sound
     | Speak
     | Spell
-      -- | SetApiUrl Code
+    | SetApiUrl String
     | SelectLocale Code
     | SetLocale Encode.Value
 
@@ -129,6 +123,7 @@ type alias Model =
     , output : Output
     , sound : Sound
     , lang : Code
+    , apiUrl : String
     , translations : Translations
     , newWord : NewWord
     , guessWord : String
@@ -143,6 +138,7 @@ type alias Model =
 
 type alias Flags =
     { translations : Encode.Value
+    , apiUrl : String
     }
 
 
@@ -150,28 +146,41 @@ type alias Flags =
 -- INIT
 
 
-initialModel : Flags -> ( Model, Cmd Msg )
-initialModel flags =
+initialModel : Model
+initialModel =
+    { status = Loading
+    , output = Init
+    , sound = On
+    , lang = En
+    , apiUrl = "https://random-words-api.vercel.app/word"
+    , translations = initialTranslations
+    , newWord =
+        { word = "INIT"
+        , definition = ""
+        , pronunciation = ""
+        }
+    , guessWord = ""
+    , checkWord = ""
+    , result = ""
+    }
+
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
     let
         setLocaleTranslation : Translations
         setLocaleTranslation =
             setUILanguage flags.translations
+
+        randomWordsApiUrl : String
+        randomWordsApiUrl =
+            flags.apiUrl
     in
-    ( { status = Loading
-      , output = Init
-      , sound = On
-      , lang = En
-      , translations = setLocaleTranslation
-      , newWord =
-            { word = "INIT"
-            , definition = ""
-            , pronunciation = ""
-            }
-      , guessWord = ""
-      , checkWord = ""
-      , result = ""
+    ( { initialModel
+        | translations = setLocaleTranslation
+        , apiUrl = randomWordsApiUrl
       }
-    , getNewWordCmd
+    , getNewWordCmd initialModel
     )
 
 
@@ -182,7 +191,7 @@ initialModel flags =
 main : Program Flags Model Msg
 main =
     Browser.element
-        { init = initialModel
+        { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
@@ -193,10 +202,10 @@ main =
 -- COMMANDS
 
 
-getNewWordCmd : Cmd Msg
-getNewWordCmd =
+getNewWordCmd : Model -> Cmd Msg
+getNewWordCmd model =
     Http.get
-        { url = randomWordsApiUrl
+        { url = model.apiUrl
         , expect = Http.expectJson GetNewWord (Decode.list newWordDecoder)
         }
 
@@ -218,6 +227,7 @@ subscriptions _ =
     Sub.batch
         [ Browser.Events.onKeyDown (Decode.map KeyPressed decodeKeyboardEvent)
         , setLocale SetLocale
+        , setApiUrl SetApiUrl
         ]
 
 
@@ -238,6 +248,9 @@ port chooseLanguage : String -> Cmd msg
 
 
 port setLocale : (Encode.Value -> msg) -> Sub msg
+
+
+port setApiUrl : (String -> msg) -> Sub msg
 
 
 
@@ -648,7 +661,7 @@ update msg model =
 
         GetAnotherWord ->
             ( resetWord model
-            , getNewWordCmd
+            , getNewWordCmd model
             )
 
         EraseLetter ->
@@ -685,15 +698,16 @@ update msg model =
             , spell (splitToSpell (wordToSpeak model))
             )
 
-        -- SetApiUrl code ->
-        --     ( model, Cmd.none )
+        SetApiUrl url ->
+            ( { model | apiUrl = url }, getNewWordCmd model )
+
         SelectLocale lang ->
             ( { model | lang = lang }
             , chooseLanguage (langCodeToString lang)
             )
 
         SetLocale locale ->
-            ( { model | translations = setUILanguage locale }, getNewWordCmd )
+            ( { model | translations = setUILanguage locale }, getNewWordCmd model )
 
 
 
@@ -775,7 +789,7 @@ kbdEventToCommand event model =
 
             Just "0" ->
                 ( resetWord model
-                , getNewWordCmd
+                , getNewWordCmd model
                 )
 
             Just "Backspace" ->
