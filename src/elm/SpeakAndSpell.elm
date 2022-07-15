@@ -57,6 +57,16 @@ elmLogoGrayish =
     asset "../img/ElmLogoGrayish.svg"
 
 
+gbFlag : String
+gbFlag =
+    asset "../img/flags/gb.svg"
+
+
+nlFlag : String
+nlFlag =
+    asset "../img/flags/nl.svg"
+
+
 
 -- MESSAGES
 
@@ -312,7 +322,6 @@ viewLoaded newWord model =
         , Attr.class "bg-shell_orange border md:rounded-t-[2.5rem] md:rounded-b-[5rem]"
         ]
         [ div [] [ newWordScreen model newWord ]
-        , div [] [ languages ]
         , div [] [ outputScreen model ]
         , div [] [ yellowShell (namePlusSoundCtrl model) (theKeyboard model) ]
         ]
@@ -422,9 +431,9 @@ newWordScreen model newWord =
     div
         -- new word "top screen"
         [ Aria.label "New Word Screen"
-        , Attr.class "bg-sky-500 text-base md:text-lg lg:text-xl flex flex-col justify-between m-2 md:mb-4 md:mt-8 md:mx-6 rounded-lg md:rounded-3xl border border-solid border-black"
+        , Attr.class "bg-sky-500 text-base md:text-lg lg:text-xl flex flex-col justify-between m-2 md:mb-8 md:mt-8 md:mx-6 rounded-lg md:rounded-3xl border border-solid border-black"
         ]
-        [ div [ Attr.class "px-4 py-8 md:px-8 md:py-10" ]
+        [ div [ Attr.class "px-4 pt-8 pb-2 md:px-8 md:pt-10" ]
             [ p
                 [ Aria.label "New Word"
                 ]
@@ -437,15 +446,42 @@ newWordScreen model newWord =
                 [ Aria.label "Word Pronunciation"
                 ]
                 [ text (TRscreen.pronunciation model.translations ++ " " ++ newWord.pronunciation) ]
+            , div [] [ languages ]
             ]
         ]
 
 
 languages : Html Msg
 languages =
-    ul [ Attr.class "flex justify-center gap-x-2 text-xs md:text-base mb-2 md:my-4 lg:my-6" ]
-        [ li [] [ button [ onClick (SelectLocale En) ] [ text "EN" ] ]
-        , li [] [ button [ onClick (SelectLocale Nl) ] [ text "NL" ] ]
+    ul [ Aria.label "languages and localizations", Attr.class "flex justify-center md:justify-end gap-x-2 mt-2" ]
+        [ li []
+            [ button
+                [ Aria.label "english language select"
+                , onClick (SelectLocale En)
+                ]
+                [ img
+                    [ Attr.src gbFlag
+                    , Attr.class "w-4 h-4 md:w-6 md:h-6"
+                    , Attr.alt "UK flag"
+                    , Attr.title "UK flag"
+                    ]
+                    []
+                ]
+            ]
+        , li []
+            [ button
+                [ Aria.label "dutch language select"
+                , onClick (SelectLocale Nl)
+                ]
+                [ img
+                    [ Attr.src nlFlag
+                    , Attr.class "w-4 h-4 md:w-6 md:h-6"
+                    , Attr.alt "Netherlands flag"
+                    , Attr.title "Netherlands flag"
+                    ]
+                    []
+                ]
+            ]
         ]
 
 
