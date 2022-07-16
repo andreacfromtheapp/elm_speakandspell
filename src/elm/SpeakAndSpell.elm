@@ -137,9 +137,7 @@ type alias Model =
 
 
 type alias Flags =
-    { translations : Encode.Value
-    , apiUrl : String
-    }
+    { translations : Encode.Value }
 
 
 
@@ -171,14 +169,9 @@ init flags =
         setLocaleTranslation : Translations
         setLocaleTranslation =
             setUILanguage flags.translations
-
-        randomWordsApiUrl : String
-        randomWordsApiUrl =
-            flags.apiUrl
     in
     ( { initialModel
         | translations = setLocaleTranslation
-        , apiUrl = randomWordsApiUrl
       }
     , getNewWordCmd initialModel
     )
@@ -699,7 +692,9 @@ update msg model =
             )
 
         SetApiUrl url ->
-            ( { model | apiUrl = url }, getNewWordCmd model )
+            ( { model | apiUrl = url }
+            , getNewWordCmd model
+            )
 
         SelectLocale lang ->
             ( { model | lang = lang }
@@ -707,7 +702,9 @@ update msg model =
             )
 
         SetLocale locale ->
-            ( { model | translations = setUILanguage locale }, getNewWordCmd model )
+            ( { model | translations = setUILanguage locale }
+            , getNewWordCmd model
+            )
 
 
 
