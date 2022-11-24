@@ -18,8 +18,7 @@ app.ports.chooseLanguage.subscribe(async (message) => {
 
   if (message === 'en') {
     app.ports.setApiUrl.send('https://random-words-api.vercel.app/word')
-  }
-  if (message === 'nl') {
+  } else if (message === 'nl') {
     app.ports.setApiUrl.send('https://random-words-api.vercel.app/word/dutch')
   }
 
