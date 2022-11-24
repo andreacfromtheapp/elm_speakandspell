@@ -11,8 +11,7 @@
     "ecmel.vscode-html-css",
     "zignd.html-css-class-completion",
     "gitlab.gitlab-workflow",
-    "github.vscode-pull-request-github",
-    "eamodio.gitlens"
+    "github.vscode-pull-request-github"
   ],
   "unwantedRecommendations": []
 }
