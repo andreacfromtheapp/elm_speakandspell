@@ -111,12 +111,11 @@
 Provided that a *polyglot API* (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
 
 - [ ] let user choose:
-  - [ ] a different dictionary language
+  - [x] a different dictionary language
   - [ ] the voice language, params, and gender
-- [ ] internationalization depending on chosen dict language
-  - [ ] UI
-  - [ ] help
-  - [ ] commands
+- [x] internationalization depending on chosen dict language
+  - [x] UI
+  - [x] commands
 
 ## Deploy
 
