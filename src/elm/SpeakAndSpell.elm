@@ -15,6 +15,7 @@ port module SpeakAndSpell exposing
     , namePlusSoundCtrl
     , newWordDecoder
     , outputScreen
+    , outputText
     , theKeyboard
     , viewLoading
     )

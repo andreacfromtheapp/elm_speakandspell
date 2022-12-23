@@ -34,6 +34,7 @@ import SpeakAndSpell
         , namePlusSoundCtrl
         , newWordDecoder
         , outputScreen
+        , outputText
         , theKeyboard
         , viewLoading
         )
@@ -229,12 +230,12 @@ getWordsFromAPI =
 -- OUTPUT SCREEN TESTS
 
 
-isInitializedOutputScreen : Test
-isInitializedOutputScreen =
+isInitializedOutputScreen : Model -> Test
+isInitializedOutputScreen model =
     test "render the output screen with the default message" <|
         \_ ->
-            outputScreenQueryHtml
-                |> Query.has [ tag "p", text "START TYPING TO MATCH THE WORD ABOVE" ]
+            outputText model
+                |> Expect.equal "START TYPING TO MATCH THE WORD ABOVE"
 
 
 
