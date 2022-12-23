@@ -378,6 +378,13 @@ namePlusLogo =
 
 namePlusSoundCtrl : Model -> Html Msg
 namePlusSoundCtrl model =
+    let
+        sndCommands : List { cmdMsg : Msg, cmdName : String }
+        sndCommands =
+            [ { cmdMsg = SetSound Off, cmdName = TranslationCmd.soundOff model.translations }
+            , { cmdMsg = SetSound On, cmdName = TranslationCmd.soundOn model.translations }
+            ]
+    in
     div
         [ Attr.class "flex flex-col md:flex-row my-8 md:my-12 lg:my-14" ]
         [ div
@@ -388,9 +395,12 @@ namePlusSoundCtrl model =
             [ Aria.label "Sound Commands"
             , Attr.class "my-auto self-center"
             ]
-            [ blueCommandBtn (SetSound Off) (TranslationCmd.soundOff model.translations)
-            , blueCommandBtn (SetSound On) (TranslationCmd.soundOn model.translations)
-            ]
+          <|
+            List.map
+                (\cmd ->
+                    blueCommandBtn cmd.cmdMsg cmd.cmdName
+                )
+                sndCommands
         ]
 
 
