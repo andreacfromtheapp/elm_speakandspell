@@ -379,8 +379,8 @@ namePlusLogo =
 namePlusSoundCtrl : Model -> Html Msg
 namePlusSoundCtrl model =
     let
-        sndCommands : List { cmdMsg : Msg, cmdName : String }
-        sndCommands =
+        soundCommands : List { cmdMsg : Msg, cmdName : String }
+        soundCommands =
             [ { cmdMsg = SetSound Off, cmdName = TranslationCmd.soundOff model.translations }
             , { cmdMsg = SetSound On, cmdName = TranslationCmd.soundOn model.translations }
             ]
@@ -400,15 +400,15 @@ namePlusSoundCtrl model =
                 (\cmd ->
                     blueCommandBtn cmd.cmdMsg cmd.cmdName
                 )
-                sndCommands
+                soundCommands
         ]
 
 
 theKeyboard : Model -> Html Msg
 theKeyboard model =
     let
-        kbdCommands : List { cmdMsg : Msg, cmdName : String }
-        kbdCommands =
+        keyboardCommands : List { cmdMsg : Msg, cmdName : String }
+        keyboardCommands =
             [ { cmdMsg = EraseLetter, cmdName = TranslationCmd.erase model.translations }
             , { cmdMsg = ResetWord, cmdName = TranslationCmd.reset model.translations }
             , { cmdMsg = Speak, cmdName = TranslationCmd.spell model.translations }
@@ -438,7 +438,7 @@ theKeyboard model =
                 (\cmd ->
                     yellowCommandBtn cmd.cmdMsg cmd.cmdName
                 )
-                kbdCommands
+                keyboardCommands
         ]
 
 
