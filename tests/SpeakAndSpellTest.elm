@@ -121,7 +121,6 @@ allThingsChecker componentToTest ariaToFind tagToFind item =
 outputScreenQueryHtml : Single Msg
 outputScreenQueryHtml =
     initialModel
-        |> Tuple.first
         |> outputScreen
         |> Query.fromHtml
 
