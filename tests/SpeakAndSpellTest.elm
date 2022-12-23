@@ -24,7 +24,8 @@ import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
 import SpeakAndSpell
     exposing
-        ( Msg(..)
+        ( Model
+        , Msg(..)
         , Sound(..)
         , elmLogoBlue
         , elmLogoGray
@@ -240,32 +241,32 @@ isInitializedOutputScreen =
 -- CLICKING TESTS
 
 
-clickLetters : Test
-clickLetters =
+clickLetters : Model -> Test
+clickLetters model =
     describe "click all letters keys on the onscreen keyboard" <|
         List.map
             (\letter ->
-                allThingsClicker theKeyboard (KeyClicked letter) "Keyboard Key" letter
+                allThingsClicker (theKeyboard model) (KeyClicked letter) "Keyboard Key" letter
             )
             alphabet
 
 
-clickCommands : Test
-clickCommands =
+clickCommands : Model -> Test
+clickCommands model =
     describe "click all onscreen keyboard commands" <|
         List.map
             (\cmd ->
-                allThingsClicker theKeyboard (Tuple.first cmd) "Command" (Tuple.second cmd)
+                allThingsClicker (theKeyboard model) (Tuple.first cmd) "Command" (Tuple.second cmd)
             )
             keyboardCommands
 
 
-clickSoundControls : Test
-clickSoundControls =
+clickSoundControls : Model -> Test
+clickSoundControls model =
     describe "click all sound controls commands" <|
         List.map
             (\cmd ->
-                allThingsClicker namePlusSoundCtrl (Tuple.first cmd) "Command" (Tuple.second cmd)
+                allThingsClicker (namePlusSoundCtrl model) (Tuple.first cmd) "Command" (Tuple.second cmd)
             )
             soundCommands
 
@@ -274,12 +275,12 @@ clickSoundControls =
 -- LETTERS TESTS
 
 
-isPresentKeyboard : Test
-isPresentKeyboard =
+isPresentKeyboard : Model -> Test
+isPresentKeyboard model =
     describe "all letters are present on the onscreen keyboard" <|
         List.map
             (\letter ->
-                allThingsChecker theKeyboard "Keyboard Key" "button" letter
+                allThingsChecker (theKeyboard model) "Keyboard Key" "button" letter
             )
             alphabet
 
@@ -288,21 +289,21 @@ isPresentKeyboard =
 -- COMMANDS TESTS
 
 
-isPresentCommands : Test
-isPresentCommands =
+isPresentCommands : Model -> Test
+isPresentCommands model =
     describe "all commands are present on the onscreen keyboard" <|
         List.map
             (\command ->
-                allThingsChecker theKeyboard "Command" "button" (Tuple.second command)
+                allThingsChecker (theKeyboard model) "Command" "button" (Tuple.second command)
             )
             keyboardCommands
 
 
-isPresentSoundControls : Test
-isPresentSoundControls =
+isPresentSoundControls : Model -> Test
+isPresentSoundControls model =
     describe "all sound controls are present" <|
         List.map
             (\command ->
-                allThingsChecker namePlusSoundCtrl "Command" "button" (Tuple.second command)
+                allThingsChecker (namePlusSoundCtrl model) "Command" "button" (Tuple.second command)
             )
             soundCommands
