@@ -8,7 +8,7 @@ port module SpeakAndSpell exposing
     , Sound(..)
     , Status(..)
     , elmLogoBlue
-    , elmLogoGrayish
+    , elmLogoGray
     , initialModel
     , main
     , namePlusLogo
@@ -31,9 +31,9 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline
 import Json.Encode as Encode
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
-import Translations.Command as TRcmd
-import Translations.Init as TRinit
-import Translations.Screen as TRscreen
+import Translations.Command as TranslationCmd
+import Translations.Init as TranslationInit
+import Translations.Screen as TranslationScreen
 import VitePluginHelper exposing (asset)
 
 
@@ -46,9 +46,9 @@ elmLogoBlue =
     asset "../img/ElmLogoBlue.svg"
 
 
-elmLogoGrayish : String
-elmLogoGrayish =
-    asset "../img/ElmLogoGrayish.svg"
+elmLogoGray : String
+elmLogoGray =
+    asset "../img/ElmLogoGray.svg"
 
 
 gbFlag : String
@@ -388,8 +388,8 @@ namePlusSoundCtrl model =
             [ Aria.label "Sound Commands"
             , Attr.class "my-auto self-center"
             ]
-            [ blueCommandBtn (SetSound Off) (TRcmd.soundOff model.translations)
-            , blueCommandBtn (SetSound On) (TRcmd.soundOn model.translations)
+            [ blueCommandBtn (SetSound Off) (TranslationCmd.soundOff model.translations)
+            , blueCommandBtn (SetSound On) (TranslationCmd.soundOn model.translations)
             ]
         ]
 
@@ -399,13 +399,13 @@ theKeyboard model =
     let
         kbdCommands : List { cmdMsg : Msg, cmdName : String }
         kbdCommands =
-            [ { cmdMsg = EraseLetter, cmdName = TRcmd.erase model.translations }
-            , { cmdMsg = ResetWord, cmdName = TRcmd.reset model.translations }
-            , { cmdMsg = Speak, cmdName = TRcmd.spell model.translations }
-            , { cmdMsg = Spell, cmdName = TRcmd.spell model.translations }
-            , { cmdMsg = SubmitWord, cmdName = TRcmd.submit model.translations }
-            , { cmdMsg = ResetWord, cmdName = TRcmd.retry model.translations }
-            , { cmdMsg = GetAnotherWord, cmdName = TRcmd.new model.translations }
+            [ { cmdMsg = EraseLetter, cmdName = TranslationCmd.erase model.translations }
+            , { cmdMsg = ResetWord, cmdName = TranslationCmd.reset model.translations }
+            , { cmdMsg = Speak, cmdName = TranslationCmd.spell model.translations }
+            , { cmdMsg = Spell, cmdName = TranslationCmd.spell model.translations }
+            , { cmdMsg = SubmitWord, cmdName = TranslationCmd.submit model.translations }
+            , { cmdMsg = ResetWord, cmdName = TranslationCmd.retry model.translations }
+            , { cmdMsg = GetAnotherWord, cmdName = TranslationCmd.new model.translations }
             ]
     in
     div
@@ -443,15 +443,15 @@ newWordScreen model newWord =
             [ p
                 [ Aria.label "New Word"
                 ]
-                [ text (TRscreen.word model.translations ++ " " ++ String.toUpper newWord.word) ]
+                [ text (TranslationScreen.word model.translations ++ " " ++ String.toUpper newWord.word) ]
             , p
                 [ Aria.label "Word Definition"
                 ]
-                [ text (TRscreen.definition model.translations ++ " " ++ newWord.definition) ]
+                [ text (TranslationScreen.definition model.translations ++ " " ++ newWord.definition) ]
             , p
                 [ Aria.label "Word Pronunciation"
                 ]
-                [ text (TRscreen.pronunciation model.translations ++ " " ++ newWord.pronunciation) ]
+                [ text (TranslationScreen.pronunciation model.translations ++ " " ++ newWord.pronunciation) ]
             , div [] [ languages ]
             ]
         ]
@@ -511,7 +511,7 @@ outputScreen model =
             , Attr.class "inline-flex self-end mr-4 md:mr-12 mb-2"
             ]
             [ img
-                [ Attr.src elmLogoGrayish
+                [ Attr.src elmLogoGray
                 , Attr.alt "Elm Logo"
                 , Attr.title "Elm Logo"
                 , Attr.class "w-2 h-2 md:w-3 md:h-3 lg:w-4 lg:h-4 self-center"
@@ -587,7 +587,7 @@ outputText : Model -> String
 outputText model =
     case model.output of
         Init ->
-            TRinit.message model.translations
+            TranslationInit.message model.translations
                 |> String.toUpper
 
         Word ->
@@ -658,7 +658,7 @@ update msg model =
             )
 
         EraseLetter ->
-            ( if isGuessEmtpy (eraseLetter model) then
+            ( if isGuessEmpty (eraseLetter model) then
                 resetWord model
 
               else
@@ -790,7 +790,7 @@ kbdEventToCommand event model =
                 )
 
             Just "Backspace" ->
-                ( if isGuessEmtpy (eraseLetter model) then
+                ( if isGuessEmpty (eraseLetter model) then
                     resetWord model
 
                   else
@@ -818,8 +818,8 @@ isStringEmpty string =
     String.isEmpty string
 
 
-isGuessEmtpy : Model -> Bool
-isGuessEmtpy model =
+isGuessEmpty : Model -> Bool
+isGuessEmpty model =
     String.isEmpty model.guessWord
 
 
@@ -845,7 +845,7 @@ submitWord model =
 
 checkResult : Model -> String
 checkResult model =
-    if isGuessEmtpy model then
+    if isGuessEmpty model then
         "AN EMPTY STRING IS NEVER THE ANSWER..."
 
     else if model.guessWord == model.checkWord then
@@ -867,7 +867,7 @@ setSound switch =
 
 wordToScreen : Model -> Model
 wordToScreen model =
-    if isGuessEmtpy model then
+    if isGuessEmpty model then
         { model | output = Init }
 
     else

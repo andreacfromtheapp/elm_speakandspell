@@ -4,7 +4,7 @@ module SpeakAndSpellTest exposing
     , clickSoundControls
     , getWordsFromAPI
     , isInitializedOutputScreen
-    , isPresentAppColors
+    , isPresentAppColours
     , isPresentAppName
     , isPresentBrandLink
     , isPresentBrandLogo
@@ -27,7 +27,7 @@ import SpeakAndSpell
         ( Msg(..)
         , Sound(..)
         , elmLogoBlue
-        , elmLogoGrayish
+        , elmLogoGray
         , initialModel
         , namePlusLogo
         , namePlusSoundCtrl
@@ -169,7 +169,7 @@ isPresentBrandLogo =
     test "brand logo present" <|
         \_ ->
             outputScreenQueryHtml
-                |> Query.has [ tag "img", attribute (Attr.src elmLogoGrayish) ]
+                |> Query.has [ tag "img", attribute (Attr.src elmLogoGray) ]
 
 
 isPresentShellLogo : Test
@@ -194,18 +194,18 @@ checkAppNameWording word =
                 |> Query.has [ tag "p", text word ]
 
 
-isPresentAppColors : Test
-isPresentAppColors =
-    describe "all app name words have the right colors" <|
-        List.map (\color -> checkAppNameColors (Tuple.second color)) speakAndSpell
+isPresentAppColours : Test
+isPresentAppColours =
+    describe "all app name words have the right colours" <|
+        List.map (\colour -> checkAppNameColours (Tuple.second colour)) speakAndSpell
 
 
-checkAppNameColors : String -> Test
-checkAppNameColors color =
-    test ("speak and spell color " ++ color) <|
+checkAppNameColours : String -> Test
+checkAppNameColours colour =
+    test ("speak and spell colour " ++ colour) <|
         \_ ->
             findAriaLabel namePlusLogo "App Name" ""
-                |> Query.has [ tag "p", classes [ color ] ]
+                |> Query.has [ tag "p", classes [ colour ] ]
 
 
 
