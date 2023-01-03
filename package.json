@@ -7,18 +7,18 @@
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "elm-i18next-gen": "^1.1.0",
-    "elm-review": "^2.8.2",
-    "elm-test": "^0.19.1-revision10",
+    "elm-review": "^2.9.1",
+    "elm-test": "^0.19.1-revision11",
     "elm-tooling": "^1.10.0",
-    "postcss": "^8.4.19",
-    "prettier": "^2.8.0",
+    "postcss": "^8.4.20",
+    "prettier": "^2.8.1",
     "standard": "^17.0.0",
     "tailwindcss": "^3.2.4",
     "vite": "^3.2.4",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-elm": "^2.7.2",
     "vite-plugin-imagemin": "^0.6.1",
-    "vite-plugin-webfont-dl": "^3.4.1"
+    "vite-plugin-webfont-dl": "^3.4.2"
   },
   "scripts": {
     "postinstall": "elm-tooling install",
