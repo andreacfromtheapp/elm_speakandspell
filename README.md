@@ -13,7 +13,8 @@ need to deploy the API first, and then point a clone of this very app to it.
 
 - API repo:
   [https://github.com/mcnaveen/random-words-api](https://github.com/mcnaveen/random-words-api)
-- API URLs need changing in ./src/js/main.js
+- API URLs need changing in [main.js](./src/js/main.js#L19-L23) and
+  [SpeakAndSpell.elm](./src/elm/SpeakAndSpell.elm#L154)
 
 ## Why Speak & Spell?
 
@@ -25,7 +26,8 @@ completely from scratch, as opposed to pre-existing concepts.
 
 Being a *toy project* (no pun intended), this is a limited reproduction:
 
-1) match the word on the screen 2) use the commands
+1) match the word on the screen
+2) use the commands
 
 No *Mystery Word* or any other play mode from the original game.
 
