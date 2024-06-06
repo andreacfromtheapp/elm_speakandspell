@@ -4,6 +4,7 @@
   "description": "Speak & Spell in Elm :)",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "elm-i18next-gen": "^1.1.0",
