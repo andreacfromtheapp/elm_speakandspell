@@ -1,15 +1,67 @@
-/* stylelint-disable scss/at-rule-no-unknown */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
-/* stylelint-enable */
+@import "tailwindcss";
 
 @font-face {
   font-family: "LCD14";
   font-weight: normal;
   font-style: normal;
-  src: local("../fonts/lcd-font-otf/LCD14.otf"),
+  src:
+    local("../fonts/lcd-font-otf/LCD14.otf"),
     url("../fonts/lcd-font-otf/LCD14.otf") format("opentype");
   font-display: swap;
+}
+
+@theme {
+  --font-mono: RobotoMono, monospace;
+  --font-serif: RobotoSerif, serif;
+  --font-lcd: LCD14;
+  --color-lcd_text: rgb(102, 204, 102);
+
+  --animate-bounce-up: bounce-up 1s infinite;
+  --animate-bounce-down: bounce-down 1s infinite;
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes wiggle {
+    0% {
+      transform: rotate(-16deg);
+    }
+    50% {
+      transform: rotate(24deg);
+    }
+    100% {
+      transform: rotate(-16deg);
+    }
+  }
+
+  @keyframes bounce-up {
+    0% {
+      transform: translateY(-12%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    100% {
+      transform: translateY(-12%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+  }
+
+  @keyframes bounce-down {
+    100% {
+      transform: translateY(12%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    ,
+    50%: {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+    0%: {
+      transform: translateY(12%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+  }
 }

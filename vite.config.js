@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
 import elmPlugin from 'vite-plugin-elm'
 import { ViteWebfontDownload } from 'vite-plugin-webfont-dl'
 import viteImagemin from 'vite-plugin-imagemin'
@@ -9,6 +11,7 @@ export default defineConfig({
     target: 'esnext'
   },
   plugins: [
+    tailwindcss(),
     elmPlugin(),
     ViteWebfontDownload(),
     viteImagemin({

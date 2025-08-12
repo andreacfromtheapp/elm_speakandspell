@@ -321,7 +321,7 @@ viewLoaded newWord model =
     div
         -- outer shell
         [ Aria.label "Loaded App"
-        , Attr.class "bg-shell_orange border md:rounded-t-[2.5rem] md:rounded-b-[5rem]"
+        , Attr.class "bg-orange-600 border md:rounded-t-[2.5rem] md:rounded-b-[5rem]"
         ]
         [ div [] [ newWordScreen model newWord ]
         , div [] [ outputScreen model ]
