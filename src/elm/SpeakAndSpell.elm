@@ -52,14 +52,9 @@ elmLogoGray =
     asset "../img/ElmLogoGray.svg"
 
 
-gbFlag : String
-gbFlag =
-    asset "../img/flags/gb.svg"
-
-
-nlFlag : String
-nlFlag =
-    asset "../img/flags/nl.svg"
+usFlag : String
+usFlag =
+    asset "../img/flags/us.svg"
 
 
 
@@ -477,7 +472,7 @@ languages =
                 , onClick (SelectLocale En)
                 ]
                 [ img
-                    [ Attr.src gbFlag
+                    [ Attr.src usFlag
                     , Attr.class "w-4 h-4 md:w-6 md:h-6"
                     , Attr.alt "UK flag"
                     , Attr.title "UK flag"
@@ -485,20 +480,21 @@ languages =
                     []
                 ]
             ]
-        , li []
-            [ button
-                [ Aria.label "dutch language select"
-                , onClick (SelectLocale Nl)
-                ]
-                [ img
-                    [ Attr.src nlFlag
-                    , Attr.class "w-4 h-4 md:w-6 md:h-6"
-                    , Attr.alt "Netherlands flag"
-                    , Attr.title "Netherlands flag"
-                    ]
-                    []
-                ]
-            ]
+
+        -- , li []
+        --     [ button
+        --         [ Aria.label "dutch language select"
+        --         , onClick (SelectLocale Nl)
+        --         ]
+        --         [ img
+        --             [ Attr.src nlFlag
+        --             , Attr.class "w-4 h-4 md:w-6 md:h-6"
+        --             , Attr.alt "Netherlands flag"
+        --             , Attr.title "Netherlands flag"
+        --             ]
+        --             []
+        --         ]
+        --     ]
         ]
 
 

@@ -17,9 +17,9 @@ app.ports.chooseLanguage.subscribe(async (message) => {
   const jsonRes = await res.json()
 
   if (message === 'en') {
-    app.ports.setApiUrl.send('https://random-words-api.vercel.app/word')
-  } else if (message === 'nl') {
-    app.ports.setApiUrl.send('https://random-words-api.vercel.app/word/dutch')
+    app.ports.setApiUrl.send('http://localhost:3000/en/word')
+  // } else if (message === 'nl') {
+  //   app.ports.setApiUrl.send('http://localhost:3000/word/dutch')
   }
 
   app.ports.setLocale.send(jsonRes)
