@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v6.0.0
     hooks:
       - id: detect-private-key
       - id: check-added-large-files
@@ -16,7 +16,7 @@ repos:
         args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/standard/standard
-    rev: v17.1.0
+    rev: v17.1.2
     files: "./src/**/*.(js|jsx|ts|tsx|mjs|cjs)"
     hooks:
       - id: standard
