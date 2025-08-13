@@ -5,22 +5,24 @@ import { Elm } from '../elm/SpeakAndSpell.elm'
 let res = await fetch('translations/translations.en.json')
 const translations = await res.json()
 
+// API URL from .env OR default to prod
+const appUrl = import.meta.env.VITE_APP_URL || 'https://word-api-axum.netlify.app'
+
 // Start the Elm application.
 const app = Elm.SpeakAndSpell.init({
   node: document.querySelector('main'),
-  flags: { translations }
+  flags: { translations, appUrl }
 })
 
 // Set the UI translation in Elm
 app.ports.chooseLanguage.subscribe(async (message) => {
+  const baseUrl = import.meta.env.VITE_APP_URL
+
   res = await fetch('translations/translations.' + message + '.json')
   const jsonRes = await res.json()
 
-  if (message === 'en') {
-    app.ports.setApiUrl.send('http://localhost:3000/en/random')
-  // } else if (message === 'nl') {
-  //   app.ports.setApiUrl.send('http://localhost:3000/nl/random')
-  }
+  const apiUrl = `${baseUrl}/${message}/random`
+  app.ports.setApiUrl.send(apiUrl)
 
   app.ports.setLocale.send(jsonRes)
 })

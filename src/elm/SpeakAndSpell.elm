@@ -133,7 +133,7 @@ type alias Model =
 
 
 type alias Flags =
-    { translations : Encode.Value }
+    { translations : Encode.Value, appUrl : String }
 
 
 
@@ -146,7 +146,7 @@ initialModel =
     , output = Init
     , sound = On
     , lang = En
-    , apiUrl = "http://localhost:3000/en/random"
+    , apiUrl = ""
     , translations = initialTranslations
     , newWord =
         { word = "INIT"
@@ -165,11 +165,15 @@ init flags =
         setLocaleTranslation : Translations
         setLocaleTranslation =
             setUILanguage flags.translations
+
+        updatedModel =
+            { initialModel
+                | translations = setLocaleTranslation
+                , apiUrl = flags.appUrl
+            }
     in
-    ( { initialModel
-        | translations = setLocaleTranslation
-      }
-    , getNewWordCmd initialModel
+    ( updatedModel
+    , getNewWordCmd updatedModel
     )
 
 
