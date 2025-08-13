@@ -17,9 +17,9 @@ app.ports.chooseLanguage.subscribe(async (message) => {
   const jsonRes = await res.json()
 
   if (message === 'en') {
-    app.ports.setApiUrl.send('http://localhost:3000/en/word')
+    app.ports.setApiUrl.send('http://localhost:3000/en/random')
   // } else if (message === 'nl') {
-  //   app.ports.setApiUrl.send('http://localhost:3000/word/dutch')
+  //   app.ports.setApiUrl.send('http://localhost:3000/nl/random')
   }
 
   app.ports.setLocale.send(jsonRes)
