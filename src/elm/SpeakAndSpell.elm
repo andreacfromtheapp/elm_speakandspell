@@ -611,7 +611,7 @@ alphabetRow start end =
             (\asciiCode ->
                 button
                     [ Aria.label ("Keyboard Key " ++ codeToString asciiCode)
-                    , Attr.class "text-xs md:text-sm md:font-semibold grow basis-6 md:basis-11 lg:basis-12 m-1 p-1 lg:px-4 md:py-4 border border-black rounded-md md:rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
+                    , Attr.class "text-xs md:text-base font-bold grow basis-6 md:basis-11 lg:basis-12 m-1 p-1 lg:px-4 md:py-4 border border-black rounded-md md:rounded-lg bg-orange-500 hover:bg-amber-700 hover:text-white"
                     , onClick (KeyClicked (codeToString asciiCode))
                     ]
                     [ text (codeToString asciiCode)
