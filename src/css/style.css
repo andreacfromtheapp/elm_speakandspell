@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import 'flag-icons/css/flag-icons.min.css';
 
 @font-face {
   font-family: "LCD14";

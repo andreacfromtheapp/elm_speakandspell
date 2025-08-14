@@ -23,7 +23,7 @@ port module SpeakAndSpell exposing
 import Accessibility.Aria as Aria
 import Browser
 import Browser.Events
-import Html exposing (Html, a, button, div, img, li, main_, p, text, ul)
+import Html exposing (Html, a, button, div, i, img, li, main_, p, text, ul)
 import Html.Attributes as Attr
 import Html.Events exposing (onClick)
 import Http
@@ -50,11 +50,6 @@ elmLogoBlue =
 elmLogoGray : String
 elmLogoGray =
     asset "../img/ElmLogoGray.svg"
-
-
-usFlag : String
-usFlag =
-    asset "../img/flags/us.svg"
 
 
 
@@ -166,6 +161,7 @@ init flags =
         setLocaleTranslation =
             setUILanguage flags.translations
 
+        updatedModel : Model
         updatedModel =
             { initialModel
                 | translations = setLocaleTranslation
@@ -467,38 +463,29 @@ newWordScreen model newWord =
         ]
 
 
+renderFlag : String -> Html msg
+renderFlag countryCode =
+    i
+        [ Attr.class "fi"
+        , Attr.class ("fi-" ++ String.toLower countryCode)
+        , Attr.class "fis"
+        ]
+        []
+
+
 languages : Html Msg
 languages =
     ul [ Aria.label "languages and localizations", Attr.class "flex justify-center md:justify-end gap-x-2 mt-2" ]
         [ li []
             [ button
                 [ Aria.label "english language select"
+                , Attr.alt "US flag"
+                , Attr.title "US flag"
                 , onClick (SelectLocale En)
                 ]
-                [ img
-                    [ Attr.src usFlag
-                    , Attr.class "w-4 h-4 md:w-6 md:h-6"
-                    , Attr.alt "UK flag"
-                    , Attr.title "UK flag"
-                    ]
-                    []
+                [ renderFlag "us"
                 ]
             ]
-
-        -- , li []
-        --     [ button
-        --         [ Aria.label "dutch language select"
-        --         , onClick (SelectLocale Nl)
-        --         ]
-        --         [ img
-        --             [ Attr.src nlFlag
-        --             , Attr.class "w-4 h-4 md:w-6 md:h-6"
-        --             , Attr.alt "Netherlands flag"
-        --             , Attr.title "Netherlands flag"
-        --             ]
-        --             []
-        --         ]
-        --     ]
         ]
 
 
