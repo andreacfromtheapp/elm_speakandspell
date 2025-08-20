@@ -4,19 +4,26 @@
 
 ### stateful logic
 
-- [x] make [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html) 🎉 🎉 🎉
-  - [x] managed certainty of ```type Status``` and ```type Output```
-    - [x] Status: can only be Loading, Loaded ```something```, and Errored
-    - [x] Output screen: can only show one line at the time, depending on user input
-- [x] avoid [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) 🥳 🥳 🥳
-  - [x] see ```type Sound```
+- [x] make
+      [Impossible States Impossible](https://sporto.github.io/elm-patterns/basic/impossible-states.html)
+      🎉 🎉 🎉
+  - [x] managed certainty of `type Status` and `type Output`
+    - [x] Status: can only be Loading, Loaded `something`, and Errored
+    - [x] Output screen: can only show one line at the time, depending on user
+          input
+- [x] avoid
+      [boolean identity crisis](https://www.youtube.com/watch?v=6TDKHGtAxeg) 🥳
+      🥳 🥳
+  - [x] see `type Sound`
 
 ### keyboard
 
 - [x] display keyboard onscreen
 - [x] onclick events to output
 - [x] onclick events to sound
-- [x] use an [package](https://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest/) to get user typing
+- [x] use an
+      [package](https://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest/)
+      to get user typing
 - [x] get keycode from typing into onscreen keyboard
 - [x] filter out KeyPressed to
   - [x] if alt/meta/shift/ctrl/repeat is pressed do nothing
@@ -28,7 +35,8 @@
 
 ### text to speech 🤖🤖🤖
 
-- [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) with a JavaScript Port
+- [x] [SpeechSynthesis Web API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis)
+      with a JavaScript Port
 - [x] let user disable voice
   - [x] completely
   - [x] ~~for some features~~ **(no. API only pauses/resumes global state)**
@@ -38,7 +46,7 @@
 
 ### refactor
 
-- [x] refactor ```update``` and use helper functions
+- [x] refactor `update` and use helper functions
   - [x] reuse helper functions to streamline code
   - [x] declutter view's onClick events and use update for Msg
   - [x] not all Msg need to be parametrized
@@ -49,7 +57,7 @@
   - [x] ~~show default message or GuessWord~~
   - [x] ~~implement a conditional to only show GuessWord if valid~~
   - [x] ~~awlays show clicked Nothing if GuessWord is empty~~
-- [x] switch to using ```type Output``` with a ```case ... of```
+- [x] switch to using `type Output` with a `case ... of`
   - [x] much clearer and less convoluted code
   - [x] it can either be Init, Holder, Word, or Result upon sumbit
   - [x] avoid double use of Maybe Strings that depended on one another
@@ -85,7 +93,8 @@
 - [x] create custom error page
   - [x] implement function to handle http.error
   - [x] and return custom (parsed) error messages
-- [x] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) accessibility
+- [x] [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+      accessibility
 - [x] SEO optimization
 - [x] make elm-ui design responsive
   - [x] elm ui seems abandonware
@@ -105,10 +114,11 @@
 
 - [ ] make it so that KeyPressed triggers visual feedback on keyboard keys
   - [ ] should I use a Maybe KeyboardEvent?
-  - [ ] refactor ```Msg``` and split into ```KeyPressed``` + ```KeyClicked``` types?
+  - [ ] refactor `Msg` and split into `KeyPressed` + `KeyClicked` types?
     - [ ] would this be too convoluted? Elm likes clarity over complexity
 
-Provided that a *polyglot API* (or separate different languages APIs) exist, these are a number of items I'd like add to the app:
+Provided that a _polyglot API_ (or separate different languages APIs) exist,
+these are a number of items I'd like add to the app:
 
 - [ ] let user choose:
   - [x] a different dictionary language
