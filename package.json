@@ -14,7 +14,7 @@
     "elm-tooling": "^1.16.0",
     "flag-icons": "^7.5.0",
     "tailwindcss": "^4.1.12",
-    "vite": "^7.1.2",
+    "vite": "^7.1.4",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-elm": "^3.0.1",
     "vite-plugin-imagemin": "^0.6.1",
