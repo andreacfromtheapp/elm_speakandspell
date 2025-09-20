@@ -1,4 +1,4 @@
-import '../css/style.css'
+import '../css/tailwind.css'
 import { Elm } from '../elm/SpeakAndSpell.elm'
 
 // translations defaults to English
@@ -6,7 +6,7 @@ let res = await fetch('translations/translations.en.json')
 const translations = await res.json()
 
 // API URL from .env OR default to prod
-const baseUrl = import.meta.env.VITE_APP_URL || 'https://word-api-axum.netlify.app'
+const baseUrl = import.meta.env.VITE_APP_URL || 'http://localhost:3000'
 const appUrl = `${baseUrl}/en/random`
 
 // Start the Elm application.
