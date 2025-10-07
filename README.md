@@ -3,18 +3,6 @@
 My very first attempt at an [Elm](https://elm-lang.org/) application, to test my
 understanding of [Elm in Action](https://www.manning.com/books/elm-in-action).
 
-## BROKEN API UPDATE (20231023)
-
-The Random Word API I used for this app is justifiably returning an error, most
-likely because the many requests would cost them money. They invite users to
-self-deploy. If you intend to check my Speak And Spell Elm implementation, you
-need to deploy the API first, and then point a clone of this very app to it.
-
-- API repo:
-  [https://github.com/mcnaveen/random-words-api](https://github.com/mcnaveen/random-words-api)
-- API URLs need changing in [main.js](./src/js/main.js#L19-L23) and
-  [SpeakAndSpell.elm](./src/elm/SpeakAndSpell.elm#L154)
-
 ## Why Speak & Spell?
 
 Because there was potential for a good mix of UI and UX. It seemed like a great
