@@ -13,13 +13,13 @@ completely from scratch, as opposed to pre-existing concepts.
 
 Being a _toy project_ (no pun intended), this is a limited reproduction:
 
-1. match the word on the screen
-2. use the commands
+1. Match the word on the screen
+2. Use the commands
 
 No _Mystery Word_ or any other play mode from the original game.
 
 The point of this exercise was to: study, internalize, apply, learn some more,
-improve skills and code, rinse and repeat. Not to be an 1:1 clone.
+improve skills and code, rinse, and repeat. Not to be an 1:1 clone.
 
 ## Some Background
 
@@ -31,14 +31,14 @@ learned up to that point, and to make sure I was getting them right.
 After improving my skills on [Exercism](https://exercism.org/profiles/gacallea),
 and doing some more exploring, I have:
 
-- migrated the project to
+- Migrated the project to
   [my template](https://github.com/gacallea/elm_vite_tailwind_template)
-- migrated from
+- Migrated from
   [Elm UI](https://github.com/gacallea/elm_speakandspell/tree/elm_ui_version) to
   [Tailwind CSS](https://tailwindcss.com/)
-- made it fully reponsive to the best of my abilities
-- resumed the book from where I left off: Chapter 6 - Testing
-- wrote
+- Made it fully responsive to the best of my abilities
+- Resumed the book from where I left off: Chapter 6 - Testing
+- Wrote
   [all tests](https://github.com/gacallea/elm_speakandspell/blob/main/tests/SpeakAndSpellTest.elm)
   for the API and more relevant UI items
 
@@ -47,7 +47,7 @@ complete. 🎉 🎉 🎉
 
 ## Made With
 
-Tooling privided by my own
+Tooling provided by my own
 [Vite, Elm, and Tailwind CSS, Template](https://github.com/gacallea/elm_vite_tailwind_template).
 Check it out 😃
 
@@ -56,6 +56,6 @@ Check it out 😃
 [Speak & Spell](<https://en.wikipedia.org/wiki/Speak_%26_Spell_(toy)>)™ is ©
 of Texas Instruments Inc.
 
-The favicon used on the Vercel app is ©
+The favicon used on the Netlify app is ©
 [Gregor Cresnar](https://thenounproject.com/icon/speak-1616157/). Licensed under
 the [Creative Commons CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/).
