@@ -407,7 +407,7 @@ theKeyboard model =
         keyboardCommands =
             [ { cmdMsg = EraseLetter, cmdName = TranslationCmd.erase model.translations }
             , { cmdMsg = ResetWord, cmdName = TranslationCmd.reset model.translations }
-            , { cmdMsg = Speak, cmdName = TranslationCmd.spell model.translations }
+            , { cmdMsg = Speak, cmdName = TranslationCmd.speak model.translations }
             , { cmdMsg = Spell, cmdName = TranslationCmd.spell model.translations }
             , { cmdMsg = SubmitWord, cmdName = TranslationCmd.submit model.translations }
             , { cmdMsg = ResetWord, cmdName = TranslationCmd.retry model.translations }
